@@ -1,7 +1,7 @@
 # Options Day-Trading Playbook
 
 Account: Robinhood **Agentic** (••••2243), ~$92 as of 2026-10-07 close of trading.
-Instruments: SPY / QQQ options only. Max **$20 premium per trade**.
+Instruments: QQQ options only. Sizing: **up to the full buying power (~$90) per trade** (user's choice, 2026-10-07).
 
 ## What the research says
 
@@ -50,21 +50,26 @@ The 5-minute ORB was the best variant. Longer opening ranges were worse.
 
 **Bottom line:** cheap SPY options on these rules lost money. QQQ, especially 1-day expiries, was roughly breakeven to slightly positive. That's within noise, so **there is no proven edge here**. Expect to lose a bit on average, and keep risk small.
 
+## Full-account sizing check
+I re-ran the simulation with one trade using about $90 of premium, and allowed contracts closer to the money (ask ≤ $0.90).
+- **QQQ, ask ≤ $0.90:** 39–42% win rate, about +7–8% average return per trade. Next-day (1DTE) contracts never pulled the account below ~$79 in this sample.
+- **SPY** still lost money at every price cap.
+- **Worst single trade was about −$43 to −$45**, even with a −35% stop, because prices are only checked every 5 minutes and can jump past the stop.
+- **Small sample and a flat-volatility model.** Real results will likely be worse. Two or three bad trades in a row could cut the account in half.
+
 ## Trading rules (autonomous mode)
+On 2026-10-07 the user authorized Claude to **place options orders without per-trade approval**, and to **use the whole account** per trade. These are the limits:
 
-The user authorized Claude on 2026-10-07 to **place options orders without per-trade approval**, within these limits:
-
-1. **Underlyings:** QQQ first, SPY second. Contracts expiring today or the next trading day. Prefer next-day (1DTE) when the ask is ≤ $0.20.
-2. **Contract filter:**
-   - ask ≤ $0.20, so 1 contract ≤ $20
-   - bid/ask spread ≤ $0.02
+1. **Underlying: QQQ only.** Prefer contracts expiring the next trading day (1DTE); same-day (0DTE) is OK.
+2. **Contract:**
+   - the nearest-to-the-money strike whose ask × 100 fits the buying power (ask ≤ ~$0.90)
+   - bid/ask spread ≤ $0.03
    - option volume > 1,000 today
-   - nearest strike to the money that fits the price cap
 3. **Setup: 5-minute ORB.**
    - Opening range = 9:30–9:35 high/low.
    - Signal = first 5-minute close above the high (buy a call) or below the low (buy a put).
    - The signal must come by **11:30am ET**.
-   - Skip if the opening-range bar is wider than ~2× its recent typical size, or if a major scheduled release (CPI, FOMC decision, jobs report) lands within the next 30 minutes.
+   - Skip if the opening bar is more than ~2× its usual size, or a major scheduled release (CPI, FOMC, jobs report) is due within 30 minutes.
 4. **Entry:** limit at the ask. If not filled within ~2 minutes, re-price once; otherwise skip.
 5. **Exits:**
    - **Target:** sell at +100%.
@@ -75,10 +80,10 @@ The user authorized Claude on 2026-10-07 to **place options orders without per-t
 6. **Limits:**
    - One position at a time.
    - Max 2 entries per day.
-   - Stop for the day after 2 losses or −$15 realized.
-   - If the account falls below $60, stop trading on my own and ask the user.
-7. **No midday or afternoon entries.** Moves after 12:30pm are too small to beat time decay on cheap options.
-8. **Reporting:** report every entry and exit to the user with the fill price and P/L.
+   - **Stop for the day after the first losing trade.**
+   - If the account falls below **$50**, stop trading on my own and ask the user.
+7. **No entries after 11:30am ET.**
+8. **Reporting:** report every entry and exit to the user (chat + push notification) with the fill price and P/L.
 
 ## Daily levels checklist (before 9:40am ET)
 - Prior day high / low / close and pivot P, R1, S1
