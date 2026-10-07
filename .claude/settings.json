@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "mcp__claude-code-remote__update_trigger",
+      "mcp__claude-code-remote__send_later",
+      "mcp__Robinhood__place_option_order",
+      "mcp__Robinhood__cancel_option_order"
+    ]
+  }
+}
