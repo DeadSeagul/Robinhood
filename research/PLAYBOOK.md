@@ -96,3 +96,4 @@ On 2026-10-07 the user authorized Claude to **place options orders without per-t
 |---|---|---|---|---|---|
 | 2026-10-07 | SPY shares (fractional, $95) | $777.62 | $777.45 | −$0.02 | Midday test trade |
 | 2026-10-07 | SPY 10/7 $779 call ×1 | $0.17 | $0.09 | −$8.00 (+fees) | 2:07pm entry after Fed minutes; no follow-through, time decay |
+| 2026-10-08 | QQQ 10/9 $745 put ×1 (5-min ORB short, autonomous) | $0.69 | $0.45 | −$24.00 (+fees) | 9:50 bar closed $752.42 below OR low $753.11; QQQ snapped back into the range within 3 min (failed breakdown) and broke the OR high by 10:21. Broker-side stop filled 10:19. Lesson: a signal that is already back inside the range at entry time is a warning sign. |
