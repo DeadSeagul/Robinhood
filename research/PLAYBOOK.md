@@ -1,7 +1,7 @@
 # Options Day-Trading Playbook
 
 Account: Robinhood **Agentic** (••••2243), ~$92 as of 2026-10-07 close of trading.
-Instruments: QQQ options only. Sizing: **up to the full buying power (~$90) per trade** (user's choice, 2026-10-07).
+Instruments: QQQ options first (plus liquid stocks in play). Sizing: **max $20 premium per trade** (user sized down on 2026-10-08; was the full account).
 
 ## What the research says
 
@@ -79,11 +79,11 @@ The rest can't be tested with our data:
 **Conclusion:** none of these beat the plain 5-min ORB. No changes to the rules.
 
 ## Trading rules (autonomous mode)
-On 2026-10-07 the user authorized Claude to **place options orders without per-trade approval**, and to **use the whole account** per trade. These are the limits:
+On 2026-10-07 the user authorized Claude to **place options orders without per-trade approval**. On 2026-10-08 the user **sized down to $20 per trade** (1 contract, ask ≤ $0.20; a −35% stop costs about $7). These are the limits:
 
 1. **Underlying: QQQ only.** Prefer contracts expiring the next trading day (1DTE); same-day (0DTE) is OK.
 2. **Contract:**
-   - the nearest-to-the-money strike whose ask × 100 fits the buying power (ask ≤ ~$0.90)
+   - the nearest-to-the-money strike with ask ≤ $0.20 (1 contract ≤ $20)
    - bid/ask spread ≤ $0.03
    - option volume > 1,000 today
 3. **Setup: 5-minute ORB.**
