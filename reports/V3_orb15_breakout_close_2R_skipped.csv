@@ -1,0 +1,303 @@
+date,symbol,time,reason
+2026-08-18,GE,2026-08-18 10:55:00-04:00,breakout ignored: SPY/QQQ not both above their VWAP
+2026-08-18,GE,2026-08-18 11:00:00-04:00,breakout ignored: SPY/QQQ not both above their VWAP
+2026-08-19,MRNA,2026-08-19 09:50:00-04:00,breakout ignored: SPY/QQQ not both above their VWAP
+2026-08-19,MRNA,2026-08-19 09:55:00-04:00,breakout ignored: SPY/QQQ not both above their VWAP
+2026-08-19,MRNA,2026-08-19 10:00:00-04:00,breakout ignored: SPY/QQQ not both above their VWAP
+2026-08-19,MRNA,2026-08-19 10:05:00-04:00,breakout ignored: SPY/QQQ not both above their VWAP
+2026-08-19,MRNA,2026-08-19 10:10:00-04:00,breakout ignored: SPY/QQQ not both above their VWAP
+2026-08-19,MRNA,2026-08-19 10:15:00-04:00,breakout ignored: SPY/QQQ not both above their VWAP
+2026-08-19,MRNA,2026-08-19 10:20:00-04:00,breakout ignored: SPY/QQQ not both above their VWAP
+2026-08-19,MRNA,2026-08-19 10:25:00-04:00,breakout ignored: SPY/QQQ not both above their VWAP
+2026-08-19,MRNA,2026-08-19 10:30:00-04:00,breakout ignored: SPY/QQQ not both above their VWAP
+2026-08-19,MRNA,2026-08-19 10:35:00-04:00,breakout ignored: SPY/QQQ not both above their VWAP
+2026-08-19,MRNA,2026-08-19 10:40:00-04:00,extended: entry 154.19 is more than 0.5 x range above OR high
+2026-08-19,MRNA,2026-08-19 10:45:00-04:00,extended: entry 149.50 is more than 0.5 x range above OR high
+2026-08-19,MRNA,2026-08-19 10:50:00-04:00,breakout ignored: SPY/QQQ not both above their VWAP
+2026-08-19,MRNA,2026-08-19 10:55:00-04:00,extended: entry 148.47 is more than 0.5 x range above OR high
+2026-08-19,MRNA,2026-08-19 11:00:00-04:00,extended: entry 148.17 is more than 0.5 x range above OR high
+2026-08-19,TGT,2026-08-19 10:00:00-04:00,breakout ignored: SPY/QQQ not both above their VWAP
+2026-08-19,TLT,2026-08-19 09:55:00-04:00,breakout ignored: SPY/QQQ not both above their VWAP
+2026-08-19,TLT,2026-08-19 10:00:00-04:00,breakout ignored: SPY/QQQ not both above their VWAP
+2026-08-19,TLT,2026-08-19 10:05:00-04:00,breakout ignored: SPY/QQQ not both above their VWAP
+2026-08-19,TLT,2026-08-19 10:10:00-04:00,breakout ignored: SPY/QQQ not both above their VWAP
+2026-08-19,TLT,2026-08-19 10:15:00-04:00,breakout ignored: SPY/QQQ not both above their VWAP
+2026-08-19,TLT,2026-08-19 10:20:00-04:00,breakout ignored: SPY/QQQ not both above their VWAP
+2026-08-19,TLT,2026-08-19 10:25:00-04:00,breakout ignored: SPY/QQQ not both above their VWAP
+2026-08-19,TLT,2026-08-19 10:30:00-04:00,breakout ignored: SPY/QQQ not both above their VWAP
+2026-08-19,TLT,2026-08-19 10:35:00-04:00,breakout ignored: SPY/QQQ not both above their VWAP
+2026-08-19,TLT,2026-08-19 10:40:00-04:00,extended: entry 83.03 is more than 0.5 x range above OR high
+2026-08-19,TLT,2026-08-19 10:45:00-04:00,extended: entry 83.04 is more than 0.5 x range above OR high
+2026-08-19,TLT,2026-08-19 10:50:00-04:00,breakout ignored: SPY/QQQ not both above their VWAP
+2026-08-19,TLT,2026-08-19 10:55:00-04:00,extended: entry 82.95 is more than 0.5 x range above OR high
+2026-08-19,TLT,2026-08-19 11:00:00-04:00,extended: entry 82.99 is more than 0.5 x range above OR high
+2026-08-19,LLY,2026-08-19 09:50:00-04:00,breakout ignored: SPY/QQQ not both above their VWAP
+2026-08-19,LLY,2026-08-19 09:55:00-04:00,breakout ignored: SPY/QQQ not both above their VWAP
+2026-08-19,LLY,2026-08-19 10:00:00-04:00,breakout ignored: SPY/QQQ not both above their VWAP
+2026-08-19,LLY,2026-08-19 10:10:00-04:00,breakout ignored: SPY/QQQ not both above their VWAP
+2026-08-19,LLY,2026-08-19 10:15:00-04:00,breakout ignored: SPY/QQQ not both above their VWAP
+2026-08-19,LLY,2026-08-19 10:20:00-04:00,breakout ignored: SPY/QQQ not both above their VWAP
+2026-08-19,LLY,2026-08-19 10:25:00-04:00,breakout ignored: SPY/QQQ not both above their VWAP
+2026-08-19,LLY,2026-08-19 10:30:00-04:00,breakout ignored: SPY/QQQ not both above their VWAP
+2026-08-19,GLD,2026-08-19 10:10:00-04:00,breakout ignored: SPY/QQQ not both above their VWAP
+2026-08-19,GLD,2026-08-19 10:15:00-04:00,breakout ignored: SPY/QQQ not both above their VWAP
+2026-08-19,GLD,2026-08-19 10:20:00-04:00,breakout ignored: SPY/QQQ not both above their VWAP
+2026-08-19,GLD,2026-08-19 10:25:00-04:00,breakout ignored: SPY/QQQ not both above their VWAP
+2026-08-19,GLD,2026-08-19 10:30:00-04:00,breakout ignored: SPY/QQQ not both above their VWAP
+2026-08-19,GLD,2026-08-19 10:35:00-04:00,breakout ignored: SPY/QQQ not both above their VWAP
+2026-08-19,GLD,2026-08-19 10:40:00-04:00,extended: entry 411.79 is more than 0.5 x range above OR high
+2026-08-19,GLD,2026-08-19 10:45:00-04:00,extended: entry 411.85 is more than 0.5 x range above OR high
+2026-08-19,GLD,2026-08-19 10:50:00-04:00,breakout ignored: SPY/QQQ not both above their VWAP
+2026-08-19,GLD,2026-08-19 10:55:00-04:00,extended: entry 411.45 is more than 0.5 x range above OR high
+2026-08-19,GLD,2026-08-19 11:00:00-04:00,extended: entry 411.70 is more than 0.5 x range above OR high
+2026-08-19,PFE,2026-08-19 09:55:00-04:00,breakout ignored: SPY/QQQ not both above their VWAP
+2026-08-19,PFE,2026-08-19 10:00:00-04:00,breakout ignored: SPY/QQQ not both above their VWAP
+2026-08-19,PFE,2026-08-19 10:05:00-04:00,breakout ignored: SPY/QQQ not both above their VWAP
+2026-08-19,PFE,2026-08-19 10:10:00-04:00,breakout ignored: SPY/QQQ not both above their VWAP
+2026-08-19,PFE,2026-08-19 10:15:00-04:00,breakout ignored: SPY/QQQ not both above their VWAP
+2026-08-19,PFE,2026-08-19 10:20:00-04:00,breakout ignored: SPY/QQQ not both above their VWAP
+2026-08-19,PFE,2026-08-19 10:25:00-04:00,breakout ignored: SPY/QQQ not both above their VWAP
+2026-08-19,PFE,2026-08-19 10:30:00-04:00,breakout ignored: SPY/QQQ not both above their VWAP
+2026-08-19,PFE,2026-08-19 10:35:00-04:00,breakout ignored: SPY/QQQ not both above their VWAP
+2026-08-21,HOOD,2026-08-21 11:00:00-04:00,skipped: max entries per day (counting working orders)
+2026-08-21,MSTR,2026-08-21 09:50:00-04:00,breakout ignored: SPY/QQQ not both above their VWAP
+2026-08-21,MSTR,2026-08-21 10:50:00-04:00,breakout ignored: SPY/QQQ not both above their VWAP
+2026-08-21,MSTR,2026-08-21 10:55:00-04:00,breakout ignored: SPY/QQQ not both above their VWAP
+2026-08-21,COIN,2026-08-21 10:00:00-04:00,breakout ignored: SPY/QQQ not both above their VWAP
+2026-08-21,COIN,2026-08-21 10:05:00-04:00,breakout ignored: SPY/QQQ not both above their VWAP
+2026-08-21,COIN,2026-08-21 10:10:00-04:00,breakout ignored: SPY/QQQ not both above their VWAP
+2026-08-21,COIN,2026-08-21 10:50:00-04:00,breakout ignored: SPY/QQQ not both above their VWAP
+2026-08-21,COIN,2026-08-21 10:55:00-04:00,breakout ignored: SPY/QQQ not both above their VWAP
+2026-08-21,HOOD,2026-08-21 09:50:00-04:00,breakout ignored: SPY/QQQ not both above their VWAP
+2026-08-21,HOOD,2026-08-21 09:55:00-04:00,breakout ignored: SPY/QQQ not both above their VWAP
+2026-08-21,HOOD,2026-08-21 10:00:00-04:00,breakout ignored: SPY/QQQ not both above their VWAP
+2026-08-21,HOOD,2026-08-21 10:05:00-04:00,breakout ignored: SPY/QQQ not both above their VWAP
+2026-08-21,HOOD,2026-08-21 10:10:00-04:00,breakout ignored: SPY/QQQ not both above their VWAP
+2026-08-21,HOOD,2026-08-21 10:15:00-04:00,breakout ignored: SPY/QQQ not both above their VWAP
+2026-08-21,HOOD,2026-08-21 10:35:00-04:00,breakout ignored: SPY/QQQ not both above their VWAP
+2026-08-21,HOOD,2026-08-21 10:50:00-04:00,breakout ignored: SPY/QQQ not both above their VWAP
+2026-08-21,HOOD,2026-08-21 10:55:00-04:00,breakout ignored: SPY/QQQ not both above their VWAP
+2026-08-21,COST,2026-08-21 10:15:00-04:00,breakout ignored: SPY/QQQ not both above their VWAP
+2026-08-21,COST,2026-08-21 10:20:00-04:00,breakout ignored: SPY/QQQ not both above their VWAP
+2026-08-21,COST,2026-08-21 10:25:00-04:00,breakout ignored: SPY/QQQ not both above their VWAP
+2026-08-21,COST,2026-08-21 10:30:00-04:00,breakout ignored: SPY/QQQ not both above their VWAP
+2026-08-21,COST,2026-08-21 10:35:00-04:00,breakout ignored: SPY/QQQ not both above their VWAP
+2026-08-21,COST,2026-08-21 10:40:00-04:00,breakout ignored: SPY/QQQ not both above their VWAP
+2026-08-21,COST,2026-08-21 10:45:00-04:00,breakout ignored: SPY/QQQ not both above their VWAP
+2026-08-21,COST,2026-08-21 10:50:00-04:00,breakout ignored: SPY/QQQ not both above their VWAP
+2026-08-21,COST,2026-08-21 10:55:00-04:00,breakout ignored: SPY/QQQ not both above their VWAP
+2026-08-21,COST,2026-08-21 11:00:00-04:00,extended: entry 949.28 is more than 0.5 x range above OR high
+2026-08-21,MRNA,2026-08-21 09:50:00-04:00,breakout ignored: SPY/QQQ not both above their VWAP
+2026-08-21,MRNA,2026-08-21 09:55:00-04:00,breakout ignored: SPY/QQQ not both above their VWAP
+2026-08-21,MRNA,2026-08-21 10:00:00-04:00,breakout ignored: SPY/QQQ not both above their VWAP
+2026-08-21,MRNA,2026-08-21 10:05:00-04:00,breakout ignored: SPY/QQQ not both above their VWAP
+2026-08-21,MRNA,2026-08-21 10:10:00-04:00,breakout ignored: SPY/QQQ not both above their VWAP
+2026-08-21,MRNA,2026-08-21 10:15:00-04:00,breakout ignored: SPY/QQQ not both above their VWAP
+2026-08-21,MRNA,2026-08-21 10:20:00-04:00,breakout ignored: SPY/QQQ not both above their VWAP
+2026-08-21,MRNA,2026-08-21 10:25:00-04:00,breakout ignored: SPY/QQQ not both above their VWAP
+2026-08-21,MRNA,2026-08-21 10:30:00-04:00,breakout ignored: SPY/QQQ not both above their VWAP
+2026-08-21,MRNA,2026-08-21 10:35:00-04:00,breakout ignored: SPY/QQQ not both above their VWAP
+2026-08-21,MRNA,2026-08-21 10:40:00-04:00,breakout ignored: SPY/QQQ not both above their VWAP
+2026-08-21,MRNA,2026-08-21 10:45:00-04:00,breakout ignored: SPY/QQQ not both above their VWAP
+2026-08-21,MRNA,2026-08-21 10:50:00-04:00,breakout ignored: SPY/QQQ not both above their VWAP
+2026-08-21,MRNA,2026-08-21 10:55:00-04:00,breakout ignored: SPY/QQQ not both above their VWAP
+2026-08-21,MRNA,2026-08-21 11:00:00-04:00,reward/risk to prior-day high 155.00 is 0.31 < 2.0
+2026-08-24,MSTR,2026-08-24 10:10:00-04:00,breakout ignored: SPY/QQQ not both above their VWAP
+2026-08-24,MSTR,2026-08-24 10:15:00-04:00,breakout ignored: SPY/QQQ not both above their VWAP
+2026-08-24,MSTR,2026-08-24 10:20:00-04:00,breakout ignored: SPY/QQQ not both above their VWAP
+2026-08-24,MSTR,2026-08-24 10:25:00-04:00,breakout ignored: SPY/QQQ not both above their VWAP
+2026-08-24,MSTR,2026-08-24 10:30:00-04:00,breakout ignored: SPY/QQQ not both above their VWAP
+2026-08-24,MSTR,2026-08-24 10:35:00-04:00,extended: entry 126.58 is more than 0.5 x range above OR high
+2026-08-24,MSTR,2026-08-24 10:40:00-04:00,extended: entry 126.38 is more than 0.5 x range above OR high
+2026-08-24,MSTR,2026-08-24 10:45:00-04:00,extended: entry 125.23 is more than 0.5 x range above OR high
+2026-08-24,MSTR,2026-08-24 10:50:00-04:00,extended: entry 124.73 is more than 0.5 x range above OR high
+2026-08-25,NKE,2026-08-25 10:25:00-04:00,breakout ignored: SPY/QQQ not both above their VWAP
+2026-08-25,NKE,2026-08-25 10:30:00-04:00,breakout ignored: SPY/QQQ not both above their VWAP
+2026-08-25,NKE,2026-08-25 11:00:00-04:00,breakout ignored: SPY/QQQ not both above their VWAP
+2026-08-25,SBUX,2026-08-25 10:25:00-04:00,breakout ignored: SPY/QQQ not both above their VWAP
+2026-08-26,XOM,2026-08-26 10:20:00-04:00,breakout ignored: SPY/QQQ not both above their VWAP
+2026-08-27,NVDA,2026-08-27 10:55:00-04:00,skipped: max 2 entries per day reached
+2026-08-27,NVDA,2026-08-27 11:00:00-04:00,skipped: max 2 entries per day reached
+2026-09-03,HOOD,2026-09-03 10:30:00-04:00,breakout ignored: SPY/QQQ not both above their VWAP
+2026-09-03,HOOD,2026-09-03 10:35:00-04:00,breakout ignored: SPY/QQQ not both above their VWAP
+2026-09-03,HOOD,2026-09-03 10:45:00-04:00,breakout ignored: SPY/QQQ not both above their VWAP
+2026-09-03,HOOD,2026-09-03 10:50:00-04:00,breakout ignored: SPY/QQQ not both above their VWAP
+2026-09-03,HOOD,2026-09-03 10:55:00-04:00,breakout ignored: SPY/QQQ not both above their VWAP
+2026-09-09,META,2026-09-09 11:00:00-04:00,breakout ignored: SPY/QQQ not both above their VWAP
+2026-09-10,TLT,2026-09-10 10:35:00-04:00,skipped: max 2 entries per day reached
+2026-09-10,TLT,2026-09-10 10:45:00-04:00,skipped: max 2 entries per day reached
+2026-09-10,TLT,2026-09-10 10:50:00-04:00,skipped: max 2 entries per day reached
+2026-09-10,TLT,2026-09-10 10:55:00-04:00,skipped: max 2 entries per day reached
+2026-09-10,TLT,2026-09-10 11:00:00-04:00,skipped: max 2 entries per day reached
+2026-09-10,IWM,2026-09-10 10:25:00-04:00,extended: entry 289.55 is more than 0.5 x range above OR high
+2026-09-10,TLT,2026-09-10 10:15:00-04:00,breakout ignored: SPY/QQQ not both above their VWAP
+2026-09-10,TLT,2026-09-10 10:20:00-04:00,extended: entry 81.14 is more than 0.5 x range above OR high
+2026-09-10,TLT,2026-09-10 10:25:00-04:00,extended: entry 81.24 is more than 0.5 x range above OR high
+2026-09-10,TLT,2026-09-10 10:30:00-04:00,extended: entry 81.15 is more than 0.5 x range above OR high
+2026-09-10,TLT,2026-09-10 10:40:00-04:00,extended: entry 81.09 is more than 0.5 x range above OR high
+2026-09-11,ADBE,2026-09-11 10:50:00-04:00,breakout ignored: SPY/QQQ not both above their VWAP
+2026-09-14,CRWD,2026-09-14 09:55:00-04:00,skipped: max 2 entries per day reached
+2026-09-14,SMH,2026-09-14 09:55:00-04:00,skipped: max 2 entries per day reached
+2026-09-14,PANW,2026-09-14 09:55:00-04:00,skipped: max 2 entries per day reached
+2026-09-14,RBLX,2026-09-14 10:00:00-04:00,skipped: max 2 entries per day reached
+2026-09-14,CRWD,2026-09-14 10:00:00-04:00,skipped: max 2 entries per day reached
+2026-09-14,SMH,2026-09-14 10:00:00-04:00,skipped: max 2 entries per day reached
+2026-09-14,SMH,2026-09-14 10:05:00-04:00,skipped: max 2 entries per day reached
+2026-09-14,RBLX,2026-09-14 10:15:00-04:00,skipped: max 2 entries per day reached
+2026-09-14,RBLX,2026-09-14 10:20:00-04:00,skipped: max 2 entries per day reached
+2026-09-14,RBLX,2026-09-14 10:25:00-04:00,breakout ignored: SPY/QQQ not both above their VWAP
+2026-09-14,RBLX,2026-09-14 10:30:00-04:00,breakout ignored: SPY/QQQ not both above their VWAP
+2026-09-14,RBLX,2026-09-14 10:35:00-04:00,breakout ignored: SPY/QQQ not both above their VWAP
+2026-09-14,RBLX,2026-09-14 10:40:00-04:00,breakout ignored: SPY/QQQ not both above their VWAP
+2026-09-14,RBLX,2026-09-14 10:45:00-04:00,breakout ignored: SPY/QQQ not both above their VWAP
+2026-09-14,RBLX,2026-09-14 10:50:00-04:00,breakout ignored: SPY/QQQ not both above their VWAP
+2026-09-14,RBLX,2026-09-14 10:55:00-04:00,breakout ignored: SPY/QQQ not both above their VWAP
+2026-09-14,RBLX,2026-09-14 11:00:00-04:00,breakout ignored: SPY/QQQ not both above their VWAP
+2026-09-14,CRWD,2026-09-14 10:05:00-04:00,extended: entry 229.99 is more than 0.5 x range above OR high
+2026-09-14,CRWD,2026-09-14 10:10:00-04:00,extended: entry 231.41 is more than 0.5 x range above OR high
+2026-09-14,CRWD,2026-09-14 10:15:00-04:00,extended: entry 231.38 is more than 0.5 x range above OR high
+2026-09-14,CRWD,2026-09-14 10:20:00-04:00,extended: entry 230.70 is more than 0.5 x range above OR high
+2026-09-14,CRWD,2026-09-14 10:25:00-04:00,breakout ignored: SPY/QQQ not both above their VWAP
+2026-09-14,CRWD,2026-09-14 10:30:00-04:00,breakout ignored: SPY/QQQ not both above their VWAP
+2026-09-14,CRWD,2026-09-14 10:35:00-04:00,breakout ignored: SPY/QQQ not both above their VWAP
+2026-09-14,CRWD,2026-09-14 10:40:00-04:00,breakout ignored: SPY/QQQ not both above their VWAP
+2026-09-14,CRWD,2026-09-14 10:45:00-04:00,breakout ignored: SPY/QQQ not both above their VWAP
+2026-09-14,CRWD,2026-09-14 10:50:00-04:00,breakout ignored: SPY/QQQ not both above their VWAP
+2026-09-14,CRWD,2026-09-14 10:55:00-04:00,breakout ignored: SPY/QQQ not both above their VWAP
+2026-09-14,CRWD,2026-09-14 11:00:00-04:00,breakout ignored: SPY/QQQ not both above their VWAP
+2026-09-14,SMH,2026-09-14 09:50:00-04:00,extended: entry 544.87 is more than 0.5 x range above OR high
+2026-09-14,SMH,2026-09-14 10:10:00-04:00,extended: entry 544.49 is more than 0.5 x range above OR high
+2026-09-14,SMH,2026-09-14 10:15:00-04:00,extended: entry 545.13 is more than 0.5 x range above OR high
+2026-09-14,SMH,2026-09-14 10:20:00-04:00,extended: entry 544.78 is more than 0.5 x range above OR high
+2026-09-14,SMH,2026-09-14 10:25:00-04:00,breakout ignored: SPY/QQQ not both above their VWAP
+2026-09-14,SMH,2026-09-14 10:30:00-04:00,breakout ignored: SPY/QQQ not both above their VWAP
+2026-09-14,SMH,2026-09-14 10:35:00-04:00,breakout ignored: SPY/QQQ not both above their VWAP
+2026-09-14,SMH,2026-09-14 10:40:00-04:00,breakout ignored: SPY/QQQ not both above their VWAP
+2026-09-14,SMH,2026-09-14 10:45:00-04:00,breakout ignored: SPY/QQQ not both above their VWAP
+2026-09-14,SMH,2026-09-14 10:50:00-04:00,breakout ignored: SPY/QQQ not both above their VWAP
+2026-09-14,PANW,2026-09-14 10:00:00-04:00,extended: entry 355.66 is more than 0.5 x range above OR high
+2026-09-14,PANW,2026-09-14 10:05:00-04:00,extended: entry 361.24 is more than 0.5 x range above OR high
+2026-09-14,PANW,2026-09-14 10:10:00-04:00,extended: entry 363.62 is more than 0.5 x range above OR high
+2026-09-14,PANW,2026-09-14 10:15:00-04:00,extended: entry 366.07 is more than 0.5 x range above OR high
+2026-09-14,PANW,2026-09-14 10:20:00-04:00,extended: entry 365.16 is more than 0.5 x range above OR high
+2026-09-14,PANW,2026-09-14 10:25:00-04:00,breakout ignored: SPY/QQQ not both above their VWAP
+2026-09-14,PANW,2026-09-14 10:30:00-04:00,breakout ignored: SPY/QQQ not both above their VWAP
+2026-09-14,PANW,2026-09-14 10:35:00-04:00,breakout ignored: SPY/QQQ not both above their VWAP
+2026-09-14,PANW,2026-09-14 10:40:00-04:00,breakout ignored: SPY/QQQ not both above their VWAP
+2026-09-14,PANW,2026-09-14 10:45:00-04:00,breakout ignored: SPY/QQQ not both above their VWAP
+2026-09-14,PANW,2026-09-14 10:50:00-04:00,breakout ignored: SPY/QQQ not both above their VWAP
+2026-09-14,PANW,2026-09-14 10:55:00-04:00,breakout ignored: SPY/QQQ not both above their VWAP
+2026-09-14,PANW,2026-09-14 11:00:00-04:00,breakout ignored: SPY/QQQ not both above their VWAP
+2026-09-17,GS,2026-09-17 10:50:00-04:00,breakout ignored: SPY/QQQ not both above their VWAP
+2026-09-18,NFLX,2026-09-18 09:55:00-04:00,breakout ignored: SPY/QQQ not both above their VWAP
+2026-09-18,NFLX,2026-09-18 10:00:00-04:00,breakout ignored: SPY/QQQ not both above their VWAP
+2026-09-18,NFLX,2026-09-18 10:05:00-04:00,breakout ignored: SPY/QQQ not both above their VWAP
+2026-09-18,NFLX,2026-09-18 10:10:00-04:00,breakout ignored: SPY/QQQ not both above their VWAP
+2026-09-18,NFLX,2026-09-18 10:15:00-04:00,breakout ignored: SPY/QQQ not both above their VWAP
+2026-09-18,NFLX,2026-09-18 10:20:00-04:00,breakout ignored: SPY/QQQ not both above their VWAP
+2026-09-18,NFLX,2026-09-18 10:25:00-04:00,breakout ignored: SPY/QQQ not both above their VWAP
+2026-09-18,NFLX,2026-09-18 10:30:00-04:00,breakout ignored: SPY/QQQ not both above their VWAP
+2026-09-18,NFLX,2026-09-18 10:35:00-04:00,breakout ignored: SPY/QQQ not both above their VWAP
+2026-09-18,NFLX,2026-09-18 10:40:00-04:00,breakout ignored: SPY/QQQ not both above their VWAP
+2026-09-18,NFLX,2026-09-18 10:45:00-04:00,breakout ignored: SPY/QQQ not both above their VWAP
+2026-09-18,NFLX,2026-09-18 10:50:00-04:00,breakout ignored: SPY/QQQ not both above their VWAP
+2026-09-18,NFLX,2026-09-18 10:55:00-04:00,breakout ignored: SPY/QQQ not both above their VWAP
+2026-09-18,NFLX,2026-09-18 11:00:00-04:00,breakout ignored: SPY/QQQ not both above their VWAP
+2026-09-18,SBUX,2026-09-18 11:00:00-04:00,breakout ignored: SPY/QQQ not both above their VWAP
+2026-09-18,GS,2026-09-18 10:15:00-04:00,breakout ignored: SPY/QQQ not both above their VWAP
+2026-09-18,GS,2026-09-18 10:20:00-04:00,breakout ignored: SPY/QQQ not both above their VWAP
+2026-09-18,GS,2026-09-18 10:25:00-04:00,breakout ignored: SPY/QQQ not both above their VWAP
+2026-09-18,GS,2026-09-18 10:30:00-04:00,breakout ignored: SPY/QQQ not both above their VWAP
+2026-09-18,JPM,2026-09-18 10:15:00-04:00,breakout ignored: SPY/QQQ not both above their VWAP
+2026-09-21,META,2026-09-21 09:55:00-04:00,skipped: max entries per day (counting working orders)
+2026-09-21,META,2026-09-21 10:00:00-04:00,skipped: max 2 entries per day reached
+2026-09-21,META,2026-09-21 10:05:00-04:00,skipped: max 2 entries per day reached
+2026-09-21,META,2026-09-21 10:10:00-04:00,skipped: max 2 entries per day reached
+2026-09-21,META,2026-09-21 10:15:00-04:00,skipped: max 2 entries per day reached
+2026-09-21,META,2026-09-21 10:20:00-04:00,skipped: max 2 entries per day reached
+2026-09-21,META,2026-09-21 10:25:00-04:00,skipped: max 2 entries per day reached
+2026-09-21,META,2026-09-21 10:30:00-04:00,skipped: max 2 entries per day reached
+2026-09-21,META,2026-09-21 10:35:00-04:00,skipped: max 2 entries per day reached
+2026-09-21,META,2026-09-21 10:40:00-04:00,skipped: max 2 entries per day reached
+2026-09-21,META,2026-09-21 10:45:00-04:00,skipped: max 2 entries per day reached
+2026-09-21,META,2026-09-21 10:50:00-04:00,skipped: max 2 entries per day reached
+2026-09-21,META,2026-09-21 10:55:00-04:00,skipped: max 2 entries per day reached
+2026-09-21,META,2026-09-21 11:00:00-04:00,skipped: max 2 entries per day reached
+2026-09-21,CRWD,2026-09-21 09:50:00-04:00,reward/risk to prior-day high 247.50 is 1.65 < 2.0
+2026-09-21,CRWD,2026-09-21 09:55:00-04:00,reward/risk to prior-day high 247.50 is 0.49 < 2.0
+2026-09-21,CRWD,2026-09-21 10:00:00-04:00,reward/risk to prior-day high 247.50 is 0.23 < 2.0
+2026-09-21,CRWD,2026-09-21 10:05:00-04:00,reward/risk to prior-day high 247.50 is 0.25 < 2.0
+2026-09-21,CRWD,2026-09-21 10:10:00-04:00,reward/risk to prior-day high 247.50 is 0.43 < 2.0
+2026-09-21,CRWD,2026-09-21 10:15:00-04:00,reward/risk to prior-day high 247.50 is 0.47 < 2.0
+2026-09-21,CRWD,2026-09-21 10:20:00-04:00,reward/risk to prior-day high 247.50 is 0.59 < 2.0
+2026-09-21,CRWD,2026-09-21 10:25:00-04:00,reward/risk to prior-day high 247.50 is 0.77 < 2.0
+2026-09-21,CRWD,2026-09-21 10:30:00-04:00,reward/risk to prior-day high 247.50 is 0.21 < 2.0
+2026-09-21,CRWD,2026-09-21 10:35:00-04:00,reward/risk to prior-day high 247.50 is 0.10 < 2.0
+2026-09-21,CRWD,2026-09-21 10:40:00-04:00,reward/risk to prior-day high 247.50 is 0.01 < 2.0
+2026-09-21,CRWD,2026-09-21 10:45:00-04:00,reward/risk to prior-day high 247.50 is 0.18 < 2.0
+2026-09-21,CRWD,2026-09-21 10:50:00-04:00,reward/risk to prior-day high 247.50 is 0.32 < 2.0
+2026-09-21,CRWD,2026-09-21 10:55:00-04:00,reward/risk to prior-day high 247.50 is 0.16 < 2.0
+2026-09-21,CRWD,2026-09-21 11:00:00-04:00,reward/risk to prior-day high 247.50 is 0.25 < 2.0
+2026-09-22,SHOP,2026-09-22 09:55:00-04:00,breakout ignored: SPY/QQQ not both above their VWAP
+2026-09-22,SHOP,2026-09-22 10:15:00-04:00,breakout ignored: SPY/QQQ not both above their VWAP
+2026-09-22,ARM,2026-09-22 10:35:00-04:00,breakout ignored: SPY/QQQ not both above their VWAP
+2026-09-22,ARM,2026-09-22 10:40:00-04:00,breakout ignored: SPY/QQQ not both above their VWAP
+2026-09-22,ARM,2026-09-22 10:55:00-04:00,breakout ignored: SPY/QQQ not both above their VWAP
+2026-09-22,ARM,2026-09-22 11:00:00-04:00,breakout ignored: SPY/QQQ not both above their VWAP
+2026-09-23,BA,2026-09-23 10:00:00-04:00,breakout ignored: SPY/QQQ not both above their VWAP
+2026-09-23,BA,2026-09-23 10:05:00-04:00,breakout ignored: SPY/QQQ not both above their VWAP
+2026-09-23,BA,2026-09-23 10:10:00-04:00,breakout ignored: SPY/QQQ not both above their VWAP
+2026-09-23,BA,2026-09-23 10:15:00-04:00,breakout ignored: SPY/QQQ not both above their VWAP
+2026-09-23,BA,2026-09-23 10:20:00-04:00,breakout ignored: SPY/QQQ not both above their VWAP
+2026-09-23,BA,2026-09-23 10:25:00-04:00,breakout ignored: SPY/QQQ not both above their VWAP
+2026-09-23,BA,2026-09-23 10:30:00-04:00,breakout ignored: SPY/QQQ not both above their VWAP
+2026-09-23,BA,2026-09-23 10:35:00-04:00,breakout ignored: SPY/QQQ not both above their VWAP
+2026-09-23,BA,2026-09-23 10:40:00-04:00,breakout ignored: SPY/QQQ not both above their VWAP
+2026-09-23,BA,2026-09-23 10:45:00-04:00,breakout ignored: SPY/QQQ not both above their VWAP
+2026-09-23,BA,2026-09-23 10:50:00-04:00,breakout ignored: SPY/QQQ not both above their VWAP
+2026-09-23,BA,2026-09-23 10:55:00-04:00,reward/risk to prior-day high 203.33 is 0.81 < 2.0
+2026-09-23,BA,2026-09-23 11:00:00-04:00,extended: entry 202.75 is more than 0.5 x range above OR high
+2026-09-25,MSFT,2026-09-25 09:50:00-04:00,skipped: max entries per day (counting working orders)
+2026-09-25,MSFT,2026-09-25 09:55:00-04:00,skipped: max 2 entries per day reached
+2026-09-25,NKE,2026-09-25 10:00:00-04:00,skipped: max 2 entries per day reached
+2026-09-25,MSFT,2026-09-25 10:00:00-04:00,skipped: max 2 entries per day reached
+2026-09-25,MSFT,2026-09-25 11:00:00-04:00,skipped: max 2 entries per day reached
+2026-09-25,NKE,2026-09-25 10:15:00-04:00,breakout ignored: SPY/QQQ not both above their VWAP
+2026-09-25,NKE,2026-09-25 10:20:00-04:00,breakout ignored: SPY/QQQ not both above their VWAP
+2026-09-25,NKE,2026-09-25 10:25:00-04:00,breakout ignored: SPY/QQQ not both above their VWAP
+2026-09-25,NKE,2026-09-25 10:30:00-04:00,breakout ignored: SPY/QQQ not both above their VWAP
+2026-09-25,NKE,2026-09-25 10:35:00-04:00,breakout ignored: SPY/QQQ not both above their VWAP
+2026-09-25,NKE,2026-09-25 10:40:00-04:00,breakout ignored: SPY/QQQ not both above their VWAP
+2026-09-25,NKE,2026-09-25 10:45:00-04:00,breakout ignored: SPY/QQQ not both above their VWAP
+2026-09-25,NKE,2026-09-25 10:50:00-04:00,breakout ignored: SPY/QQQ not both above their VWAP
+2026-09-25,NKE,2026-09-25 10:55:00-04:00,breakout ignored: SPY/QQQ not both above their VWAP
+2026-09-25,NKE,2026-09-25 11:00:00-04:00,extended: entry 35.78 is more than 0.5 x range above OR high
+2026-09-25,MSFT,2026-09-25 10:30:00-04:00,breakout ignored: SPY/QQQ not both above their VWAP
+2026-09-25,MSFT,2026-09-25 10:35:00-04:00,breakout ignored: SPY/QQQ not both above their VWAP
+2026-09-25,MSFT,2026-09-25 10:40:00-04:00,breakout ignored: SPY/QQQ not both above their VWAP
+2026-09-25,MSFT,2026-09-25 10:45:00-04:00,breakout ignored: SPY/QQQ not both above their VWAP
+2026-09-25,MSFT,2026-09-25 10:50:00-04:00,breakout ignored: SPY/QQQ not both above their VWAP
+2026-09-25,MSFT,2026-09-25 10:55:00-04:00,breakout ignored: SPY/QQQ not both above their VWAP
+2026-09-25,ARM,2026-09-25 09:55:00-04:00,reward/risk to prior-day high 326.00 is 0.41 < 2.0
+2026-09-29,BA,2026-09-29 09:50:00-04:00,breakout ignored: SPY/QQQ not both above their VWAP
+2026-09-29,BA,2026-09-29 10:00:00-04:00,breakout ignored: SPY/QQQ not both above their VWAP
+2026-09-29,BA,2026-09-29 10:05:00-04:00,breakout ignored: SPY/QQQ not both above their VWAP
+2026-09-29,BA,2026-09-29 10:10:00-04:00,breakout ignored: SPY/QQQ not both above their VWAP
+2026-09-29,BA,2026-09-29 10:15:00-04:00,breakout ignored: SPY/QQQ not both above their VWAP
+2026-09-29,BA,2026-09-29 10:20:00-04:00,breakout ignored: SPY/QQQ not both above their VWAP
+2026-09-29,BA,2026-09-29 10:30:00-04:00,breakout ignored: SPY/QQQ not both above their VWAP
+2026-09-29,BA,2026-09-29 10:45:00-04:00,breakout ignored: SPY/QQQ not both above their VWAP
+2026-10-01,TLT,2026-10-01 10:40:00-04:00,breakout ignored: SPY/QQQ not both above their VWAP
+2026-10-01,TLT,2026-10-01 10:45:00-04:00,breakout ignored: SPY/QQQ not both above their VWAP
+2026-10-01,TLT,2026-10-01 10:50:00-04:00,breakout ignored: SPY/QQQ not both above their VWAP
+2026-10-01,TLT,2026-10-01 10:55:00-04:00,breakout ignored: SPY/QQQ not both above their VWAP
+2026-10-01,TLT,2026-10-01 11:00:00-04:00,breakout ignored: SPY/QQQ not both above their VWAP
+2026-10-07,SMH,2026-10-07 10:20:00-04:00,breakout ignored: SPY/QQQ not both above their VWAP
+2026-10-07,SMH,2026-10-07 10:25:00-04:00,breakout ignored: SPY/QQQ not both above their VWAP
+2026-10-07,SMH,2026-10-07 10:30:00-04:00,breakout ignored: SPY/QQQ not both above their VWAP
+2026-10-07,SMH,2026-10-07 10:35:00-04:00,breakout ignored: SPY/QQQ not both above their VWAP
+2026-10-07,SMH,2026-10-07 10:40:00-04:00,breakout ignored: SPY/QQQ not both above their VWAP
+2026-10-07,SMH,2026-10-07 10:45:00-04:00,breakout ignored: SPY/QQQ not both above their VWAP
+2026-10-08,JPM,2026-10-08 09:50:00-04:00,breakout ignored: SPY/QQQ not both above their VWAP
+2026-10-08,JPM,2026-10-08 09:55:00-04:00,breakout ignored: SPY/QQQ not both above their VWAP
+2026-10-08,JPM,2026-10-08 10:00:00-04:00,breakout ignored: SPY/QQQ not both above their VWAP
