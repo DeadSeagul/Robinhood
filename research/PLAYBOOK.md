@@ -57,6 +57,27 @@ I re-ran the simulation with one trade using about $90 of premium, and allowed c
 - **Worst single trade was about −$43 to −$45**, even with a −35% stop, because prices are only checked every 5 minutes and can jump past the stop.
 - **Small sample and a flat-volatility model.** Real results will likely be worse. Two or three bad trades in a row could cut the account in half.
 
+## Popular "guru" rules, tested (`folklore_tests.py`)
+On 2026-10-08 the user shared a Reddit list of day-trading strategies. I tested the ones that can be checked with price data, on the same 60 sessions. All values are $/share; |t| < 2 means indistinguishable from noise.
+
+| Rule | SPY | QQQ | Verdict |
+|---|---|---|---|
+| ORB only **with** the 1H 100-EMA trend | −$0.04 (n=28) | +$0.02 (n=20) | No help. On SPY, trades *against* the trend did better (+$0.53, n=16, t=1.6), the opposite of the claim, and still noise |
+| "9:45 reversal": fade the first 15 minutes | −$0.31 | −$0.02 | No edge, slightly negative |
+| "First hour trend lock" until the close | +$0.13 | $0.00 | No edge |
+| Stop-hunt reversal at prior-day high/low | −$0.23 (n=19) | −$0.46 (n=14) | Fading failed breaks lost money. The breaks kept going more often than not |
+| "Broken parabolic" short after 4+ green 5-min bars | +$0.01 | −$0.19 | No edge |
+
+The rest can't be tested with our data:
+- **Needs order-book or tape data we don't have:** Level 2 bids, dark-pool prints, "market maker refill zones."
+- **Wrong or made up:**
+  - "80% of earnings moves fade": research finds the opposite, post-earnings drift.
+  - "Merger arb above the deal price is a free short": a price above the offer usually means the market expects a higher bid.
+  - "Options chain spoofing": spoofing is illegal market manipulation, not a signal.
+- **Real but not tradable on demand:** max-pain pinning near expiry is real but small; gamma squeezes can't be predicted.
+
+**Conclusion:** none of these beat the plain 5-min ORB. No changes to the rules.
+
 ## Trading rules (autonomous mode)
 On 2026-10-07 the user authorized Claude to **place options orders without per-trade approval**, and to **use the whole account** per trade. These are the limits:
 
