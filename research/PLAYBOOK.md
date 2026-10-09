@@ -45,6 +45,14 @@ The 5-minute ORB was the best variant. Longer opening ranges were worse.
 | QQQ 1DTE, TP +100% / SL −50% | 41% | +$0.62 | +$36 |
 
 - Filters I tried (trade only in the direction vs prior close; only narrow opening ranges) made results **worse**.
+- **By weekday** (re-run 2026-10-09 on 2026-07-17 → 2026-10-08, QQQ, TP +100% / SL −35%; 11–12 trades per weekday, so every cell is noise):
+
+  | | Mon | Tue | Wed | Thu | Fri | Total |
+  |---|---|---|---|---|---|---|
+  | 0DTE, total $ | +25 | −19 | −3 | −7 | −5 | **−10** |
+  | 1DTE, total $ | +28 | −22 | +20 | 0 | +2 | **+29** |
+
+  Fridays weren't worse than other days. The clearer pattern is that same-day contracts did worse than next-day ones overall. The model also understates Friday's problem: Friday's next expiry is Monday, and the weekend makes those contracts more expensive. Under a $20 cap that pushes the strike far out of the money. On 2026-10-09 the Monday puts under $0.20 were $19 out of the money and traded fewer than 1,000 contracts, so they failed the volume filter.
 - The "noise area" momentum rule **lost money** in this window (30% win rate on SPY and QQQ).
 - Prior-day levels: on the first touch, prior-day **lows broke ~80% of the time**. Prior-day highs and closes held about 40% of the time.
 
@@ -81,7 +89,8 @@ The rest can't be tested with our data:
 ## Trading rules (autonomous mode)
 On 2026-10-07 the user authorized Claude to **place options orders without per-trade approval**. On 2026-10-08 the user **sized down to $20 per trade** (1 contract, ask ≤ $0.20; a −35% stop costs about $7). These are the limits:
 
-1. **Underlying: QQQ only.** Prefer contracts expiring the next trading day (1DTE); same-day (0DTE) is OK.
+1. **Underlying: QQQ only. Monday–Thursday only; no trading on Fridays** (user decision, 2026-10-09).
+   - **Next-day (1DTE) contracts only. No same-day (0DTE) contracts.** If no next-day contract passes the filters below, there is no trade that day.
 2. **Contract:**
    - the nearest-to-the-money strike with ask ≤ $0.20 (1 contract ≤ $20)
    - bid/ask spread ≤ $0.03
