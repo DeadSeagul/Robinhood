@@ -1,6 +1,6 @@
 # Options Day-Trading Playbook
 
-Account: Robinhood **Agentic** (••••2243), ~$92 as of 2026-10-07 close of trading.
+Account: Robinhood **Agentic** (••••2243), $60.71 as of 2026-10-09 (started at $100).
 Instruments: QQQ options first (plus liquid stocks in play). Sizing: **max $20 premium per trade** (user sized down on 2026-10-08; was the full account).
 
 ## What the research says
@@ -118,3 +118,6 @@ On 2026-10-07 the user authorized Claude to **place options orders without per-t
 | 2026-10-07 | SPY shares (fractional, $95) | $777.62 | $777.45 | −$0.02 | Midday test trade |
 | 2026-10-07 | SPY 10/7 $779 call ×1 | $0.17 | $0.09 | −$8.00 (+fees) | 2:07pm entry after Fed minutes; no follow-through, time decay |
 | 2026-10-08 | QQQ 10/9 $745 put ×1 (5-min ORB short, autonomous) | $0.69 | $0.45 | −$24.00 (+fees) | 9:50 bar closed $752.42 below OR low $753.11; QQQ snapped back into the range within 3 min (failed breakdown) and broke the OR high by 10:21. Broker-side stop filled 10:19. Lesson: a signal that is already back inside the range at entry time is a warning sign. |
+| 2026-10-09 | QQQ 10/9 $740 put ×1 (5-min ORB short, autonomous, $20 size) | $0.20 | $0.13 | −$7.00 (−$7.09 with fees) | OR 751.31–752.86 (narrow, $1.55). 9:40 bar closed $749.38 below the OR low; still below at entry. The 10/12 puts ≤ $0.20 traded < 1,000 contracts, so I used the 0DTE $740 put (delta −0.07). First order at $0.19 didn't fill; re-priced once to $0.20. QQQ never got back inside the range, but it went sideways ($748.6–749.7). The put lost 35% in 14 minutes from time decay and falling implied volatility alone, and the broker stop filled at 9:59. Lesson below. |
+
+**Lesson from 2026-10-09.** A $0.20 same-day option that is $9 out of the money needs QQQ to keep moving right away. If QQQ just stalls, time decay and falling volatility take about 1¢ a minute in the first half hour, so the −35% stop (7¢) is hit in roughly 15 minutes even when the signal hasn't failed. My backtest assumed flat volatility, so it didn't capture this; expect real 0DTE results to be worse than `options_sim.py` shows. Tally so far: 3 option trades, all losses (2 of them under the autonomous rules); account $100 → $60.71.
