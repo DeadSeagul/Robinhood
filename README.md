@@ -5,6 +5,7 @@ A modular Python system that scans, backtests and paper-trades an opening-range-
 - Design, research, API choices and first results: [`docs/SYSTEM_DESIGN.md`](docs/SYSTEM_DESIGN.md)
 - Latest backtest report: [`reports/backtest_report.md`](reports/backtest_report.md); open `reports/dashboard.html` in a browser for the interactive version
 - Earlier exploratory research (SPY/QQQ ORB, options simulations, tested "guru" rules): [`research/PLAYBOOK.md`](research/PLAYBOOK.md)
+- Practice trades on past charts, scored without money: [`research/REPLAY.md`](research/REPLAY.md)
 
 **Current verdict:** no tested variant passes the validation screen (≥100 trades, PF ≥ 1.2, t ≥ 2, DD < 5%). **Do not trade it live.**
 
@@ -30,9 +31,10 @@ touch KILL_SWITCH                                            # flatten everythin
 ```
 daytrader/        the application (config, data, indicators, scanner, strategy, risk, engine,
                   broker/, backtest, live paper trader, analytics, dashboard, journal)
-tests/            22 tests: indicators, sizing, state machine, fill model, no-look-ahead,
-                  mode guards, Alpaca adapter, paper-trader replay, kill switch, reconnects
+tests/            28 tests: indicators, sizing, state machine, fill model, no-look-ahead,
+                  mode guards, Alpaca adapter, paper-trader replay, kill switch, reconnects,
+                  chart-replay scoring and no-look-ahead
 reports/          output of the latest backtest run
-research/         exploratory scripts and the options playbook from earlier sessions
+research/         exploratory scripts, the options playbook, chart-replay drills and their journal
 docs/             system design and test log
 ```
