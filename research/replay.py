@@ -39,6 +39,8 @@ FIELDS = ["id", "symbol", "date", "time", "last", "side", "stop", "target", "min
 SLIP_BPS = 1.0  # per side
 DEFAULT_STOP, DEFAULT_TARGET, DEFAULT_MINUTES = 0.0025, 0.005, 60  # brackets used to score passes
 INDEX_ETFS = {"QQQ", "SPY"}
+# Sessions I watched or traded live: I already know how they went, so they can't be drills.
+SEEN_LIVE = {"2026-10-07", "2026-10-08", "2026-10-09", "2026-10-12", "2026-10-13"}
 BAR = pd.Timedelta(minutes=5)
 
 
@@ -209,7 +211,7 @@ def deal(args) -> None:
     syms = [args.symbol] if args.symbol else sorted(p.name.split("_")[0] for p in DATA.glob("*_5m.json"))
     if not syms:
         sys.exit(f"No data in {DATA}. Run: research/fetch_data.sh {DATA} QQQ SPY NVDA ...")
-    used = set(j.date.astype(str))
+    used = set(j.date.astype(str)) | SEEN_LIVE
     cache = {s: load_sessions(s) for s in syms}
     free = [(s, d) for s in syms for d in sorted(cache[s])[6:] if str(d) not in used]
     if not free:

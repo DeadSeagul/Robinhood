@@ -26,6 +26,8 @@ python3 -I research/replay.py stats
 | Batch | Drills | Calls | Win rate | Avg R | Mirror-image avg R | Skill vs coin flip | Passes: default long / short |
 |---|---|---|---|---|---|---|---|
 | 1 (2026-10-12) | 10 | 5 | 0% | −1.06 | +0.86 | −0.96R/call (t = −3.5, n = 5) | −0.36R / −0.19R |
+| 2 (2026-10-13) | 10 | 6 | 50% | +0.41 | −0.18 | +0.29R/call (t = 0.6, n = 6) | +1.17R / −1.08R |
+| **All** | **20** | **11** | **27%** | **−0.26** | **+0.29** | **−0.28R/call (t = −0.8): no skill shown yet** | +0.32R / −0.58R |
 
 ## Lessons and hypotheses
 
@@ -47,3 +49,21 @@ python3 -I research/replay.py stats
   - `extended-into-level`: after a big bar into a prior-day level, the move reverses more often than it continues.
   - `retest-entry`: waiting for a pullback to the broken level beats entering right on the breakout close.
   - Midday (11:30–14:30) targets set at the day's high or low are too far; about 1.5R is more realistic.
+
+**Batch 2 (drills 11–20)**, using stops beyond real chart levels:
+- **Stops beyond structure helped.** All three wins had stops past a real level:
+  - drill 12: a retest of yesterday's high
+  - drill 13: a range break
+  - drill 18: a base with lower highs
+
+  Drill 12 went 0.8R against me before hitting its target; the old tight default stop would have been knocked out (−1.08R).
+- **Entering at an extreme after a long run lost in both directions.**
+  - Drill 14 faded a stretched trend day at a round number (−1.1R).
+  - Drill 15 bought the day's high after a midday grind (−1.0R).
+
+  So `extended-into-level` is not a fade signal on trend days. The better answer to "stretched" is to pass, not to trade against it. This revises the batch 1 hypothesis.
+- **What worked:**
+  - range breaks that weren't stretched yet (2 of 2, +2.6R)
+  - the retest entry (1 of 1, +2.05R)
+- **Passes cost upside this batch.** In 3 of the 4 passes, price rallied, and a default long would have made +1.9R each. Two of those had readable signs: a tight morning flag at the high (drill 17), and a failed breakdown that reclaimed the opening-range low (drill 20). Hypothesis to tag: `tight-flag-am` (morning flag right at the day's high, before 10:30) and `failed-break-reclaim`.
+- **Running total:** 11 calls, −2.9R. The skill measure is −0.28R per call (t = −0.8), so no edge is shown yet in either direction. It needs about 30 calls before it means anything.
