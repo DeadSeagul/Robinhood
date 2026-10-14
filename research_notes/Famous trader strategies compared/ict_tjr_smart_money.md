@@ -319,7 +319,6 @@ No audited, broker-statement-verified, or regulator-filed performance record was
   - Trustpilot showed about 3.4/5 from 978 reviews at the time of the search. — [Trustpilot (AU mirror)](https://au.trustpilot.com/review/oneofonefunding.com?page=8)
   - The founding claim (2023, TJR as founder) comes from a third-party listing. — [TradeLocker](https://tradelocker.com/hub/prop-firms/1of1-funding)
 - [3P-DESC] Net worth figures range from $1–5M to "$20M+," the latter a self-claim per one site. They come from low-quality aggregator sites that repeat each other and are unreliable. — e.g., [Millionaire Script](https://millionairescript.com/tjr-tyler-riches-biography/), [Nanofilm Technology](https://nanofilmtechnology.com/celebrities/tjr-net-worth-the-22-year-old-who-claimed-to-make-1-million-a-month/)
-- [3P-DESC] No Bloomberg, WSJ, or Business Insider coverage of TJR was found in searches. — search results ([search summary context](https://beststockstrategy.com/tjr-trades-net-worth/))
 
 **Prop-firm context**
 - [3P-VERIFY] The CFTC's fraud suit against prop firm My Forex Funds was dismissed in May 2025 on the CFTC's procedural failings, not the merits, and the court ordered the CFTC to pay about $3.1M in expenses. — [Today's General Counsel](https://todaysgeneralcounsel.com/?p=96462)
@@ -337,6 +336,7 @@ No audited, broker-statement-verified, or regulator-filed performance record was
 ### Gaps
 - Official Robbins World Cup 2024 standings for Huddleston were not found. The 2016 "$10k to $1M" claim could not be traced to a primary record.
 - NFA BASIC and CFTC/SEC enforcement databases were not queried directly; their search interfaces are JavaScript apps that were not accessible. No CFTC/NFA/SEC action against either person surfaced in web searches. The late-1990s ICT–CFTC "conflict" remains unverified.
+- Searches found no reputable-press (Bloomberg, WSJ, Business Insider) coverage of TJR or Huddleston. The coverage found is blogs, prop-firm review sites, a Gate.com/Chain News reprint, and YouTube commentary.
 - No court records or lawsuits involving TJR, 1of1 Funding, or Huddleston were found. BBB complaint details were not independently retrieved.
 - No response from TJR to the March 2026 allegations was found. Absence in search results is not proof that none exists.
 - 1of1 Funding's closure date, reason, and payout history are unverified beyond the TrustedProp listing and the exposé's claim.
