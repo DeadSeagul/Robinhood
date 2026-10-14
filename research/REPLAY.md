@@ -27,7 +27,8 @@ python3 -I research/replay.py stats
 |---|---|---|---|---|---|---|---|
 | 1 (2026-10-12) | 10 | 5 | 0% | −1.06 | +0.86 | −0.96R/call (t = −3.5, n = 5) | −0.36R / −0.19R |
 | 2 (2026-10-13) | 10 | 6 | 50% | +0.41 | −0.18 | +0.29R/call (t = 0.6, n = 6) | +1.17R / −1.08R |
-| **All** | **20** | **11** | **27%** | **−0.26** | **+0.29** | **−0.28R/call (t = −0.8): no skill shown yet** | +0.32R / −0.58R |
+| 3 (2026-10-14) | 10 | 7 | 43% | +0.25 | +0.09 | +0.08R/call (t = 0.2, n = 7) | −0.82R / +1.14R |
+| **All** | **30** | **18** | **33%** | **−0.06** | **+0.22** | **−0.14R/call (t = −0.5): no skill shown yet** | +0.03R / −0.15R |
 
 ## Lessons and hypotheses
 
@@ -67,3 +68,21 @@ python3 -I research/replay.py stats
   - the retest entry (1 of 1, +2.05R)
 - **Passes cost upside this batch.** In 3 of the 4 passes, price rallied, and a default long would have made +1.9R each. Two of those had readable signs: a tight morning flag at the high (drill 17), and a failed breakdown that reclaimed the opening-range low (drill 20). Hypothesis to tag: `tight-flag-am` (morning flag right at the day's high, before 10:30) and `failed-break-reclaim`.
 - **Running total:** 11 calls, −2.9R. The skill measure is −0.28R per call (t = −0.8), so no edge is shown yet in either direction. It needs about 30 calls before it means anything.
+
+**Batch 3 (drills 21–30).**
+- **Time of day is the clearest split so far.**
+
+  | Calls placed | Count | Avg R | Total |
+  |---|---|---|---|
+  | Before 11:30 | 10 | +0.29 | +2.9R |
+  | 11:30–14:30 | 8 | −0.51 | −4.1R |
+
+  The morning edge isn't directional skill, though. Before 11:30, my calls beat their mirror images by only +0.09R (t = 0.2). Morning moves are simply big enough for a 1.5–2R bracket to pay in either direction, which fits the playbook research: the first hour moves 2–3× more than 1:30–2:30pm. Working rule for drills: **no new entries after 11:30.**
+- **The setups that keep working:**
+  - `retest-entry` 2 of 2 (+3.5R)
+  - `failed-break-reclaim` 1 of 1 (+1.4R)
+  - `tight-flag-am` 1 of 1 (+1.7R)
+
+  The afternoon version of the flag (`tight-flag-pm`, light volume) lost (−1.1R). `range-break` is now 2 of 3; the loss was a morning short on 0.4× volume. `trend-continuation` is 1 of 5 (−2.75R), and four of those five were midday.
+- **Passes:** 2 of 3 missed shorts that a default bracket would have won (+1.9R, +1.35R), both on afternoon fades. No clear rule yet.
+- **Running total:** 18 calls, −1.1R, skill −0.14R per call (t = −0.5). Still no proven edge. The setup tags are where the signal will show up if there is one. Each needs about 30 drills before I'd trust it.
