@@ -1,6 +1,6 @@
 # Options Day-Trading Playbook
 
-Account: Robinhood **Agentic** (••••2243), $60.71 as of 2026-10-09 (started at $100).
+Account: Robinhood **Agentic** (••••2243), $54.62 as of 2026-10-15 (started at $100).
 Instruments: QQQ options first (plus liquid stocks in play). Sizing: **max $20 premium per trade** (user sized down on 2026-10-08; was the full account).
 
 ## What the research says
@@ -133,6 +133,8 @@ On 2026-10-07 the user authorized Claude to **place options orders without per-t
 | 2026-10-13 | **No trade** (Tue). Call signal skipped by the volume filter | – | – | $0 | Gap down −0.85% (open 739.53). OR 738.84–740.58; 9:35 bar closed $742.84 above the OR high. The next-day (10/14) calls ≤ $0.20 were the $757 ($0.20, 202 volume), $758 ($0.16, 106) and $760 ($0.10, 246), so no trade. **Shadow trade:** the $757 call bought at $0.20 peaked at $0.24 and hit the $0.13 stop at ~10:15, so about −$7. QQQ topped at $744.20 and drifted back to $741. That's the third ORB signal in a row that stalled right after the break (10/9, 10/12, 10/13). The volume filter has saved ~$14 over two days. |
 | 2026-10-14 | **No trade** (Wed). Call signal skipped by the volume filter | – | – | $0 | Gap down −0.7%. OR 736.90–739.03; 9:45 bar closed $740.18 above the OR high. The next-day (10/15) calls ≤ $0.20 were the $754 ($0.20, 164 volume) and $755 ($0.17, 335), so no trade. **Shadow trade:** the $754 call bought at $0.20 at 9:50 fell through the $0.13 stop by 9:55 (the bar low was $0.11), so about −$7 to −$9. QQQ reversed from $740.19 to $735.90 within 10 minutes, back through the OR low, and drifted to $734 by 11:20. |
 
-**Live ORB scorecard, 2026-10-08 → 10-14: 5 signals, 5 failed or stalled** (10/8 put, 10/9 put, 10/12 put, 10/13 call, 10/14 call). Two were real trades (−$31 total) and three were shadow trades (≈ −$21 avoided). Five is a small sample, but nothing in the live data supports this signal right now.
+| 2026-10-15 | QQQ 10/16 $740 call ×1 (5-min ORB long, autonomous, first trade under the next-day-only rule) | $0.17 | $0.11 | −$6.00 (−$6.09 with fees) | Fourth straight down day (−2.0% on 10/14, −1.2% gap down). OR 717.01–719.42 (normal size). 9:35 bar closed $720.47 above the OR high; QQQ $720.10 at entry. The $740 call was the nearest strike ≤ $0.20 with > 1,000 volume ($0.18 ask, 3,445 volume; the $739 was $0.21). QQQ topped near $720.9, fell back inside the range by 9:47 and the broker stop filled at 9:49:55. Stop for the day after the first loss. |
+
+**Live ORB scorecard, 2026-10-08 → 10-15: 6 signals, 6 failed or stalled** (10/8 put, 10/9 put, 10/12 put, 10/13 call, 10/14 call, 10/15 call). Three were real trades (−$37 total) and three were shadow trades (≈ −$21 avoided). Six is still a small sample, but every live signal so far has reversed or stalled within 15 minutes. The account ($54.62) is now one stopped trade away from the $50 floor.
 
 **Lesson from 2026-10-09.** A $0.20 same-day option that is $9 out of the money needs QQQ to keep moving right away. If QQQ just stalls, time decay and falling volatility take about 1¢ a minute in the first half hour, so the −35% stop (7¢) is hit in roughly 15 minutes even when the signal hasn't failed. My backtest assumed flat volatility, so it didn't capture this; expect real 0DTE results to be worse than `options_sim.py` shows. Tally so far: 3 option trades, all losses (2 of them under the autonomous rules); account $100 → $60.71.
