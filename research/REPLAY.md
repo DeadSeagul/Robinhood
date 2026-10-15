@@ -28,7 +28,8 @@ python3 -I research/replay.py stats
 | 1 (2026-10-12) | 10 | 5 | 0% | −1.06 | +0.86 | −0.96R/call (t = −3.5, n = 5) | −0.36R / −0.19R |
 | 2 (2026-10-13) | 10 | 6 | 50% | +0.41 | −0.18 | +0.29R/call (t = 0.6, n = 6) | +1.17R / −1.08R |
 | 3 (2026-10-14) | 10 | 7 | 43% | +0.25 | +0.09 | +0.08R/call (t = 0.2, n = 7) | −0.82R / +1.14R |
-| **All** | **30** | **18** | **33%** | **−0.06** | **+0.22** | **−0.14R/call (t = −0.5): no skill shown yet** | +0.03R / −0.15R |
+| 4 (2026-10-15) | 10 | 2 | 50% | +0.35 | −0.60 | +0.47R/call (t = 0.5, n = 2) | −0.39R / −0.23R |
+| **All** | **40** | **20** | **35%** | **−0.02** | **+0.14** | **−0.08R/call (t = −0.3): no skill shown yet** | −0.14R / −0.19R |
 
 ## Lessons and hypotheses
 
@@ -86,3 +87,13 @@ python3 -I research/replay.py stats
   The afternoon version of the flag (`tight-flag-pm`, light volume) lost (−1.1R). `range-break` is now 2 of 3; the loss was a morning short on 0.4× volume. `trend-continuation` is 1 of 5 (−2.75R), and four of those five were midday.
 - **Passes:** 2 of 3 missed shorts that a default bracket would have won (+1.9R, +1.35R), both on afternoon fades. No clear rule yet.
 - **Running total:** 18 calls, −1.1R, skill −0.14R per call (t = −0.5). Still no proven edge. The setup tags are where the signal will show up if there is one. Each needs about 30 drills before I'd trust it.
+
+**Batch 4 (drills 31–40).** The first batch run by the daily paper-trading task.
+- **Eight passes, two calls.** Four drills fell after 11:30 and were passed under the cutoff rule. On average a default trade would have lost on the passes in both directions (long −0.39R, short −0.23R), so passing was right overall.
+- **The win:** `vwap-reclaim-hl` (drill 32, AMD, +1.77R). A gap-up flushed on the first bar, then made higher lows back over VWAP. The stop went under the last higher low. The default tight stop would have lost −1.08R on the same trade, so stops beyond structure helped for the third batch running.
+- **The loss:** `gap-fail-lower-high` (drill 37, SPY, −1.07R). I shorted a bounce under VWAP while it was still rising, before any rejection. SPY reclaimed VWAP and closed near the day's high. Working rule: **fading at a level needs a rejection bar first** (a close back away from the level), never an entry mid-bounce.
+- **Missed winners:**
+  - Drill 33 (META): a 50-minute flag above the prior-day high, before 11:00, broke up (default long +1.92R). That is the third morning flag at the highs that resolved upward (drill 17, `tight-flag-am`, drill 33). If the pattern keeps holding, I'll start taking it.
+  - Drill 35 (TSLA): I passed a clean opening-range break and retest because yesterday's high was less than 1R away. The stock trended to 341.6 and never came near a stop under the retest low. The default bracket lost only because its stop was too tight.
+  - Drill 36 (NVDA): a gap-up that failed below its opening-range low, then put in a lower high at that low (default short +1.92R). This is the same idea that lost in drill 37, but here the rejection had already happened. Both drills stay tagged `gap-fail-lower-high` for now.
+- **Running total:** 20 calls, −0.4R, skill −0.08R per call (t = −0.3). Still no edge either way. `retest-entry`, `range-break`, `tight-flag-am` and the reclaim setups are the only tags with positive results, and none has more than three samples.
