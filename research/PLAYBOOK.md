@@ -1,5 +1,7 @@
 # Options Day-Trading Playbook
 
+> **Status (2026-10-15): live trading is paused at the user's request. Paper trades only.** No real orders are placed. Every trading day the 5-minute ORB signal is scored after the close of its 90-minute window by [`paper_orb.py`](paper_orb.py), on QQQ shares and on the playbook option contract, and logged in [`paper_trades.csv`](paper_trades.csv). Practice drills continue in [`REPLAY.md`](REPLAY.md). Real-money trading resumes only if the user asks.
+
 Account: Robinhood **Agentic** (••••2243), $54.62 as of 2026-10-15 (started at $100).
 Instruments: QQQ options first (plus liquid stocks in play). Sizing: **max $20 premium per trade** (user sized down on 2026-10-08; was the full account).
 
@@ -86,7 +88,7 @@ The rest can't be tested with our data:
 
 **Conclusion:** none of these beat the plain 5-min ORB. No changes to the rules.
 
-## Trading rules (autonomous mode)
+## Trading rules (autonomous mode; paused since 2026-10-15, kept for paper scoring)
 On 2026-10-07 the user authorized Claude to **place options orders without per-trade approval**. On 2026-10-08 the user **sized down to $20 per trade** (1 contract, ask ≤ $0.20; a −35% stop costs about $7). These are the limits:
 
 1. **Underlying: QQQ only. Monday–Thursday only; no trading on Fridays** (user decision, 2026-10-09).
