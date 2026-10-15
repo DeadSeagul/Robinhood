@@ -153,6 +153,12 @@ def score(args) -> None:
             row["opt_ret"] = round(row["opt_exit"] / row["opt_entry"] - 1, 3)
             row["opt_pnl"] = round((row["opt_exit"] - row["opt_entry"]) * 100 - FEES, 2)
     log = read_log()
+    prev = log[log.date == args.date]
+    if len(prev):  # re-scoring a day keeps what is already known (live/shadow source, option result, note)
+        old = prev.iloc[0].to_dict()
+        for k in ("source", "contract", "opt_entry", "opt_exit", "opt_reason", "opt_ret", "opt_pnl", "note"):
+            if (pd.isna(row.get(k)) or row.get(k) in (None, "", "paper")) and pd.notna(old.get(k)):
+                row[k] = old[k]
     log = pd.concat([log[log.date != args.date], pd.DataFrame([row])], ignore_index=True).sort_values("date")
     log.reindex(columns=FIELDS).to_csv(LOG, index=False)
     print(", ".join(f"{k}={v}" for k, v in row.items() if pd.notna(v) and v != ""))
