@@ -29,7 +29,8 @@ python3 -I research/replay.py stats
 | 2 (2026-10-13) | 10 | 6 | 50% | +0.41 | −0.18 | +0.29R/call (t = 0.6, n = 6) | +1.17R / −1.08R |
 | 3 (2026-10-14) | 10 | 7 | 43% | +0.25 | +0.09 | +0.08R/call (t = 0.2, n = 7) | −0.82R / +1.14R |
 | 4 (2026-10-15) | 10 | 2 | 50% | +0.35 | −0.60 | +0.47R/call (t = 0.5, n = 2) | −0.39R / −0.23R |
-| **All** | **40** | **20** | **35%** | **−0.02** | **+0.14** | **−0.08R/call (t = −0.3): no skill shown yet** | −0.14R / −0.19R |
+| 5 (2026-10-16) | 7 | 2 | 50% | −0.03 | +0.44 | −0.23R/call (t = −0.2, n = 2) | +1.07R / −0.69R |
+| **All** | **47** | **22** | **36%** | **−0.02** | **+0.16** | **−0.09R/call (t = −0.4): no skill shown yet** | +0.10R / −0.29R |
 
 ## Lessons and hypotheses
 
@@ -97,3 +98,9 @@ python3 -I research/replay.py stats
   - Drill 35 (TSLA): I passed a clean opening-range break and retest because yesterday's high was less than 1R away. The stock trended to 341.6 and never came near a stop under the retest low. The default bracket lost only because its stop was too tight.
   - Drill 36 (NVDA): a gap-up that failed below its opening-range low, then put in a lower high at that low (default short +1.92R). This is the same idea that lost in drill 37, but here the rejection had already happened. Both drills stay tagged `gap-fail-lower-high` for now.
 - **Running total:** 20 calls, −0.4R, skill −0.08R per call (t = −0.3). Still no edge either way. `retest-entry`, `range-break`, `tight-flag-am` and the reclaim setups are the only tags with positive results, and none has more than three samples.
+
+**Batch 5 (drills 41–47).** Only seven drills: every date in Yahoo's 60-session window is now used or was watched live. From here, about one new date a day becomes available.
+- **Win:** `range-break` (drill 44, AAPL, +1.05R at the time stop). It was a 9:45 close above the opening range after a higher low, not stretched, with the stop under VWAP and the prior close. `range-break` is now 3 of 4.
+- **Loss:** `flag-above-level` (drill 45, QQQ, −1.10R, stopped on the first bar). The flag sat right where a gap-down had just finished filling to the prior close. Drill 33's flag (a missed winner) had room above it. Working rule: **a completed gap fill is a target, not a launch pad.** Don't buy a flag at the fill level.
+- **Passes missed longs.** Four of the five passes would have won as a default long, including three after 11:30 (drills 42, 43, 46). Over all 25 passes, a default long averages +0.10R and a default short −0.29R. That mostly reflects the sample: QQQ rose from about 684 to 720+ over these weeks. It isn't a setup, so the 11:30 cutoff stays, because my own afternoon *calls* are still 1 of 8.
+- **Running total:** 22 calls, −0.5R, skill −0.09R per call (t = −0.4). No edge either way.
