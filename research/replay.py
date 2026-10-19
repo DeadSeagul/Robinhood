@@ -11,10 +11,11 @@ Usage:
   python3 -I research/replay.py reveal 7
   python3 -I research/replay.py stats
 
-Data: Yahoo chart JSON in data_cache/yahoo (refresh with research/fetch_data.sh data_cache/yahoo QQQ SPY ...).
-Only the last ~60 sessions are available, and each date is used for one drill so that a reveal on one
-symbol cannot leak the market's direction into a later drill. Never open the data files while a drill
-is open: the point is to decide without seeing the future.
+Data: Yahoo chart JSON in data_cache/yahoo (refresh with research/fetch_data.sh data_cache/yahoo QQQ SPY ...)
+covers only the last ~60 sessions. Older days come from Robinhood, saved blind into data_cache/archive by
+research/archive_add.py (the procedure is in REPLAY.md); where both have a date, the archive's bars are used.
+Each date is used for one drill so that a reveal on one symbol cannot leak the market's direction into a
+later drill. Never open the data files while a drill is open: the point is to decide without seeing the future.
 """
 from __future__ import annotations
 
@@ -33,6 +34,8 @@ sys.path.insert(0, str(HERE))
 
 JOURNAL = HERE / "replay_journal.csv"
 DATA = HERE.parent / "data_cache" / "yahoo"
+ARCHIVE = HERE.parent / "data_cache" / "archive"
+TRAINING_CUTOFF = "2026-07-01"  # dates before this fall inside my training data, so a faint memory of them is possible
 FIELDS = ["id", "symbol", "date", "time", "last", "side", "stop", "target", "minutes", "tag", "note",
           "entry", "exit", "exit_time", "reason", "r", "r_flip", "r_long_def", "r_short_def",
           "mfe_r", "mae_r", "opt_ret", "dealt_at", "decided_at", "revealed_at"]
@@ -44,13 +47,19 @@ SEEN_LIVE = {"2026-10-07", "2026-10-08", "2026-10-09", "2026-10-12", "2026-10-13
 BAR = pd.Timedelta(minutes=5)
 
 
-def load_sessions(sym: str, data: Path = DATA) -> dict:
-    raw = json.loads((data / f"{sym}_5m.json").read_text())["chart"]["result"][0]
-    q = raw["indicators"]["quote"][0]
-    df = pd.DataFrame({k: q[k] for k in ("open", "high", "low", "close", "volume")},
-                      index=pd.to_datetime(raw["timestamp"], unit="s", utc=True).tz_convert("America/New_York"))
-    df = df.dropna().between_time("09:30", "15:55")
-    return {d: g for d, g in df.groupby(df.index.date) if len(g) >= 70}
+def load_sessions(sym: str, data: Path = DATA, archive: Path = ARCHIVE) -> dict:
+    """Full regular sessions by date, from Yahoo and the Robinhood archive (the archive wins where both have a date)."""
+    days = {}
+    for path in (data / f"{sym}_5m.json", archive / f"{sym}_5m.json"):
+        if not path.exists():
+            continue
+        raw = json.loads(path.read_text())["chart"]["result"][0]
+        q = raw["indicators"]["quote"][0]
+        df = pd.DataFrame({k: q[k] for k in ("open", "high", "low", "close", "volume")},
+                          index=pd.to_datetime(raw["timestamp"], unit="s", utc=True).tz_convert("America/New_York"))
+        df = df.dropna().between_time("09:30", "15:55")
+        days.update({d: g for d, g in df.groupby(df.index.date) if len(g) >= 70})
+    return dict(sorted(days.items()))
 
 
 def now() -> str:
@@ -208,14 +217,15 @@ def deal(args) -> None:
     if len(open_rows):
         sys.exit(f"Drill #{int(open_rows.id.iloc[0])} is still open: decide and reveal it first.")
     rng = random.Random(args.seed)
-    syms = [args.symbol] if args.symbol else sorted(p.name.split("_")[0] for p in DATA.glob("*_5m.json"))
+    syms = [args.symbol] if args.symbol else sorted({p.name.split("_")[0] for d in (DATA, ARCHIVE)
+                                                     for p in d.glob("*_5m.json")})
     if not syms:
-        sys.exit(f"No data in {DATA}. Run: research/fetch_data.sh {DATA} QQQ SPY NVDA ...")
+        sys.exit(f"No data in {DATA} or {ARCHIVE}. Run: research/fetch_data.sh {DATA} QQQ SPY NVDA ...")
     used = set(j.date.astype(str)) | SEEN_LIVE
     cache = {s: load_sessions(s) for s in syms}
     free = [(s, d) for s in syms for d in sorted(cache[s])[6:] if str(d) not in used]
     if not free:
-        sys.exit("Every available date has been used. Refresh the data to get new days.")
+        sys.exit("Every available date has been used. Add older days to the archive (see REPLAY.md).")
     sym, d = rng.choice(free)
     u = rng.random()
     lo, hi = ("09:40", "11:25") if u < 0.6 else ("11:30", "14:25") if u < 0.9 else ("14:30", "15:05")
@@ -337,7 +347,8 @@ def stats(args) -> None:
         bucket = pd.cut(pd.to_datetime(calls.time, format="%H:%M").dt.hour * 60
                         + pd.to_datetime(calls.time, format="%H:%M").dt.minute,
                         [0, 690, 870, 1000], labels=["open-11:30", "11:30-14:30", "after 14:30"])
-        for name, grp in [("tag", calls.tag.fillna("-")), ("time", bucket)]:
+        era = np.where(calls.date.astype(str) < TRAINING_CUTOFF, f"before {TRAINING_CUTOFF}", f"{TRAINING_CUTOFF} on")
+        for name, grp in [("tag", calls.tag.fillna("-")), ("time", bucket), ("period", pd.Series(era, index=calls.index))]:
             tab = calls.groupby(grp, observed=True).r.agg(["count", "mean", "sum"])
             print(f"\nBy {name}:\n" + tab.round(2).to_string())
     if len(passes):

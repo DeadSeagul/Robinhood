@@ -21,6 +21,24 @@ python3 -I research/replay.py stats
 - **Passes are scored too.** Each pass is checked against a default bracket (0.25% stop, 0.50% target, 60 minutes) in both directions, to see whether passing avoided losses or missed winners.
 - **What would change the live rules:** a setup tag that holds up over at least 30 drills with t ≥ 2, and then agrees with the daily shadow trades on live QQQ signals. Until then, lessons here are hypotheses.
 
+## Older days: the Robinhood archive
+
+Yahoo serves only the last ~60 sessions of 5-minute bars. By 2026-10-19 every one of those dates had been used or watched live, and each new trading day is watched live for the paper trade. So since 2026-10-19 the drills also draw on older days from Robinhood (`get_equity_historicals`, 5-minute, regular hours), stored in `data_cache/archive/`.
+
+**How the bars stay blind.**
+- Claude Code saves a large tool result straight to a file, and only a 2 KB preview reaches the context.
+- A helper agent makes the calls and runs `python3 -I research/archive_add.py <saved file> --delete` on each result. That merges the bars into `data_cache/archive/<SYMBOL>_5m.json` (Yahoo's chart format) and prints only dates and counts.
+- Nobody reads the bars, and I never see the helper's previews.
+- Where Yahoo and the archive both have a date, the archive's bars are used.
+
+**Coverage:** 2026-01-02 → 2026-07-31 for QQQ, SPY, NVDA, TSLA, AAPL, AMD, META, MSFT, AMZN and PLTR.
+- I left 2025 out on purpose. It falls inside my training data, and I might recognise the big days, such as the April 2025 selloff.
+- January–June 2026 is close to my training cutoff. `stats` reports results before and after 2026-07-01 separately so any memory effect would show.
+
+**Rebuilding.** `data_cache/` isn't committed, so a fresh container starts with an empty archive. Check with `python3 -I research/archive_add.py --summary`. If it's empty, give a helper agent this job:
+
+> Load `mcp__Robinhood__get_equity_historicals` with ToolSearch. For each of QQQ SPY NVDA TSLA AAPL AMD META MSFT AMZN PLTR and each window 2026-01-02→02-14, 02-14→04-01, 04-01→05-16, 05-16→07-01, 07-01→08-01 (00:00Z boundaries), call it with interval "5minute", bounds "regular". Each result is saved to a file: run `python3 -I research/archive_add.py <path> --delete` on it. Split a window in half if it's rejected for too many bars. Never retype data that comes back inline, and never open, print or summarise the saved files. Finish with `archive_add.py --summary` and report only that output.
+
 ## Scoreboard
 
 | Batch | Drills | Calls | Win rate | Avg R | Mirror-image avg R | Skill vs coin flip | Passes: default long / short |
