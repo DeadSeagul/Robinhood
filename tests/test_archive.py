@@ -66,3 +66,13 @@ def test_archive_wins_over_yahoo_and_both_sources_combine(tmp_path):
     days = replay.load_sessions("QQQ", data=yahoo, archive=arc)
     assert [str(d) for d in days] == ["2026-03-10", "2026-03-11"]
     assert days[pd.Timestamp("2026-03-11").date()].close.eq(700.0).all()
+
+
+def test_wrapped_results_parse_and_empty_files_are_kept(tmp_path):
+    a = rh_file(tmp_path, "a.txt", "2026-03-10", 600.0)
+    wrapped = tmp_path / "w.txt"
+    wrapped.write_text(json.dumps([{"type": "text", "text": a.read_text()}]))
+    assert list(archive_add.parse(wrapped)) == ["QQQ"]
+    blank = tmp_path / "blank.txt"
+    blank.write_text(json.dumps({"data": {"results": [{"symbol": "QQQ", "bars": []}]}}))
+    assert archive_add.merge([blank], delete=True, archive=tmp_path / "archive") == 1 and blank.exists()

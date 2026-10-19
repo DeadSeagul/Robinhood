@@ -21,11 +21,27 @@ ARCHIVE = Path(__file__).resolve().parent.parent / "data_cache" / "archive"
 COLS = ["open", "high", "low", "close", "volume"]
 
 
+def load_result(path: Path) -> dict:
+    """The tool's JSON, whether saved raw or wrapped (a list of {"type": "text", "text": ...} blocks, or a preamble)."""
+    text = path.read_text()
+    try:
+        doc = json.loads(text)
+    except json.JSONDecodeError:
+        doc = json.loads(text[text.index("{"):text.rindex("}") + 1])
+    if isinstance(doc, list):
+        doc = next(json.loads(b["text"]) for b in doc if isinstance(b, dict) and "data" in b.get("text", ""))
+    return doc
+
+
 def parse(path: Path) -> dict[str, pd.DataFrame]:
     """Robinhood get_equity_historicals JSON -> {symbol: bars indexed by UTC start time}."""
     out = {}
-    for res in json.loads(path.read_text())["data"]["results"]:
-        bars = [b for b in res["bars"] if not b.get("interpolated") and b.get("session", "reg") == "reg"]
+    for res in load_result(path)["data"]["results"]:
+        raw = res.get("bars") or []
+        bars = [b for b in raw if not b.get("interpolated") and b.get("session", "reg") == "reg"]
+        if len(bars) < len(raw):
+            print(f"{path.name}: {res.get('symbol')}: dropped {len(raw) - len(bars)} of {len(raw)} bars "
+                  f"(sessions {sorted({str(b.get('session')) for b in raw})})")
         if not bars:
             continue
         df = pd.DataFrame({"open": [float(b["open_price"]) for b in bars], "high": [float(b["high_price"]) for b in bars],
@@ -62,17 +78,24 @@ def describe(sym: str, df: pd.DataFrame) -> str:
     return f"{sym}: {len(full)} full sessions, {full.index[0]} to {full.index[-1]}"
 
 
-def merge(paths: list[Path], delete: bool = False, archive: Path = ARCHIVE) -> None:
+def merge(paths: list[Path], delete: bool = False, archive: Path = ARCHIVE) -> int:
+    """Merge each file into the archive; returns how many files added nothing (those are never deleted)."""
+    empty = 0
     for p in paths:
-        for sym, new in parse(p).items():
+        parsed = parse(p)
+        for sym, new in parsed.items():
             dest = archive / f"{sym}_5m.json"
             old = read(dest)
             df = pd.concat([old, new])
             df = df[~df.index.duplicated(keep="last")].sort_index()
             write(dest, df)
             print(f"{p.name}: +{len(df) - len(old)} bars -> {describe(sym, df)}")
-        if delete:
+        if not parsed:
+            empty += 1
+            print(f"{p.name}: NO BARS FOUND - kept the file for inspection")
+        elif delete:
             p.unlink()
+    return empty
 
 
 def summary(archive: Path = ARCHIVE) -> None:
@@ -89,10 +112,11 @@ def main(argv=None) -> None:
     p.add_argument("--delete", action="store_true")
     p.add_argument("--summary", action="store_true")
     args = p.parse_args(argv)
-    if args.files:
-        merge(args.files, args.delete)
+    empty = merge(args.files, args.delete) if args.files else 0
     if args.summary or not args.files:
         summary()
+    if empty:
+        raise SystemExit(f"{empty} file(s) had no bars.")
 
 
 if __name__ == "__main__":

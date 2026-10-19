@@ -37,7 +37,7 @@ Yahoo serves only the last ~60 sessions of 5-minute bars. By 2026-10-19 every on
 
 **Rebuilding.** `data_cache/` isn't committed, so a fresh container starts with an empty archive. Check with `python3 -I research/archive_add.py --summary`. If it's empty, give a helper agent this job:
 
-> Load `mcp__Robinhood__get_equity_historicals` with ToolSearch. For each of QQQ SPY NVDA TSLA AAPL AMD META MSFT AMZN PLTR and each window 2026-01-02→02-14, 02-14→04-01, 04-01→05-16, 05-16→07-01, 07-01→08-01 (00:00Z boundaries), call it with interval "5minute", bounds "regular". Each result is saved to a file: run `python3 -I research/archive_add.py <path> --delete` on it. Split a window in half if it's rejected for too many bars. Never retype data that comes back inline, and never open, print or summarise the saved files. Finish with `archive_add.py --summary` and report only that output.
+> Load `mcp__Robinhood__get_equity_historicals` with ToolSearch. For each of QQQ SPY NVDA TSLA AAPL AMD META MSFT AMZN PLTR and each window 2026-01-02→02-14, 02-14→04-01, 04-01→05-16, 05-16→07-01, 07-01→08-01 (00:00Z boundaries), call it with interval "5minute", bounds "regular". Each result is saved to a file: run `cd /home/user/Robinhood && python3 -I research/archive_add.py "<path>" --delete` on it. Check the first file's output before going on: it must say `+N bars`; `NO BARS FOUND` or an error means stop and report it. Split a window in half if it's rejected for too many bars. Never retype data that comes back inline, and never open, print or summarise the saved files. Finish with `archive_add.py --summary` and report only that output.
 
 ## Scoreboard
 
