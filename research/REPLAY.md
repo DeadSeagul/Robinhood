@@ -31,13 +31,14 @@ Yahoo serves only the last ~60 sessions of 5-minute bars. By 2026-10-19 every on
 - Nobody reads the bars, and I never see the helper's previews.
 - Where Yahoo and the archive both have a date, the archive's bars are used.
 
-**Coverage:** 2026-01-02 → 2026-07-31 for QQQ, SPY, NVDA, TSLA, AAPL, AMD, META, MSFT, AMZN and PLTR.
+**Coverage:** 2026-02-23 → 2026-07-31 for QQQ, SPY, NVDA, TSLA, AAPL, AMD, META, MSFT, AMZN and PLTR. That's 111 sessions each, and 104 fresh drill dates once warm-up days and used dates are taken out.
+- Robinhood keeps about eight months of real 5-minute history. Before 2026-02-23 it returns flat, zero-volume filler marked `interpolated`, which `archive_add.py` drops. The start date will move forward over time.
 - I left 2025 out on purpose. It falls inside my training data, and I might recognise the big days, such as the April 2025 selloff.
-- January–June 2026 is close to my training cutoff. `stats` reports results before and after 2026-07-01 separately so any memory effect would show.
+- February–June 2026 is close to my training cutoff. `stats` reports results before and after 2026-07-01 separately so any memory effect would show.
 
 **Rebuilding.** `data_cache/` isn't committed, so a fresh container starts with an empty archive. Check with `python3 -I research/archive_add.py --summary`. If it's empty, give a helper agent this job:
 
-> Load `mcp__Robinhood__get_equity_historicals` with ToolSearch. For each of QQQ SPY NVDA TSLA AAPL AMD META MSFT AMZN PLTR and each window 2026-01-02→02-14, 02-14→04-01, 04-01→05-16, 05-16→07-01, 07-01→08-01 (00:00Z boundaries), call it with interval "5minute", bounds "regular". Each result is saved to a file: run `cd /home/user/Robinhood && python3 -I research/archive_add.py "<path>" --delete` on it. Check the first file's output before going on: it must say `+N bars`; `NO BARS FOUND` or an error means stop and report it. Split a window in half if it's rejected for too many bars. Never retype data that comes back inline, and never open, print or summarise the saved files. Finish with `archive_add.py --summary` and report only that output.
+> Load `mcp__Robinhood__get_equity_historicals` with ToolSearch. For each of QQQ SPY NVDA TSLA AAPL AMD META MSFT AMZN PLTR and each window 2026-02-14→04-01, 04-01→05-16, 05-16→07-01, 07-01→08-01 (00:00Z boundaries), call it with interval "5minute", bounds "regular". Each result is saved to a file: run `cd /home/user/Robinhood && python3 -I research/archive_add.py "<path>" --delete` on it. Check the first file's output before going on: it must say `+N bars`; `NO BARS FOUND` or an error means stop and report it. Split a window in half if it's rejected for too many bars. Never retype data that comes back inline, and never open, print or summarise the saved files. Finish with `archive_add.py --summary` and report only that output.
 
 ## Scoreboard
 
@@ -48,7 +49,8 @@ Yahoo serves only the last ~60 sessions of 5-minute bars. By 2026-10-19 every on
 | 3 (2026-10-14) | 10 | 7 | 43% | +0.25 | +0.09 | +0.08R/call (t = 0.2, n = 7) | −0.82R / +1.14R |
 | 4 (2026-10-15) | 10 | 2 | 50% | +0.35 | −0.60 | +0.47R/call (t = 0.5, n = 2) | −0.39R / −0.23R |
 | 5 (2026-10-16) | 7 | 2 | 50% | −0.03 | +0.44 | −0.23R/call (t = −0.2, n = 2) | +1.07R / −0.69R |
-| **All** | **47** | **22** | **36%** | **−0.02** | **+0.16** | **−0.09R/call (t = −0.4): no skill shown yet** | +0.10R / −0.29R |
+| 6 (2026-10-19, archive days) | 10 | 2 | 50% | +0.28 | +0.36 | −0.04R/call (t = −0.0, n = 2) | +0.14R / −0.19R |
+| **All** | **57** | **24** | **38%** | **+0.00** | **+0.18** | **−0.09R/call (t = −0.4): no skill shown yet** | +0.11R / −0.26R |
 
 ## Lessons and hypotheses
 
@@ -122,3 +124,13 @@ Yahoo serves only the last ~60 sessions of 5-minute bars. By 2026-10-19 every on
 - **Loss:** `flag-above-level` (drill 45, QQQ, −1.10R, stopped on the first bar). The flag sat right where a gap-down had just finished filling to the prior close. Drill 33's flag (a missed winner) had room above it. Working rule: **a completed gap fill is a target, not a launch pad.** Don't buy a flag at the fill level.
 - **Passes missed longs.** Four of the five passes would have won as a default long, including three after 11:30 (drills 42, 43, 46). Over all 25 passes, a default long averages +0.10R and a default short −0.29R. That mostly reflects the sample: QQQ rose from about 684 to 720+ over these weeks. It isn't a setup, so the 11:30 cutoff stays, because my own afternoon *calls* are still 1 of 8.
 - **Running total:** 22 calls, −0.5R, skill −0.09R per call (t = −0.4). No edge either way.
+
+**Batch 6 (drills 48–57).** The first batch from the Robinhood archive, with dates from April to July 2026.
+- **The win:** `range-break` (drill 54, QQQ, +1.62R). A short after the opening-range low broke and price made lower highs under VWAP, with the target at the prior-day low.
+- **The loss:** `range-break` (drill 56, AAPL, −1.06R). I bought a pullback after a break of the opening-range high before the pullback had reached the level. `range-break` is now 4 of 6.
+- **Entering before the level is tested has now lost twice:** drill 37 shorted a bounce still rising, and drill 56 bought a pullback still falling. Working rule: **wait for price to touch the level and for a bar to close back in the trade's direction.** That's the `retest-entry` rule, which is 2 of 2.
+- **Two pass patterns have now been wrong twice each:**
+  - *Passing a fresh break of the opening-range high because it's "stretched into the prior-day high."* Drills 35 and 55 (both TSLA) ran straight through that high, and a default long would have made +1.92R both times. The better answer is to wait for the first pullback, not to pass the whole move.
+  - *Passing a failed gap-up once the lower high is in.* Drills 36 and 48 kept falling (default short +1.92R each). The only `gap-fail-lower-high` call that lost (drill 37) went in before the rejection.
+- **Afternoon passes are fine on average.** Over 16 passes after 11:30, a default long averaged −0.01R and a default short −0.40R. Morning passes cost more: a default long averaged +0.22R over 17 of them.
+- **Running total:** 24 calls, +0.1R, skill −0.09R per call (t = −0.4). Still no edge either way.
