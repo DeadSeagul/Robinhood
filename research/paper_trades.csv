@@ -6,3 +6,4 @@ date,source,signal_time,side,or_high,or_low,entry_time,share_entry,share_exit,sh
 2026-10-14,shadow,09:50,long,739.03,736.9,09:50,740.19,736.9,stop,-1.0,10/15 754C,0.2,0.13,stop,-0.35,-7.09,skipped: volume < 1000; bar low 0.11
 2026-10-15,live,09:40,long,719.42,717.01,09:40,720.47,717.01,stop,-1.0,10/16 740C,0.17,0.11,stop,-0.353,-6.09,last live trade; paper only from here
 2026-10-16,paper,09:40,short,725.94,724.02,09:40,722.43,717.75,time,1.333,10/19 695P,0.17,0.111,stop,-0.347,-5.99,"Friday: live playbook skips Fridays (Mon-Thu only), scored for the record. 695P = nearest put with 09:40 open <= 0.19 (700P opened 0.24). Volume not checkable after the fact."
+2026-10-19,paper,10:00,short,720.22,718.36,10:00,717.97,720.22,stop,-1.0,10/20 690P,0.2,0.13,stop,-0.35,-7.09,"690P = nearest put with 10:00 open <= 0.19 (695P opened 0.29, 700P 0.48: puts rich today). Volume not checkable after the fact."
