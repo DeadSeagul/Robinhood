@@ -43,7 +43,7 @@ SLIP_BPS = 1.0  # per side
 DEFAULT_STOP, DEFAULT_TARGET, DEFAULT_MINUTES = 0.0025, 0.005, 60  # brackets used to score passes
 INDEX_ETFS = {"QQQ", "SPY"}
 # Sessions I watched or traded live: I already know how they went, so they can't be drills.
-SEEN_LIVE = {"2026-10-07", "2026-10-08", "2026-10-09", "2026-10-12", "2026-10-13", "2026-10-14", "2026-10-15", "2026-10-16", "2026-10-19"}
+SEEN_LIVE = {"2026-10-07", "2026-10-08", "2026-10-09", "2026-10-12", "2026-10-13", "2026-10-14", "2026-10-15", "2026-10-16", "2026-10-19", "2026-10-20"}
 BAR = pd.Timedelta(minutes=5)
 
 

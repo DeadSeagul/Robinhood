@@ -50,7 +50,8 @@ Yahoo serves only the last ~60 sessions of 5-minute bars. By 2026-10-19 every on
 | 4 (2026-10-15) | 10 | 2 | 50% | +0.35 | −0.60 | +0.47R/call (t = 0.5, n = 2) | −0.39R / −0.23R |
 | 5 (2026-10-16) | 7 | 2 | 50% | −0.03 | +0.44 | −0.23R/call (t = −0.2, n = 2) | +1.07R / −0.69R |
 | 6 (2026-10-19, archive days) | 10 | 2 | 50% | +0.28 | +0.36 | −0.04R/call (t = −0.0, n = 2) | +0.14R / −0.19R |
-| **All** | **57** | **24** | **38%** | **+0.00** | **+0.18** | **−0.09R/call (t = −0.4): no skill shown yet** | +0.11R / −0.26R |
+| 7 (2026-10-20, archive days) | 10 | 4 | 50% | −0.32 | +0.26 | −0.29R/call (t = −0.6, n = 4) | −0.58R / +0.36R |
+| **All** | **67** | **28** | **39%** | **−0.04** | **+0.19** | **−0.12R/call (t = −0.5): no skill shown yet** | +0.01R / −0.17R |
 
 ## Lessons and hypotheses
 
@@ -134,3 +135,9 @@ Yahoo serves only the last ~60 sessions of 5-minute bars. By 2026-10-19 every on
   - *Passing a failed gap-up once the lower high is in.* Drills 36 and 48 kept falling (default short +1.92R each). The only `gap-fail-lower-high` call that lost (drill 37) went in before the rejection.
 - **Afternoon passes are fine on average.** Over 16 passes after 11:30, a default long averaged −0.01R and a default short −0.40R. Morning passes cost more: a default long averaged +0.22R over 17 of them.
 - **Running total:** 24 calls, +0.1R, skill −0.09R per call (t = −0.4). Still no edge either way.
+
+**Batch 7 (drills 58–67).**
+- **The batch 6 idea failed as soon as I traded it.** Batch 6 called `gap-fail-lower-high` a missed opportunity, based on two passes that would have won. Taken as real calls, it's now 0 of 3 (−2.83R): drill 62 timed out at −0.73R, and in drill 66 AMD held the prior-day high and ran +5%. **A pattern found by looking back at passes is hindsight.** Only calls count, so I've dropped it from the candidate setups.
+- **Chasing a stretched breakout still doesn't pay.** Drill 64 tested "breaks keep running" (from drills 35 and 55) on TSLA. It scratched (+0.05R), and TSLA later gave back the whole move. `trend-continuation` is 1 of 6.
+- **What held up:** `failed-break-reclaim` 2 of 2 (+1.82R; drill 67 PLTR, +0.44R at the time stop). `range-break` 4 of 6 (+3.12R) and `retest-entry` 2 of 2 (+3.47R). Those three tags hold 8 of my 11 winning calls. They're the only setups I'd keep testing, and each still needs about 30 calls.
+- **Running total:** 28 calls, −1.2R, skill −0.12R per call (t = −0.5). Still no edge either way.
