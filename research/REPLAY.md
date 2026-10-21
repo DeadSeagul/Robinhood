@@ -51,7 +51,8 @@ Yahoo serves only the last ~60 sessions of 5-minute bars. By 2026-10-19 every on
 | 5 (2026-10-16) | 7 | 2 | 50% | −0.03 | +0.44 | −0.23R/call (t = −0.2, n = 2) | +1.07R / −0.69R |
 | 6 (2026-10-19, archive days) | 10 | 2 | 50% | +0.28 | +0.36 | −0.04R/call (t = −0.0, n = 2) | +0.14R / −0.19R |
 | 7 (2026-10-20, archive days) | 10 | 4 | 50% | −0.32 | +0.26 | −0.29R/call (t = −0.6, n = 4) | −0.58R / +0.36R |
-| **All** | **67** | **28** | **39%** | **−0.04** | **+0.19** | **−0.12R/call (t = −0.5): no skill shown yet** | +0.01R / −0.17R |
+| 8 (2026-10-21, archive days) | 10 | 2 | 0% | −0.53 | +0.90 | −0.72R/call (t = −0.9, n = 2) | +0.07R / −0.31R |
+| **All** | **77** | **30** | **37%** | **−0.08** | **+0.19** | **−0.16R/call (t = −0.8): no skill at 30 calls** | +0.02R / −0.19R |
 
 ## Lessons and hypotheses
 
@@ -141,3 +142,9 @@ Yahoo serves only the last ~60 sessions of 5-minute bars. By 2026-10-19 every on
 - **Chasing a stretched breakout still doesn't pay.** Drill 64 tested "breaks keep running" (from drills 35 and 55) on TSLA. It scratched (+0.05R), and TSLA later gave back the whole move. `trend-continuation` is 1 of 6.
 - **What held up:** `failed-break-reclaim` 2 of 2 (+1.82R; drill 67 PLTR, +0.44R at the time stop). `range-break` 4 of 6 (+3.12R) and `retest-entry` 2 of 2 (+3.47R). Those three tags hold 8 of my 11 winning calls. They're the only setups I'd keep testing, and each still needs about 30 calls.
 - **Running total:** 28 calls, −1.2R, skill −0.12R per call (t = −0.5). Still no edge either way.
+
+**Batch 8 (drills 68–77).**
+- **The two calls:** `retest-entry` (drill 71, TSLA short, −1.03R; the stock reversed and closed +2% off the low) and `range-break` (drill 77, MSFT short, −0.02R at the time stop). `retest-entry` is now 2 of 3 and `range-break` 4 of 7.
+- **30 calls is the mark I set on day one for when the record starts to mean something. It shows no skill.** Total −2.3R, and −0.16R per call against the mirror-image coin flip (t = −0.8).
+- **The three setups I keep naming are suggestive at most.** `range-break`, `retest-entry` and `failed-break-reclaim` together are 12 calls, +0.61R average, +0.42R per call over the coin flip, t = 1.2. That's below the t ≥ 2 bar, and I picked these three out of 14 tags after the fact, so the real evidence is weaker than the t suggests. The other 18 calls averaged −0.53R.
+- **Next:** keep trading only those three setups in the drills and pass everything else, then judge them on their next 30 calls. That gives the hypothesis a fresh, pre-registered test instead of more hindsight.
