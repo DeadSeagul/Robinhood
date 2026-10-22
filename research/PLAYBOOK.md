@@ -123,6 +123,24 @@ On 2026-10-07 the user authorized Claude to **place options orders without per-t
 - VWAP as the day goes; round numbers ($5/$10 increments on SPY/QQQ)
 - Economic calendar and big-cap earnings that day
 
+## Pre-market news read (from 2026-10-23)
+
+On 2026-10-22 the user asked me to read the news each morning, since it shows how the market may act that day. The schedule:
+
+| When | What happens |
+|---|---|
+| 8:50am ET, weekdays | I read the overnight and pre-market news: futures and why they're moving, the economic calendar, Fed speakers, oil and yields, and earnings from the biggest QQQ holdings. |
+| Before 9:30 | I log a call in [`news_log.py`](news_log.py): a **bias** (up, down or none) for QQQ from the 9:30 open to 12:00, and **vol** (normal or high). The log is committed before the open. |
+| 1:17pm | The daily task scores the call. |
+
+How the news read is kept honest:
+- **The gap doesn't count.** Futures already show it, so the bias is about where QQQ goes after the open.
+- **Late reads are excluded.** A read logged at or after 9:30 ET is marked late and never scored.
+- **No forced calls.** "None" is allowed when the news doesn't clearly point one way.
+- **The ORB rules don't change because of the news.** Instead, `news_log.py stats` splits ORB results into signals that agree with the news bias, signals against it, and days with no bias. If agreeing signals beat disagreeing ones over a real sample (20+ calls, and better than a coin flip), the bias becomes a filter.
+- **Dates get checked.** Search tools can mislabel them. On 10/22, a summary put that day's selloff on 10/21. The read checks headline claims against prices.
+- **The news isn't used in the blind practice drills.** Past headlines give away how the day went.
+
 ## Trade log
 | Date | Trade | Entry | Exit | P/L | Note |
 |---|---|---|---|---|---|
