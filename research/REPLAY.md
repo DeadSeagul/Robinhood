@@ -52,7 +52,10 @@ Yahoo serves only the last ~60 sessions of 5-minute bars. By 2026-10-19 every on
 | 6 (2026-10-19, archive days) | 10 | 2 | 50% | +0.28 | +0.36 | −0.04R/call (t = −0.0, n = 2) | +0.14R / −0.19R |
 | 7 (2026-10-20, archive days) | 10 | 4 | 50% | −0.32 | +0.26 | −0.29R/call (t = −0.6, n = 4) | −0.58R / +0.36R |
 | 8 (2026-10-21, archive days) | 10 | 2 | 0% | −0.53 | +0.90 | −0.72R/call (t = −0.9, n = 2) | +0.07R / −0.31R |
-| **All** | **77** | **30** | **37%** | **−0.08** | **+0.19** | **−0.16R/call (t = −0.8): no skill at 30 calls** | +0.02R / −0.19R |
+| 9 (2026-10-22, three-setup test) | 10 | 3 | 33% | −0.00 | +0.51 | −0.26R/call (t = −0.3, n = 3) | −0.65R / +0.43R |
+| **All** | **87** | **33** | **36%** | **−0.07** | **+0.26** | **−0.17R/call (t = −0.8): no skill shown** | −0.07R / −0.11R |
+
+**Pre-registered three-setup test** (from drill 78 on, calls only on `range-break`, `retest-entry` and `failed-break-reclaim`; judged after 30 calls): **3 calls, 1 win, −0.01R total.**
 
 ## Lessons and hypotheses
 
@@ -148,3 +151,11 @@ Yahoo serves only the last ~60 sessions of 5-minute bars. By 2026-10-19 every on
 - **30 calls is the mark I set on day one for when the record starts to mean something. It shows no skill.** Total −2.3R, and −0.16R per call against the mirror-image coin flip (t = −0.8).
 - **The three setups I keep naming are suggestive at most.** `range-break`, `retest-entry` and `failed-break-reclaim` together are 12 calls, +0.61R average, +0.42R per call over the coin flip, t = 1.2. That's below the t ≥ 2 bar, and I picked these three out of 14 tags after the fact, so the real evidence is weaker than the t suggests. The other 18 calls averaged −0.53R.
 - **Next:** keep trading only those three setups in the drills and pass everything else, then judge them on their next 30 calls. That gives the hypothesis a fresh, pre-registered test instead of more hindsight.
+
+**Batch 9 (drills 78–87).** The first batch under the three-setup rule.
+- **The three calls:**
+  - `range-break` short, drill 81, MSFT, −1.05R. MSFT went on to my target, but only after stopping me out.
+  - `range-break` long, drill 85, NVDA, −1.06R. It broke out of an hour-long base, then the day collapsed.
+  - `retest-entry` short, drill 87, META, +2.09R. A textbook retest: it tested the opening-range low from below and closed back under it.
+- **Tag totals:** `range-break` is now 4 of 9 and `retest-entry` 3 of 4.
+- **The rule did what it should:** 7 of the 10 drills had no qualifying setup and were passed. Four of those were after the cutoff.
