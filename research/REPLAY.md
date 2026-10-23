@@ -53,9 +53,10 @@ Yahoo serves only the last ~60 sessions of 5-minute bars. By 2026-10-19 every on
 | 7 (2026-10-20, archive days) | 10 | 4 | 50% | −0.32 | +0.26 | −0.29R/call (t = −0.6, n = 4) | −0.58R / +0.36R |
 | 8 (2026-10-21, archive days) | 10 | 2 | 0% | −0.53 | +0.90 | −0.72R/call (t = −0.9, n = 2) | +0.07R / −0.31R |
 | 9 (2026-10-22, three-setup test) | 10 | 3 | 33% | −0.00 | +0.51 | −0.26R/call (t = −0.3, n = 3) | −0.65R / +0.43R |
-| **All** | **87** | **33** | **36%** | **−0.07** | **+0.26** | **−0.17R/call (t = −0.8): no skill shown** | −0.07R / −0.11R |
+| 10 (2026-10-23, three-setup test) | 10 | 1 | 100% | +0.34 | −1.05 | +0.70R/call (n = 1) | −0.47R / +0.37R |
+| **All** | **97** | **34** | **38%** | **−0.06** | **+0.23** | **−0.14R/call (t = −0.7): no skill shown** | −0.13R / −0.04R |
 
-**Pre-registered three-setup test** (from drill 78 on, calls only on `range-break`, `retest-entry` and `failed-break-reclaim`; judged after 30 calls): **3 calls, 1 win, −0.01R total.**
+**Pre-registered three-setup test** (from drill 78 on, calls only on `range-break`, `retest-entry` and `failed-break-reclaim`; judged after 30 calls): **4 calls, 2 wins, +0.33R total, skill −0.02R per call.**
 
 ## Lessons and hypotheses
 
@@ -159,3 +160,7 @@ Yahoo serves only the last ~60 sessions of 5-minute bars. By 2026-10-19 every on
   - `retest-entry` short, drill 87, META, +2.09R. A textbook retest: it tested the opening-range low from below and closed back under it.
 - **Tag totals:** `range-break` is now 4 of 9 and `retest-entry` 3 of 4.
 - **The rule did what it should:** 7 of the 10 drills had no qualifying setup and were passed. Four of those were after the cutoff.
+
+**Batch 10 (drills 88–97).**
+- **The one call:** `failed-break-reclaim` (drill 92, SPY long, +0.34R at the time stop, after reaching +1.13R). A gap-down broke the opening-range low, then closed back above it and VWAP twice. `failed-break-reclaim` is now 3 of 3.
+- **The rest:** 9 passes. Six fell after the cutoff or at it. The others were a stretched chase, an unconfirmed retest and a mid-range chop. A default short would have won on 4 of the 9 passes (drills 89, 90, 93, 96), but passes aren't calls, and batch 7 showed that pass patterns are hindsight.
