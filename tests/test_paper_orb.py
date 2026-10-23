@@ -35,3 +35,18 @@ def test_option_exits_at_the_stop_before_the_target_in_the_same_bar():
     d = day([[0.20, 0.50, 0.10, 0.30]])
     res = paper.option_trade(d, d.index[0])
     assert res["opt_reason"] == "stop"
+
+
+def test_qqq_stop_ignores_a_premium_drop_while_qqq_holds():
+    opt = day([[0.19, 0.19, 0.11, 0.12], [0.12, 0.14, 0.11, 0.13]] + [[0.13, 0.15, 0.12, 0.14]] * 20)
+    und = day([[704.4, 704.6, 703.8, 704.0]] * 22)  # long, share stop 701.37: never touched
+    old = paper.option_trade(opt, opt.index[0])
+    new = paper.option_trade(opt, opt.index[0], und=und, side=1, und_stop=701.37)
+    assert old["opt_reason"] == "stop" and new["opt_reason"] == "time"
+
+
+def test_qqq_stop_sells_at_the_option_bar_low_when_qqq_breaks_the_stop():
+    opt = day([[0.19, 0.21, 0.17, 0.18], [0.18, 0.18, 0.09, 0.10]])
+    und = day([[712.2, 712.6, 711.5, 712.1], [712.1, 714.9, 712.0, 714.8]])  # short, share stop 714.74
+    res = paper.option_trade(opt, opt.index[0], und=und, side=-1, und_stop=714.74)
+    assert res["opt_reason"] == "stop" and res["opt_exit"] == 0.09

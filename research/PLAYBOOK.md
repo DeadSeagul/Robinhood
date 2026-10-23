@@ -106,7 +106,9 @@ On 2026-10-07 the user authorized Claude to **place options orders without per-t
 5. **Exits:**
    - **Target:** sell at +100%.
    - **Trail:** once up +50%, sell if it falls back to +30%.
-   - **Stop:** sell at −35%.
+   - **Stop:** sell when **QQQ trades through the share stop**, the other side of the 9:30 opening range. Changed by the user on 2026-10-23. It used to be −35% of the premium, which kept stopping out signals that went on to win on shares.
+     - Robinhood's option stop orders trigger on the option's own price, so this stop can't be left with the broker. Live, it would need watching, or an alert on QQQ.
+     - The most a trade can lose is the premium, about $20 for one ≤ $0.20 contract.
    - **Time stop:** sell 90 minutes after entry, and by 3:30pm ET at the latest.
    - Never hold overnight.
 6. **Limits:**
@@ -159,6 +161,27 @@ How the news read is kept honest:
 
 **First paper result, 2026-10-16 (Friday; scored for the record only, since the playbook skips Fridays).** The short signal at 9:40 was right: QQQ fell from 722.43 to 717.75 by the 90-minute time stop, +1.33R on shares, and never got near the share stop at 725.94. The ≤ $0.20 option still lost. The Monday 695 put ($0.17) hit its −35% stop at 10:45, when QQQ bounced to 723.6. The 702 and 710 puts hit −35% on the same bounce. All three were back above their entry prices by 11:05–11:10. **So the −35% option stop sits much closer than the share stop.** A normal pullback inside a working trade is enough to hit it. One day isn't enough to change the rules, but the paper log tracks it: shares 1 of 7, options 0 of 7.
 
-**It happened again on 2026-10-23** (Friday, paper only). The long signal at 9:45 made +0.86R on shares by the time stop. The ≤ $0.20 Monday 732 call hit −35% at 10:15, when QQQ dipped only 0.6 below the entry; the share stop was 3 points away. Three of the 12 paper signals have won on shares (10/16, 10/22, 10/23). The option won only on 10/22, where the trailing exit locked in +30%. The other two were stopped out early, so the option stop is the leg that fails most. I'm not changing it mid-test, but I'll note it here in case a future rule change considers it.
+**It happened again on 2026-10-23** (Friday, paper only). The long signal at 9:45 made +0.86R on shares by the time stop. The ≤ $0.20 Monday 732 call hit −35% at 10:15, when QQQ dipped only 0.6 below the entry; the share stop was 3 points away. Three of the 12 paper signals have won on shares (10/16, 10/22, 10/23). The option won only on 10/22, where the trailing exit locked in +30%. The other two were stopped out early, so the option stop is the leg that fails most. The user changed the stop that same day (see the rules above).
+
+**The stop change, checked on past signals (2026-10-23).** I re-scored every past signal that still has real option bars under both stop rules, using the same simulated entries (bar open + $0.01). That's 9 of the 12. Robinhood returns only placeholder bars for the 10/8, 10/9 and 10/12 contracts.
+
+| Rule | Total, 9 signals | Wins |
+|---|---|---|
+| −35% premium stop | −$49.91 | 1 (10/22) |
+| QQQ share stop | −$49.11 | 2 (10/16 +$1.91, 10/22 +$5.61) |
+
+What changed under the QQQ stop:
+
+| Day | −35% stop | QQQ stop | Why |
+|---|---|---|---|
+| 10/16 | −$5.99 | +$1.91 | Gained, because the option survived the bounce |
+| 10/19, 10/21 | −$7.09, −$6.69 | −$5.09 each | Slightly better |
+| 10/13 | −$7.49 | −$11.09 | Worse: no QQQ stop, so the option decayed to the time stop |
+| 10/14, 10/15 | −$8.09, −$6.39 | −$12.09, −$8.09 | Worse: QQQ hit the stop later, by which time the option was worth less |
+| 10/23 | −$6.69 | −$7.09 | Worse: QQQ never hit the stop, and the call decayed anyway |
+
+So the wider stop saves the occasional winner and makes the losers bigger. On this sample the two rules are a wash.
+
+These 9 days were chosen with hindsight, so they prove nothing either way. The fair test is signals after 2026-10-23. `paper_orb.py stats` reports those separately, and `p35_*` columns keep scoring the old rule alongside for comparison.
 
 **Lesson from 2026-10-09.** A $0.20 same-day option that is $9 out of the money needs QQQ to keep moving right away. If QQQ just stalls, time decay and falling volatility take about 1¢ a minute in the first half hour, so the −35% stop (7¢) is hit in roughly 15 minutes even when the signal hasn't failed. My backtest assumed flat volatility, so it didn't capture this; expect real 0DTE results to be worse than `options_sim.py` shows. Tally so far: 3 option trades, all losses (2 of them under the autonomous rules); account $100 → $60.71.
