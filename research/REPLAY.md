@@ -54,9 +54,10 @@ Yahoo serves only the last ~60 sessions of 5-minute bars. By 2026-10-19 every on
 | 8 (2026-10-21, archive days) | 10 | 2 | 0% | −0.53 | +0.90 | −0.72R/call (t = −0.9, n = 2) | +0.07R / −0.31R |
 | 9 (2026-10-22, three-setup test) | 10 | 3 | 33% | −0.00 | +0.51 | −0.26R/call (t = −0.3, n = 3) | −0.65R / +0.43R |
 | 10 (2026-10-23, three-setup test) | 10 | 1 | 100% | +0.34 | −1.05 | +0.70R/call (n = 1) | −0.47R / +0.37R |
-| **All** | **97** | **34** | **38%** | **−0.06** | **+0.23** | **−0.14R/call (t = −0.7): no skill shown** | −0.13R / −0.04R |
+| 11 (2026-10-26, three-setup test) | 10 | 1 | 100% | +0.30 | −0.35 | +0.33R/call (n = 1) | −0.13R / −0.25R |
+| **All** | **107** | **35** | **40%** | **−0.05** | **+0.21** | **−0.13R/call (t = −0.7): no skill shown** | −0.13R / −0.07R |
 
-**Pre-registered three-setup test** (from drill 78 on, calls only on `range-break`, `retest-entry` and `failed-break-reclaim`; judged after 30 calls): **4 calls, 2 wins, +0.33R total, skill −0.02R per call.**
+**Pre-registered three-setup test** (from drill 78 on, calls only on `range-break`, `retest-entry` and `failed-break-reclaim`; judged after 30 calls): **5 calls, 3 wins, +0.63R total, skill +0.05R per call.**
 
 ## Lessons and hypotheses
 
@@ -164,3 +165,9 @@ Yahoo serves only the last ~60 sessions of 5-minute bars. By 2026-10-19 every on
 **Batch 10 (drills 88–97).**
 - **The one call:** `failed-break-reclaim` (drill 92, SPY long, +0.34R at the time stop, after reaching +1.13R). A gap-down broke the opening-range low, then closed back above it and VWAP twice. `failed-break-reclaim` is now 3 of 3.
 - **The rest:** 9 passes. Six fell after the cutoff or at it. The others were a stretched chase, an unconfirmed retest and a mid-range chop. A default short would have won on 4 of the 9 passes (drills 89, 90, 93, 96), but passes aren't calls, and batch 7 showed that pass patterns are hindsight.
+
+**Batch 11 (drills 98–107).**
+- **The one call:** `range-break` (drill 104, TSLA long, +0.30R at the time stop). A tight flag above the opening-range high broke at 10:55, with the stop under the flag low.
+- **The rest:** 9 passes. Four were after the cutoff. The others were a whipsaw at the opening-range low, two unconfirmed reclaims, and two stretched or late moves.
+- **Passes had mixed hindsight:** a default long averaged −0.13R and a default short −0.25R. The cost: drill 105 (AAPL whipsaw at the range low, then +3%) and drill 99 (afternoon) would have won as default longs.
+- **The three-setup test now reads 5 calls, +0.63R.** It's slowly accumulating, but at about one call a day it will take weeks to reach 30.
