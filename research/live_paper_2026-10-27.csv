@@ -5,3 +5,6 @@ ts_utc,event,qqq_bid,qqq_ask,opt_bid,opt_ask,note
 2026-10-27T13:46:32Z,check,716.62,716.64,0.13,0.14,"hold"
 2026-10-27T13:48:46Z,check,716.28,716.32,0.11,0.12,"hold"
 2026-10-27T13:50:58Z,check,715.14,715.18,0.09,0.10,"hold: QQQ 0.53 above stop"
+2026-10-27T13:52:13Z,check,714.77,714.79,0.09,0.10,"QQQ 1-minute bar 13:51Z low 714.56 broke the share stop 714.61 between checks (found via minute bars)"
+2026-10-27T13:51:00Z,option_exit,,,0.09,0.10,"STOP (QQQ share stop touched at 9:51 ET). Sold at the bid 0.09 (bid was 0.09 at both 13:50:58Z and 13:52:13Z). Option P/L (0.09-0.17)x100 = -$8.00, -$8.09 with $0.09 fees."
+2026-10-27T13:51:00Z,share_exit,714.61,,,,"Share stop 714.61: -3.04/share = -1.0R."
