@@ -1,3 +1,4 @@
 ts_utc,event,qqq_bid,qqq_ask,opt_bid,opt_ask,note
 2026-10-27T13:41:53Z,option_entry,,,0.16,0.17,"Real-time paper trade: ORB long (9:35 bar closed 717.89 > ORH 716.77). Bought 1x 10/28 737C at the ask 0.17 (736C asked 0.21). Option volume 21 / OI 470 at entry: fails the >1000 volume rule. Exits: QQQ <= 714.61 (share stop), bid >= 0.34 (target), trail arm bid >= 0.255 then exit bid <= 0.221, time stop 11:11:53 ET. Exits at the bid."
 2026-10-27T13:42:06Z,share_entry,717.62,717.65,,,"Shares reference: bought at the ask 717.65; stop 714.61 (risk 3.04), target 2R 723.73, time stop 11:12 ET."
+2026-10-27T13:44:22Z,check,716.93,716.95,0.13,0.14,"hold: QQQ above stop 714.61"
