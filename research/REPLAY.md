@@ -55,7 +55,8 @@ Yahoo serves only the last ~60 sessions of 5-minute bars. By 2026-10-19 every on
 | 9 (2026-10-22, three-setup test) | 10 | 3 | 33% | −0.00 | +0.51 | −0.26R/call (t = −0.3, n = 3) | −0.65R / +0.43R |
 | 10 (2026-10-23, three-setup test) | 10 | 1 | 100% | +0.34 | −1.05 | +0.70R/call (n = 1) | −0.47R / +0.37R |
 | 11 (2026-10-26, three-setup test) | 10 | 1 | 100% | +0.30 | −0.35 | +0.33R/call (n = 1) | −0.13R / −0.25R |
-| **All** | **107** | **35** | **40%** | **−0.05** | **+0.21** | **−0.13R/call (t = −0.7): no skill shown** | −0.13R / −0.07R |
+| 12 (2026-10-27, three-setup test) | 10 | 0 | – | – | – | – | −0.37R / +0.15R |
+| **All** | **117** | **35** | **40%** | **−0.05** | **+0.21** | **−0.13R/call (t = −0.7): no skill shown** | −0.16R / −0.04R |
 
 **Pre-registered three-setup test** (from drill 78 on, calls only on `range-break`, `retest-entry` and `failed-break-reclaim`; judged after 30 calls): **5 calls, 3 wins, +0.63R total, skill +0.05R per call.**
 
@@ -171,3 +172,8 @@ Yahoo serves only the last ~60 sessions of 5-minute bars. By 2026-10-19 every on
 - **The rest:** 9 passes. Four were after the cutoff. The others were a whipsaw at the opening-range low, two unconfirmed reclaims, and two stretched or late moves.
 - **Passes had mixed hindsight:** a default long averaged −0.13R and a default short −0.25R. The cost: drill 105 (AAPL whipsaw at the range low, then +3%) and drill 99 (afternoon) would have won as default longs.
 - **The three-setup test now reads 5 calls, +0.63R.** It's slowly accumulating, but at about one call a day it will take weeks to reach 30.
+
+**Batch 12 (drills 108–117).** No qualifying setup in 10 drills.
+- **Why:** four were after the cutoff, two were chop, three were unconfirmed or whipsawing at a level, and two were moves already finished. Drill 108's breakout had run through its gap fill, and drill 113's breakdown closed right on its gap fill.
+- **Drill 113 was a miss.** NVDA kept falling from the gap fill to 199. That makes the "don't trade into a completed gap fill" idea 1 of 2 (it held in drill 45).
+- **The pace is slow:** the three-setup test has 5 calls after 40 drills, about 1 per 8 drills. Reaching 30 will take roughly 25 more trading days. I'm not loosening the rules mid-test.
