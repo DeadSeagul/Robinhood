@@ -56,9 +56,10 @@ Yahoo serves only the last ~60 sessions of 5-minute bars. By 2026-10-19 every on
 | 10 (2026-10-23, three-setup test) | 10 | 1 | 100% | +0.34 | −1.05 | +0.70R/call (n = 1) | −0.47R / +0.37R |
 | 11 (2026-10-26, three-setup test) | 10 | 1 | 100% | +0.30 | −0.35 | +0.33R/call (n = 1) | −0.13R / −0.25R |
 | 12 (2026-10-27, three-setup test) | 10 | 0 | – | – | – | – | −0.37R / +0.15R |
-| **All** | **117** | **35** | **40%** | **−0.05** | **+0.21** | **−0.13R/call (t = −0.7): no skill shown** | −0.16R / −0.04R |
+| 13 (2026-10-28, three-setup test) | 10 | 2 | 0% | −1.06 | +0.42 | −0.74R/call (t = −1.0, n = 2) | +0.11R / −0.25R |
+| **All** | **127** | **37** | **38%** | **−0.10** | **+0.22** | **−0.16R/call (t = −0.9): no skill shown** | −0.13R / −0.06R |
 
-**Pre-registered three-setup test** (from drill 78 on, calls only on `range-break`, `retest-entry` and `failed-break-reclaim`; judged after 30 calls): **5 calls, 3 wins, +0.63R total, skill +0.05R per call.**
+**Pre-registered three-setup test** (from drill 78 on, calls only on `range-break`, `retest-entry` and `failed-break-reclaim`; judged after 30 calls): **7 calls, 3 wins, −1.49R total, skill −0.18R per call (t = −0.4).**
 
 ## Lessons and hypotheses
 
@@ -177,3 +178,9 @@ Yahoo serves only the last ~60 sessions of 5-minute bars. By 2026-10-19 every on
 - **Why:** four were after the cutoff, two were chop, three were unconfirmed or whipsawing at a level, and two were moves already finished. Drill 108's breakout had run through its gap fill, and drill 113's breakdown closed right on its gap fill.
 - **Drill 113 was a miss.** NVDA kept falling from the gap fill to 199. That makes the "don't trade into a completed gap fill" idea 1 of 2 (it held in drill 45).
 - **The pace is slow:** the three-setup test has 5 calls after 40 drills, about 1 per 8 drills. Reaching 30 will take roughly 25 more trading days. I'm not loosening the rules mid-test.
+
+**Batch 13 (drills 118–127).** Two `retest-entry` calls, both stopped.
+- **Drill 118, PLTR long, −1.04R.** A failed break below the opening-range low was reclaimed, and the 10:25 bar wicked through VWAP to 134.10 and closed back above. My stop sat at 134.05, just under that wick. The next bar's low was exactly 134.05, then PLTR ran to 137.88. The flipped bracket also lost, so the problem was the stop distance, not the direction. Hypothesis for after the test: give a retest stop some room beyond the wick. I'm not changing stop rules mid-test.
+- **Drill 127, SPY short, −1.08R.** On a gap-down, the 9:45 bar retested up through the opening-range low and closed back under it, a textbook retest by my definition. SPY then reversed and closed +0.5% from my entry, while the flipped bracket made +1.88R. That's the same failure as drill 85: a clean setup on a day that turned.
+- **The rest:** 8 passes. Four were after the cutoff, two were whipsaws at the opening-range low, and two were stretched moves (an AAPL breakdown and an AMD two-bar thrust through the opening-range high). AMD kept running to 548, but chasing stretched breaks has not paid (drill 64), so the pass stands.
+- **The three-setup test now reads 7 calls, 3 wins, −1.49R** (skill −0.18R per call, t = −0.4). That's noise either way at n = 7. It gets judged at 30 calls.
