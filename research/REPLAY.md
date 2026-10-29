@@ -57,9 +57,10 @@ Yahoo serves only the last ~60 sessions of 5-minute bars. By 2026-10-19 every on
 | 11 (2026-10-26, three-setup test) | 10 | 1 | 100% | +0.30 | −0.35 | +0.33R/call (n = 1) | −0.13R / −0.25R |
 | 12 (2026-10-27, three-setup test) | 10 | 0 | – | – | – | – | −0.37R / +0.15R |
 | 13 (2026-10-28, three-setup test) | 10 | 2 | 0% | −1.06 | +0.42 | −0.74R/call (t = −1.0, n = 2) | +0.11R / −0.25R |
-| **All** | **127** | **37** | **38%** | **−0.10** | **+0.22** | **−0.16R/call (t = −0.9): no skill shown** | −0.13R / −0.06R |
+| 14 (2026-10-29, three-setup test) | 10 | 2 | 100% | +0.80 | −0.77 | +0.78R/call (n = 2) | +0.31R / −0.71R |
+| **All** | **137** | **39** | **41%** | **−0.06** | **+0.17** | **−0.11R/call (t = −0.6): no skill shown** | −0.10R / −0.11R |
 
-**Pre-registered three-setup test** (from drill 78 on, calls only on `range-break`, `retest-entry` and `failed-break-reclaim`; judged after 30 calls): **7 calls, 3 wins, −1.49R total, skill −0.18R per call (t = −0.4).**
+**Pre-registered three-setup test** (from drill 78 on, calls only on `range-break`, `retest-entry` and `failed-break-reclaim`; judged after 30 calls): **9 calls, 5 wins, +0.10R total, skill +0.04R per call (t = 0.1).**
 
 ## Lessons and hypotheses
 
@@ -184,3 +185,11 @@ Yahoo serves only the last ~60 sessions of 5-minute bars. By 2026-10-19 every on
 - **Drill 127, SPY short, −1.08R.** On a gap-down, the 9:45 bar retested up through the opening-range low and closed back under it, a textbook retest by my definition. SPY then reversed and closed +0.5% from my entry, while the flipped bracket made +1.88R. That's the same failure as drill 85: a clean setup on a day that turned.
 - **The rest:** 8 passes. Four were after the cutoff, two were whipsaws at the opening-range low, and two were stretched moves (an AAPL breakdown and an AMD two-bar thrust through the opening-range high). AMD kept running to 548, but chasing stretched breaks has not paid (drill 64), so the pass stands.
 - **The three-setup test now reads 7 calls, 3 wins, −1.49R** (skill −0.18R per call, t = −0.4). That's noise either way at n = 7. It gets judged at 30 calls.
+
+**Batch 14 (drills 128–137).** Two `range-break` longs, both won, both at the time stop.
+- **Drill 133, AMZN, +0.44R.** It made the first close above the opening-range high after a 90-minute base, 0.25% past the level. I put the stop under VWAP and the base rather than at the breakout wick. It reached +0.86R, then AMZN gave the whole move back in the afternoon.
+- **Drill 137, NVDA, +1.15R.** It made the first close above the opening-range high at 9:45, 0.23% past the level and above VWAP, with the stop just under the breakout bar. It reached +1.56R.
+- **What they share:** both broke out within about 0.25% of the level, and both stops sat a little beyond the structure rather than at a wick. That fits batch 13's hypothesis about stop room, but two drills aren't evidence, and no rule changes mid-test.
+- **The rest:** 8 passes. Three were after the cutoff, three were stretched (an MSFT break already 1.2% past the level, an AMZN flag and an AMD flush), and two were whipsaws at a level.
+- **Tag totals:** `range-break` is now 7 of 12, +2.88R.
+- **The three-setup test now reads 9 calls, 5 wins, +0.10R** (skill +0.04R per call). That's flat and still noise. It gets judged at 30 calls.
