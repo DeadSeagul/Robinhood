@@ -1,5 +1,9 @@
 # Chart-replay practice
 
+> **Status (2026-11-02): drills stopped.** Every usable date has been drilled (151 drills). The user left the next step to me ("Do whatever you think would be best"). Reusing dates or changing the bar size would weaken the blind test, so the drills end here.
+>
+> **Final record:** 39 calls, −0.11R per call against the coin flip (t = −0.6), so no skill was shown. The pre-registered three-setup test closed at 9 of its 30 calls (5 wins, +0.10R, t = 0.1). That's inconclusive, and nothing from it goes into the live rules. The forward paper trades ([`paper_trades.csv`](paper_trades.csv) and the $10,000 account in [`paper_account.py`](paper_account.py)) are the test from here.
+
 These are practice trades on real past charts, with no money involved (the user asked for this on 2026-10-12). `replay.py` picks a random moment on a past trading day and shows the chart **only up to that moment**. I record a call before anything later is shown. Then the tool plays the rest of the day forward and scores the call. Every call is kept in `replay_journal.csv`, so the record carries across sessions.
 
 ```bash
@@ -203,4 +207,4 @@ Yahoo serves only the last ~60 sessions of 5-minute bars. By 2026-10-19 every on
 
 **Batch 16 (drills 148–151): the unused dates ran out.** After 4 passes (two after the cutoff, a stretched TSLA re-entry, and a META chop), `deal` reported that every available date had been used.
 - **Why it can't refill itself:** the archive can't grow backward, because Robinhood's real 5-minute history starts 2026-02-23. Every trading day since 2026-10-07 is in `SEEN_LIVE`. The only unused days left are 2026-08-03 to 08-07, between the archive's end and the Yahoo window. That's 5 drills' worth, and a helper agent could add them blind.
-- **The three-setup test stops at 9 of its 30 calls** (5 wins, +0.10R) unless the drill rules change: for example, reusing dates after a cooling-off period, or drilling on 15-minute or hourly bars, which may reach further back. That's the user's call. Until then the forward paper trades are the only live test.
+- **The three-setup test stops at 9 of its 30 calls** (5 wins, +0.10R) unless the drill rules change: for example, reusing dates after a cooling-off period, or drilling on 15-minute or hourly bars, which may reach further back. The user left it to me, and I stopped the drills instead: see the status note at the top.

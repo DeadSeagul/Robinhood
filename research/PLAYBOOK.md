@@ -1,6 +1,6 @@
 # Options Day-Trading Playbook
 
-> **Status (2026-10-15): live trading is paused at the user's request. Paper trades only.** No real orders are placed. Every trading day the 5-minute ORB signal is scored after the close of its 90-minute window by [`paper_orb.py`](paper_orb.py), on QQQ shares and on the playbook option contract, and logged in [`paper_trades.csv`](paper_trades.csv). Practice drills continue in [`REPLAY.md`](REPLAY.md). Real-money trading resumes only if the user asks.
+> **Status (2026-10-15): live trading is paused at the user's request. Paper trades only.** No real orders are placed. Every trading day the 5-minute ORB signal is scored after the close of its 90-minute window by [`paper_orb.py`](paper_orb.py), on QQQ shares and on the playbook option contract, and logged in [`paper_trades.csv`](paper_trades.csv). Practice drills ran out of unused dates and stopped on 2026-11-02 (results in [`REPLAY.md`](REPLAY.md)). From that day the $10,000 paper account below is scored too. Real-money trading resumes only if the user asks.
 
 Account: Robinhood **Agentic** (••••2243), $54.62 as of 2026-10-15 (started at $100).
 Instruments: QQQ options first (plus liquid stocks in play). Sizing: **max $20 premium per trade** (user sized down on 2026-10-08; was the full account).
