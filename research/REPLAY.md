@@ -59,7 +59,8 @@ Yahoo serves only the last ~60 sessions of 5-minute bars. By 2026-10-19 every on
 | 13 (2026-10-28, three-setup test) | 10 | 2 | 0% | −1.06 | +0.42 | −0.74R/call (t = −1.0, n = 2) | +0.11R / −0.25R |
 | 14 (2026-10-29, three-setup test) | 10 | 2 | 100% | +0.80 | −0.77 | +0.78R/call (n = 2) | +0.31R / −0.71R |
 | 15 (2026-10-30, three-setup test) | 10 | 0 | – | – | – | – | −0.31R / −0.12R |
-| **All** | **147** | **39** | **41%** | **−0.06** | **+0.17** | **−0.11R/call (t = −0.6): no skill shown** | −0.12R / −0.11R |
+| 16 (2026-11-02, three-setup test; dates ran out) | 4 | 0 | – | – | – | – | +0.42R / −0.33R |
+| **All** | **151** | **39** | **41%** | **−0.06** | **+0.17** | **−0.11R/call (t = −0.6): no skill shown** | −0.10R / −0.12R |
 
 **Pre-registered three-setup test** (from drill 78 on, calls only on `range-break`, `retest-entry` and `failed-break-reclaim`; judged after 30 calls): **9 calls, 5 wins, +0.10R total, skill +0.04R per call (t = 0.1).**
 
@@ -199,3 +200,7 @@ Yahoo serves only the last ~60 sessions of 5-minute bars. By 2026-10-19 every on
 - **Why:** six were at or after the 11:30 cutoff. The other four were a pullback that hadn't reached its level, an hour-long base broken by only 15 cents, 90 minutes of chop inside the opening range, and an hour of chop after a reclaim I'd already missed.
 - **Passing cost nothing on average:** a default long would have averaged −0.31R and a default short −0.12R. MSFT (drill 144) did fall to 371 after the marginal base break I passed, so its default short got stopped out (−0.54R) before the move.
 - **The deal is the bottleneck:** about 40% of drills land after the cutoff by design, and those are automatic passes. The three-setup test stays at 9 calls after 70 drills. At about one call per 8 drills, the remaining 21 calls need roughly 160 more drills, or about 16 more trading days. I'm not changing the deal or the rules mid-test.
+
+**Batch 16 (drills 148–151): the unused dates ran out.** After 4 passes (two after the cutoff, a stretched TSLA re-entry, and a META chop), `deal` reported that every available date had been used.
+- **Why it can't refill itself:** the archive can't grow backward, because Robinhood's real 5-minute history starts 2026-02-23. Every trading day since 2026-10-07 is in `SEEN_LIVE`. The only unused days left are 2026-08-03 to 08-07, between the archive's end and the Yahoo window. That's 5 drills' worth, and a helper agent could add them blind.
+- **The three-setup test stops at 9 of its 30 calls** (5 wins, +0.10R) unless the drill rules change: for example, reusing dates after a cooling-off period, or drilling on 15-minute or hourly bars, which may reach further back. That's the user's call. Until then the forward paper trades are the only live test.
