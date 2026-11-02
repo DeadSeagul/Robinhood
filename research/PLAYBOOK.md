@@ -1,25 +1,19 @@
 # Options Day-Trading Playbook
 
-> **Status (2026-10-15): live trading is paused at the user's request. Paper trades only.** No real orders are placed. Every trading day the 5-minute ORB signal is scored after the close of its 90-minute window by [`paper_orb.py`](paper_orb.py), on QQQ shares and on the playbook option contract, and logged in [`paper_trades.csv`](paper_trades.csv). Practice drills ran out of unused dates and stopped on 2026-11-02 (results in [`REPLAY.md`](REPLAY.md)). From that day the $10,000 paper account below is scored too. Real-money trading resumes only if the user asks.
+> **Status (2026-10-15): live trading is paused at the user's request. Paper trades only.** No real orders are placed. Every trading day the 5-minute ORB signal is scored after the close of its 90-minute window by [`paper_orb.py`](paper_orb.py), on QQQ shares and on the playbook option contract, and logged in [`paper_trades.csv`](paper_trades.csv). Practice drills ran out of unused dates and stopped on 2026-11-02 (results in [`REPLAY.md`](REPLAY.md)). From that day the $10,000 options-only paper account below is scored too. Real-money trading resumes only if the user asks.
 
 Account: Robinhood **Agentic** (••••2243), $54.62 as of 2026-10-15 (started at $100).
 Instruments: QQQ options first (plus liquid stocks in play). Sizing: **max $20 premium per trade** (user sized down on 2026-10-08; was the full account).
 
-## $10,000 paper account (from 2026-11-02)
+## $10,000 paper account, options only (from 2026-11-02)
 
-On 2026-10-30 the user asked: "Say you had $10,000. Trade based on that amount." This is paper only. The real account is unchanged and live trading stays paused. [`paper_account.py`](paper_account.py) sizes the same Monday-to-Thursday ORB signals for a $10,000 balance. It tracks two books, each starting at $10,000:
+On 2026-10-30 the user asked: "Say you had $10,000. Trade based on that amount." On 2026-11-02 they added: "Only do options." This is paper only. The real account is unchanged and live trading stays paused. [`paper_account.py`](paper_account.py) trades the same Monday-to-Thursday ORB signals with options in a $10,000 cash account. A cash account has no day-trade limit.
 
-| | Shares book | Options book |
-|---|---|---|
-| Account type | Margin, which is needed to short QQQ | Cash |
-| Size | Risk 1% of the balance between entry and the stop (the other side of the opening range), capped at 2× the balance in buying power. In the replay that came to 24-27 shares of QQQ. | Up to 1% of the balance in premium, which is also the most a trade can lose. At $10,000 that's $100: the nearest-to-the-money next-day contract opening at ≤ $0.99, as many as fit. |
-| Day-trade limit | Under $25,000 the pattern-day-trader rule allows 3 day trades in any 5 business days, so a 4th signal is skipped. | None in a cash account. $100 a trade never runs into settlement. |
-| Exits | The playbook's: the stop, 2R target, or 90 minutes | The playbook's: the QQQ share stop, +100% target, trail, or 90 minutes |
-| Costs | $0.01 a share of slippage each way | Entry at the bar open + $0.01, $0.09 fees per contract |
-
-**Replay of the signals already logged (2026-10-08 to 10-29, rules fixed before running it):**
-- **Shares book:** 9 trades, 2 winners. The day-trade limit skipped 3 more signals: two would have lost 1R and one would have made +0.27R. The balance would be **$9,846.74 (−$153.26, −1.5%)**.
-- **Options book:** it can't be replayed, because each past day would need a different contract than the $0.20 one that was scored. Both books count forward from 2026-11-02.
+- **Size:** up to 1% of the balance in premium, which is also the most a trade can lose. At $10,000 that's $100, so the contract is the nearest-to-the-money next-day call or put opening at ≤ $0.99, bought as many times as the budget allows. The budget moves with the balance.
+- **Entry, exits and costs:** entry at the 5-minute bar's open + $0.01, with $0.09 fees per contract. Exits follow the playbook: the QQQ share stop (the other side of the opening range), +100% target, the trail (arms at +50%, sells at +30%) or 90 minutes.
+- **What QQQ's chart still does:** it gives the signal, the entry time and the stop. Share trades are no longer taken or reported.
+- **The $0.20 playbook contract** stays logged in `paper_trades.csv` alongside it, as the long-running comparison.
+- **Dropped on 2026-11-02:** a shares version of the account. Its replay of the logged signals came to $9,846.74 (−1.5%), and its one live day lost $66.92.
 
 ## What the research says
 

@@ -1,26 +1,20 @@
-"""A $10,000 paper account that trades the playbook's QQQ ORB signals, sized from the account balance.
+"""A $10,000 paper account that trades the playbook's QQQ ORB signals with options only, sized from the balance.
 
-On 2026-10-30 the user asked: "Say you had $10,000. Trade based on that amount." The real account holds about
-$55 and live trading is paused, so this is paper only. The signals are the ones paper_orb.py logs in
-paper_trades.csv. This file decides how big each trade is and keeps the running balance.
+On 2026-10-30 the user asked: "Say you had $10,000. Trade based on that amount." On 2026-11-02 they added:
+"Only do options." The real account holds about $55 and live trading is paused, so this is paper only. The
+signals are the ones paper_orb.py logs in paper_trades.csv. QQQ's chart still decides the direction, the entry
+time and the stop. This file picks the size of each options trade and keeps the running balance.
 
-Two books, each starting at $10,000, trade the same Monday-Thursday signals (the playbook skips Fridays):
+The rules, fixed before the first trade on 2026-11-02:
+  - Monday to Thursday signals only (the playbook skips Fridays). A cash account, so there's no day-trade limit.
+  - Up to 1% of the balance goes into premium, which is also the most a trade can lose. At $10,000 that's $100,
+    so the contract is the nearest-to-the-money next-day call (long) or put (short) whose 5-minute open at entry
+    is <= $0.99, bought as many times as the budget allows.
+  - Entry at that bar's open + $0.01, $0.09 fees per contract. Exits are the playbook's: the QQQ share stop (the
+    other side of the opening range), +100% target, the trail (arm at +50%, sell at +30%) or 90 minutes.
 
-  shares   QQQ shares, long or short. Shorting needs a margin account, and a margin account under $25,000 is a
-           pattern-day-trader account: at most 3 day trades in any 5 business days, so a 4th signal is skipped.
-           Size: risk 1% of the balance between entry and the stop (the other side of the opening range),
-           capped at 2x the balance in buying power. $0.01 a share of slippage each way, no commission.
-  options  The playbook's next-day call or put, bought in a cash account (no day-trade limit). Up to 1% of the
-           balance goes into premium, which is also the most the trade can lose. At $10,000 that's $100, so the
-           contract is the nearest-to-the-money one whose 5-minute open at entry is <= $0.99, bought as many
-           times as the budget allows. Exits are the playbook's: QQQ share stop, +100% target, trail, 90 minutes.
-
-These rules were fixed before the shares book was replayed on the signals already logged. The options book can't
-be replayed, because every past day would need a different contract than the $0.20 one that was scored. Both
-books count forward from 2026-11-02.
-
-  python3 -I research/paper_account.py report [--since 2026-11-02]
-  python3 -I research/paper_account.py option 2026-11-02 --option-bars FILE --contract "11/3 712C" [--bars FILE]
+  python3 -I research/paper_account.py report
+  python3 -I research/paper_account.py option 2026-11-02 --option-bars FILE --contract "11/3 707C" [--bars FILE]
 """
 from __future__ import annotations
 
@@ -39,10 +33,6 @@ OPT_LOG = HERE / "paper_account_options.csv"
 OPT_FIELDS = ["date", "side", "contract", "contracts", "opt_entry", "opt_exit", "opt_reason", "pnl", "balance"]
 START = 10_000.0
 RISK = 0.01
-MARGIN = 2.0
-SLIP = 0.01
-PDT_TRADES, PDT_DAYS = 3, 5
-FORWARD = "2026-11-02"
 
 
 def tradable(date: str) -> bool:
@@ -50,37 +40,11 @@ def tradable(date: str) -> bool:
     return pd.Timestamp(date).dayofweek < 4
 
 
-def share_size(balance: float, entry: float, stop: float) -> int:
-    by_risk = math.floor(RISK * balance / abs(entry - stop) + 1e-9)
-    by_cash = math.floor(MARGIN * balance / entry + 1e-9)
-    return max(0, min(by_risk, by_cash))
-
-
 def option_size(budget: float, entry: float) -> int:
     return max(0, math.floor(budget / round(entry * 100, 6) + 1e-9))
 
 
-def shares_book(orb: pd.DataFrame, since: str) -> pd.DataFrame:
-    rows, balance, taken = [], START, []
-    for r in orb.sort_values("date").itertuples():
-        if r.date < since or not tradable(r.date) or r.side not in ("long", "short") or pd.isna(r.share_exit):
-            continue
-        window = pd.bdate_range(end=pd.Timestamp(r.date), periods=PDT_DAYS)
-        if sum(pd.Timestamp(t) in window for t in taken) >= PDT_TRADES:
-            rows.append(dict(date=r.date, side=r.side, shares=0, pnl=0.0, balance=balance,
-                             note="skipped: would be a 4th day trade in 5 days (PDT)"))
-            continue
-        sign = 1 if r.side == "long" else -1
-        n = share_size(balance, r.share_entry, r.or_low if sign == 1 else r.or_high)
-        pnl = round(n * (sign * (r.share_exit - r.share_entry) - 2 * SLIP), 2)
-        balance = round(balance + pnl, 2)
-        taken.append(r.date)
-        rows.append(dict(date=r.date, side=r.side, shares=n, entry=r.share_entry, exit=r.share_exit,
-                         reason=r.share_reason, r=r.share_r, pnl=pnl, balance=balance, note=""))
-    return pd.DataFrame(rows)
-
-
-def read_options() -> pd.DataFrame:
+def read_book() -> pd.DataFrame:
     if OPT_LOG.exists():
         return pd.read_csv(OPT_LOG, dtype={"date": str, "contract": str})
     return pd.DataFrame(columns=OPT_FIELDS)
@@ -94,7 +58,7 @@ def option(args) -> None:
     if hit.empty or hit.side.iat[0] not in ("long", "short"):
         sys.exit(f"No ORB signal logged for {args.date}; score the day with paper_orb.py first.")
     r = hit.iloc[0]
-    book = read_options()
+    book = read_book()
     book = book[book.date != args.date]
     budget = RISK * (START + book[book.date < args.date].pnl.sum())
     bars = load_bars(Path(args.bars))
@@ -115,40 +79,26 @@ def option(args) -> None:
     book["balance"] = (START + book.pnl.astype(float).cumsum()).round(2)
     book.reindex(columns=OPT_FIELDS).to_csv(OPT_LOG, index=False)
     print(f"{args.date} {r.side} {n} x {args.contract}: in {res['opt_entry']:.2f}, out {res['opt_exit']:.2f} "
-          f"({res['opt_reason']}), P&L ${pnl:+,.2f}, options balance ${book.balance.iat[-1]:,.2f}")
+          f"({res['opt_reason']}), P&L ${pnl:+,.2f}, balance ${book.balance.iat[-1]:,.2f}")
 
 
 def report(args) -> None:
-    orb = pd.read_csv(ORB_LOG, dtype={"date": str})
-    print(f"$10,000 paper account, signals from {args.since} (Monday-Thursday only; paper, no real orders)")
-    sh = shares_book(orb, args.since)
-    print("\nShares book (margin account, 1% risk to the stop, 2x buying power, 3 day trades per 5 days):")
-    if sh.empty:
-        print("  no trades yet")
-    else:
-        print(sh.fillna("").to_string(index=False))
-        t = sh[sh.shares > 0]
-        print(f"  {len(t)} trades, {int((t.pnl > 0).sum())} winners, {int((sh.shares == 0).sum())} skipped for the "
-              f"day-trade limit; P&L ${t.pnl.sum():+,.2f}; balance ${sh.balance.iat[-1]:,.2f}")
-    book = read_options()
-    book = book[book.date >= args.since]
-    print("\nOptions book (cash account, up to 1% of the balance in premium):")
+    book = read_book()
+    print("$10,000 paper account, options only (Monday-Thursday ORB signals; paper, no real orders)")
     if book.empty:
         print("  no trades yet")
     else:
         print(book.to_string(index=False))
         print(f"  {len(book)} trades, {int((book.pnl > 0).sum())} winners; P&L ${book.pnl.sum():+,.2f}; "
               f"balance ${START + book.pnl.sum():,.2f}")
-    budget = RISK * (START + read_options().pnl.sum())
-    print(f"  Next options budget: ${budget:,.0f}, so the contract's 5-minute open at entry must be "
-          f"<= {budget / 100 - 0.01:.2f}")
+    budget = RISK * (START + book.pnl.sum())
+    print(f"  Next budget: ${budget:,.0f}, so the contract's 5-minute open at entry must be <= {budget / 100 - 0.01:.2f}")
 
 
 def main(argv=None) -> None:
     p = argparse.ArgumentParser(description=__doc__.split("\n")[0])
     sub = p.add_subparsers(dest="cmd", required=True)
-    r = sub.add_parser("report")
-    r.add_argument("--since", default=FORWARD)
+    sub.add_parser("report")
     o = sub.add_parser("option")
     o.add_argument("date")
     o.add_argument("--option-bars", required=True)
