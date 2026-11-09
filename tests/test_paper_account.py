@@ -45,6 +45,20 @@ def test_a_trade_is_sized_from_the_balance_and_compounds(tmp_path, monkeypatch):
     assert book.contracts.iat[0] == 2 and book.opt_reason.iat[0] == "target"   # $100 buys two at 0.50
     assert book.pnl.iat[0] == round(2 * ((1.00 - 0.50) * 100 - 0.09), 2)
     assert book.balance.iat[0] == round(10_000 + book.pnl.iat[0], 2)
-    with pytest.raises(SystemExit):   # $101 can't buy a contract at 1.10
+    with pytest.raises(SystemExit):   # 1.10 is over the 1% price cap
         dear = bars_file(tmp_path / "dear.json", "2026-11-03 14:35", [(1.09, 1.1, 1.0, 1.05)] * 20)
         paper_account.option(Namespace(date="2026-11-03", option_bars=dear, contract="11/4 700C", bars=qqq))
+
+
+def test_from_the_budget_change_a_trade_spends_1000_on_the_same_contract(tmp_path, monkeypatch):
+    orb = tmp_path / "orb.csv"
+    pd.DataFrame([dict(date="2026-11-10", side="long", or_high=699.0, or_low=697.0, entry_time="09:35")]).to_csv(orb, index=False)
+    monkeypatch.setattr(paper_account, "ORB_LOG", orb)
+    monkeypatch.setattr(paper_account, "OPT_LOG", tmp_path / "book.csv")
+    qqq = bars_file(tmp_path / "qqq.json", "2026-11-10 14:30", [(700, 700.5, 699.5, 700)] * 20)
+    opt = bars_file(tmp_path / "opt.json", "2026-11-10 14:35", [(0.89, 0.95, 0.85, 0.92)] * 20)
+    paper_account.option(Namespace(date="2026-11-10", option_bars=opt, contract="11/11 710C", bars=qqq))
+    book = paper_account.read_book()
+    assert book.contracts.iat[0] == 11                      # $1,000 / $90 a contract
+    assert paper_account.budget_for("2026-11-09", 10_250) == pytest.approx(102.5)
+    assert paper_account.budget_for("2026-11-10", 10_250) == 1_000

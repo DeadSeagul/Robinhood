@@ -7,9 +7,11 @@ time and the stop. This file picks the size of each options trade and keeps the 
 
 The rules, fixed before the first trade on 2026-11-02:
   - Monday to Thursday signals only (the playbook skips Fridays). A cash account, so there's no day-trade limit.
-  - Up to 1% of the balance goes into premium, which is also the most a trade can lose. At $10,000 that's $100,
-    so the contract is the nearest-to-the-money next-day call (long) or put (short) whose 5-minute open at entry
-    is <= $0.99, bought as many times as the budget allows.
+  - The contract is the nearest-to-the-money next-day call (long) or put (short) whose 5-minute open at entry
+    fits in 1% of the balance (<= $0.99 at $10,000).
+  - Up to 1% of the balance goes into premium, bought as many times as that allows. From 2026-11-10 the user
+    raised it to a flat $1,000 a trade ("Raise the budget to $1000"): the same contract, about ten of them. The
+    premium is also the most a trade can lose.
   - Entry at that bar's open + $0.01, $0.09 fees per contract. Exits are the playbook's: the QQQ share stop (the
     other side of the opening range), +100% target, the trail (arm at +50%, sell at +30%) or 90 minutes.
 
@@ -32,12 +34,22 @@ from paper_orb import DEFAULT_BARS, FEES, LOG as ORB_LOG, load_bars, option_trad
 OPT_LOG = HERE / "paper_account_options.csv"
 OPT_FIELDS = ["date", "side", "contract", "contracts", "opt_entry", "opt_exit", "opt_reason", "pnl", "balance"]
 START = 10_000.0
-RISK = 0.01
+RISK = 0.01                # the contract must fit in this share of the balance
+BUDGET, BUDGET_FROM = 1_000.0, "2026-11-10"   # premium per trade from this date; 1% of the balance before it
 
 
 def tradable(date: str) -> bool:
     """The playbook trades Monday to Thursday."""
     return pd.Timestamp(date).dayofweek < 4
+
+
+def budget_for(date: str, balance: float) -> float:
+    return BUDGET if date >= BUDGET_FROM else RISK * balance
+
+
+def max_open(balance: float) -> float:
+    """The highest 5-minute open a contract can have; entry pays open + $0.01."""
+    return RISK * balance / 100 - 0.01
 
 
 def option_size(budget: float, entry: float) -> int:
@@ -60,7 +72,7 @@ def option(args) -> None:
     r = hit.iloc[0]
     book = read_book()
     book = book[book.date != args.date]
-    budget = RISK * (START + book[book.date < args.date].pnl.sum())
+    balance = START + book[book.date < args.date].pnl.sum()
     bars = load_bars(Path(args.bars))
     day = bars[bars.index.date == pd.Timestamp(args.date).date()].between_time("09:30", "15:55")
     side = 1 if r.side == "long" else -1
@@ -69,10 +81,10 @@ def option(args) -> None:
                        und_stop=r.or_low if side == 1 else r.or_high)
     if "opt_exit" not in res:
         sys.exit(f"Can't score {args.contract}: {res.get('opt_reason', 'no option bars at the entry time')}.")
-    n = option_size(budget, res["opt_entry"])
-    if n < 1:
-        sys.exit(f"{args.contract} costs {res['opt_entry']:.2f} at entry, over the ${budget:.0f} budget: "
-                 f"pick a contract whose 5-minute open is <= {budget / 100 - 0.01:.2f}.")
+    if res["opt_entry"] > max_open(balance) + 0.01 + 1e-9:
+        sys.exit(f"{args.contract} costs {res['opt_entry']:.2f} at entry: pick a contract whose 5-minute open is "
+                 f"<= {max_open(balance):.2f}.")
+    n = option_size(budget_for(args.date, balance), res["opt_entry"])
     pnl = round(n * ((res["opt_exit"] - res["opt_entry"]) * 100 - FEES), 2)
     row = dict(date=args.date, side=r.side, contract=args.contract, contracts=n, **res, pnl=pnl)
     book = pd.concat([book, pd.DataFrame([row])], ignore_index=True).sort_values("date")
@@ -91,8 +103,10 @@ def report(args) -> None:
         print(book.to_string(index=False))
         print(f"  {len(book)} trades, {int((book.pnl > 0).sum())} winners; P&L ${book.pnl.sum():+,.2f}; "
               f"balance ${START + book.pnl.sum():,.2f}")
-    budget = RISK * (START + book.pnl.sum())
-    print(f"  Next budget: ${budget:,.0f}, so the contract's 5-minute open at entry must be <= {budget / 100 - 0.01:.2f}")
+    balance = START + book.pnl.sum()
+    budget = budget_for(pd.Timestamp.now(tz="America/New_York").strftime("%Y-%m-%d"), balance)
+    print(f"  Next trade: the contract's 5-minute open at entry must be <= {max_open(balance):.2f}; "
+          f"spend up to ${budget:,.0f} on as many as that buys")
 
 
 def main(argv=None) -> None:

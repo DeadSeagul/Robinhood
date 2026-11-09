@@ -9,7 +9,8 @@ Instruments: QQQ options first (plus liquid stocks in play). Sizing: **max $20 p
 
 On 2026-10-30 the user asked: "Say you had $10,000. Trade based on that amount." On 2026-11-02 they added: "Only do options." This is paper only. The real account is unchanged and live trading stays paused. [`paper_account.py`](paper_account.py) trades the same Monday-to-Thursday ORB signals with options in a $10,000 cash account. A cash account has no day-trade limit.
 
-- **Size:** up to 1% of the balance in premium, which is also the most a trade can lose. At $10,000 that's $100, so the contract is the nearest-to-the-money next-day call or put opening at ≤ $0.99, bought as many times as the budget allows. The budget moves with the balance.
+- **Contract:** the nearest-to-the-money next-day call or put whose opening price fits in 1% of the balance: at most $0.99 at a $10,000 balance, and the cap moves with the balance.
+- **Size:** on 2026-11-09 the user said: "Raise the budget to $1000". From 2026-11-10, each trade spends up to **$1,000** on that contract, about 10 contracts at $0.90–$1.00. Before that it spent 1% of the balance, about $100, which was one contract. The premium paid is the most a trade can lose, so a losing trade can now cost up to about 10% of the account.
 - **Entry, exits and costs:** entry at the 5-minute bar's open + $0.01, with $0.09 fees per contract. Exits follow the playbook: the QQQ share stop (the other side of the opening range), +100% target, the trail (arms at +50%, sells at +30%) or 90 minutes.
 - **What QQQ's chart still does:** it gives the signal, the entry time and the stop. Share trades are no longer taken or reported.
 - **The $0.20 playbook contract** stays logged in `paper_trades.csv` alongside it, as the long-running comparison.
