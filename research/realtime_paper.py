@@ -62,7 +62,9 @@ def completed(bars: pd.DataFrame, width: pd.Timedelta, at: pd.Timestamp) -> pd.D
 
 
 def check_signal(bars: pd.DataFrame, at: pd.Timestamp) -> dict:
-    """'signal', 'none' (no close beyond the range by the 11:25 bar) or 'wait'."""
+    """'signal', 'none' (no close beyond the range by the 11:25 bar) or 'wait'. Only today's bars count: before
+    the open Yahoo's one-day chart still holds the previous session."""
+    bars = bars[bars.index.date == at.date()]
     day = completed(bars, BAR, at).between_time("09:30", "15:55")
     sig = signal(day)
     if sig is None:
@@ -102,6 +104,7 @@ def watch(args) -> None:
     deadline = clock.time() + args.seconds
     while True:
         bars = yahoo("1m")
+        bars = bars[bars.index.date == now_et().date()]
         if since is not None:
             bars = bars[bars.index >= since.floor("min")]
         hit = stop_hit(bars, args.side, args.stop)
@@ -109,7 +112,8 @@ def watch(args) -> None:
             print(f"state=stop bar={hit.name:%H:%M} low={hit.low:.2f} high={hit.high:.2f} now={now_et():%H:%M:%S}")
             return
         if clock.time() > deadline:
-            print(f"state=ok qqq={bars.close.iat[-1]:.2f} now={now_et():%H:%M:%S}")
+            last = f"{bars.close.iat[-1]:.2f}" if len(bars) else "none"
+            print(f"state=ok qqq={last} now={now_et():%H:%M:%S}")
             return
         clock.sleep(15)
 

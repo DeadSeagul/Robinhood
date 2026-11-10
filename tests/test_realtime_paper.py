@@ -31,6 +31,9 @@ def test_signal_waits_for_the_bar_to_close_and_matches_the_after_the_fact_rule()
     assert rt.check_signal(b, at("09:39:59"))["state"] == "wait"
     s = rt.check_signal(b, at("09:40:00"))
     assert s["state"] == "signal" and s["side"] == "long" and s["entry_time"] == "09:40"
+    yesterday = b.copy()
+    yesterday.index = yesterday.index - pd.Timedelta(days=1)
+    assert rt.check_signal(yesterday, at("08:55"))["state"] == "wait"   # before the open: yesterday's bars don't count
     quiet = bars([700.0] * 30)                       # never leaves the range
     assert rt.check_signal(quiet, at("11:00"))["state"] == "wait"
     assert rt.check_signal(quiet, at("11:31"))["state"] == "none"
