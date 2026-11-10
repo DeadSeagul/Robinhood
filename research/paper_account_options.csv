@@ -4,3 +4,4 @@ date,side,contract,contracts,opt_entry,opt_exit,opt_reason,pnl,balance
 2026-11-04,long,11/5 706C,1,0.98,1.96,target,97.91,10127.03
 2026-11-05,short,11/6 656P,1,0.97,1.94,target,96.91,10223.94
 2026-11-09,long,11/10 683C,1,0.9,1.17,trail,26.91,10250.85
+2026-11-10,long,11/11 687C,11,0.87,1.74,target,956.01,11206.86
