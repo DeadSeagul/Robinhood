@@ -1,0 +1,2 @@
+date,logged_at_et,event,side,contract,contracts,opt_ask,opt_bid,qqq,reason,note
+2026-11-10,2026-11-10 09:40:26,entry,long,11/11 687C,10,0.93,0.91,674.1,,"Signal 9:35 bar closed 673.83 > ORH 673.54 (OR 669.92-673.54). Quotes at 14:40:16Z: 686C ask 1.12 (over the 1.00 cap), 687C ask 0.93 / bid 0.91, OI 753, vol 155. Exits: QQQ <= 669.92 stop; target 1.86 (resting); trail arms at bid >= 1.395, exits at bid <= 1.209; time 11:10 ET."
