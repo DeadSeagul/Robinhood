@@ -61,6 +61,6 @@ Each Monday to Thursday, after the 8:50am news read is pushed:
   - **Stop trading** if the live account falls 30% below the starting deposit.
   - **Stops:** a broker-side stop goes in as a backstop, in case the session drops mid-trade.
 
-## Voided entries (removed from the log; not counted toward the 20)
+## Pauses
 
-- **2026-11-11:** short signal (9:40 bar closed 685.69 below the 686.81 OR low). Paper entry logged at 09:45:25: 9 × 11/12 670P at the ask 1.04 (bid 1.02, QQQ 684.33). At 09:46 the user said "The market is closed today. Don't trade", so the entry was voided and monitoring stopped. Mark at the void, 09:46:43: 670P bid 1.01 / ask 1.03, QQQ 684.32, so about −$0.03 per contract before fees. (US stock and option markets were open on Veterans Day; only the bond market was closed.) No result is scored for the day.
+- **2026-11-11:** the 09:45:25 entry (9 × 11/12 670P at the ask 1.04) was briefly voided at 09:46 when the user thought the market was closed (Veterans Day closes only the bond market), then reinstated at 09:48 when the user said to continue. Nothing could have triggered in the gap: QQQ never touched the 689.02 stop, and the 670P's minute highs were 1.03, 1.06 and 1.14, under the 1.56 trail arm and the 2.08 target. The original entry row is kept unchanged.
