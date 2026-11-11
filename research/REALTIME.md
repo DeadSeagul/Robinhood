@@ -60,3 +60,7 @@ Each Monday to Thursday, after the 8:50am news read is pushed:
   - **At most 3 trades in any 5 business days.** The account is a limited-margin account under $25,000, so the pattern-day-trader limit likely applies; the user is checking.
   - **Stop trading** if the live account falls 30% below the starting deposit.
   - **Stops:** a broker-side stop goes in as a backstop, in case the session drops mid-trade.
+
+## Voided entries (removed from the log; not counted toward the 20)
+
+- **2026-11-11:** short signal (9:40 bar closed 685.69 below the 686.81 OR low). Paper entry logged at 09:45:25: 9 × 11/12 670P at the ask 1.04 (bid 1.02, QQQ 684.33). At 09:46 the user said "The market is closed today. Don't trade", so the entry was voided and monitoring stopped. Mark at the void, 09:46:43: 670P bid 1.01 / ask 1.03, QQQ 684.32, so about −$0.03 per contract before fees. (US stock and option markets were open on Veterans Day; only the bond market was closed.) No result is scored for the day.
