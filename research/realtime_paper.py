@@ -13,7 +13,13 @@ Robinhood through my tools, and every decision is logged with the clock time it 
   python3 -I research/realtime_paper.py log entry --contract "11/11 683C" --ask 0.91 --bid 0.89 --qqq 668.70
   python3 -I research/realtime_paper.py log exit --reason trail --ask 1.19 --bid 1.17 --qqq 671.20
   python3 -I research/realtime_paper.py log no_signal | missed --note "..."
+  python3 -I research/realtime_paper.py log shadow_exit --reason target --ask 1.86 --bid 1.84 --qqq 690.10
   python3 -I research/realtime_paper.py report
+
+The no-trail shadow (pre-registered 2026-11-12 at the user's request, counted from 2026-11-16): the same entry, the
+same stop, 2x target and 90-minute time exit, but no trail. It only differs from the official trade when the trail
+fires; then monitoring carries on until the shadow's own exit, logged as `shadow_exit`. The official rules and the
+go-live bar don't change.
 """
 from __future__ import annotations
 
@@ -39,6 +45,7 @@ FIELDS = ["date", "logged_at_et", "event", "side", "contract", "contracts", "opt
 NY = "America/New_York"
 LAST_ENTRY = time(11, 30)   # a 5-minute close beyond the range on a bar starting by 11:25
 GO_LIVE_TRADES = 20
+SHADOW_FROM = "2026-11-16"  # the no-trail shadow counts from the first trade after it was pre-registered (11/12)
 
 
 def now_et() -> pd.Timestamp:
@@ -125,20 +132,29 @@ def read_log() -> pd.DataFrame:
 
 
 def trades(log: pd.DataFrame) -> pd.DataFrame:
-    """One row per entry with its exit; P&L per contract and for the contracts bought."""
+    """One row per entry with its exit; P&L per contract and for the contracts bought.
+
+    shadow_* is the no-trail shadow: the official exit unless the trail fired, else the logged `shadow_exit`
+    (missing while that is still pending)."""
     rows = []
     for date, g in log.groupby("date", sort=True):
-        e, x = g[g.event == "entry"], g[g.event == "exit"]
+        e, x, s = g[g.event == "entry"], g[g.event == "exit"], g[g.event == "shadow_exit"]
         if e.empty:
             continue
         e = e.iloc[0]
-        row = dict(date=date, side=e.side, contract=e.contract, contracts=int(e.contracts), entry=e.opt_ask,
+        n = int(e.contracts)
+        row = dict(date=date, side=e.side, contract=e.contract, contracts=n, entry=e.opt_ask,
                    entry_at=e.logged_at_et)
         if not x.empty:
             x = x.iloc[0]
             per = round((x.opt_bid - e.opt_ask) * 100 - FEES, 2)
             row.update(exit=x.opt_bid, exit_at=x.logged_at_et, reason=x.reason, per_contract=per,
-                       pnl=round(per * int(e.contracts), 2))
+                       pnl=round(per * n, 2))
+            sh = s.iloc[0] if not s.empty else (x if x.reason != "trail" else None)
+            if sh is not None:
+                sper = round((sh.opt_bid - e.opt_ask) * 100 - FEES, 2)
+                row.update(shadow_exit=sh.opt_bid, shadow_reason=sh.reason, shadow_per_contract=sper,
+                           shadow_pnl=round(sper * n, 2))
         rows.append(row)
     return pd.DataFrame(rows)
 
@@ -163,12 +179,26 @@ def log(args) -> None:
         row["contracts"] = contracts_for(balance, args.ask)
     if args.event == "exit" and not ((lg.date == today) & (lg.event == "entry")).any():
         sys.exit(f"No entry logged for {today}.")
+    if args.event == "shadow_exit":
+        day = lg[lg.date == today]
+        if not ((day.event == "exit") & (day.reason == "trail")).any():
+            sys.exit("The shadow only splits off when the official trade trails out: no trail exit today.")
+        if (day.event == "shadow_exit").any():
+            sys.exit(f"{today} already has a shadow exit.")
+        if args.reason == "trail":
+            sys.exit("The shadow has no trail: its exits are stop, target or time.")
     lg = pd.concat([lg, pd.DataFrame([row])], ignore_index=True)
     lg.reindex(columns=FIELDS).to_csv(LOG, index=False)
     print(", ".join(f"{k}={v}" for k, v in row.items() if v is not None and not (isinstance(v, float) and math.isnan(v))))
     if args.event == "exit":
         t = trades(lg).iloc[-1]
         print(f"P&L {t.contracts} x {t.contract}: ${t.pnl:+,.2f} (${t.per_contract:+.2f} a contract)")
+        if t.reason == "trail":
+            print("Trail exit: keep monitoring for the no-trail shadow (stop, target, time) and log shadow_exit.")
+    if args.event == "shadow_exit":
+        t = trades(lg).iloc[-1]
+        print(f"Shadow P&L {t.contracts} x {t.contract}: ${t.shadow_pnl:+,.2f} "
+              f"(official ${t.pnl:+,.2f}; difference ${t.shadow_pnl - t.pnl:+,.2f})")
 
 
 def report(args) -> None:
@@ -178,7 +208,9 @@ def report(args) -> None:
         print("  none yet")
         print(f"  Next trade: the contract's ask at entry must be <= {RISK * START / 100:.2f}; up to ${BUDGET:,.0f}")
         return
-    print(t.fillna("").to_string(index=False))
+    official = [c for c in ("date", "side", "contract", "contracts", "entry", "entry_at", "exit", "exit_at", "reason",
+                            "per_contract", "pnl") if c in t]
+    print(t[official].fillna("").to_string(index=False))
     closed = t[t.pnl.notna()] if "pnl" in t else t.iloc[0:0]
     n = len(closed)
     total = closed.pnl.sum() if n else 0.0
@@ -187,6 +219,27 @@ def report(args) -> None:
     verdict = ("PASSES" if total > 0 else "FAILS") if n >= GO_LIVE_TRADES else f"{n} of {GO_LIVE_TRADES} trades so far"
     print(f"  Go-live bar (total P&L > 0 after {GO_LIVE_TRADES} trades, set 2026-11-09): {verdict}")
     print(f"  Next trade: the contract's ask at entry must be <= {RISK * (START + total) / 100:.2f}; up to ${BUDGET:,.0f}")
+    shadow_report(closed)
+
+
+def shadow_report(closed: pd.DataFrame) -> None:
+    print(f"No-trail shadow (pre-registered 2026-11-12; same entries; stop, 2x target, 90-minute time, no trail; "
+          f"counts from {SHADOW_FROM}):")
+    w = closed[closed.date >= SHADOW_FROM]
+    if w.empty:
+        print("  no trades in the window yet")
+        return
+    if "shadow_pnl" not in w:
+        w = w.assign(shadow_exit=float("nan"), shadow_reason=None, shadow_pnl=float("nan"))
+    cols = ["date", "contract", "reason", "pnl", "shadow_reason", "shadow_exit", "shadow_pnl"]
+    print(w[cols].rename(columns={"reason": "official", "pnl": "official_pnl", "shadow_reason": "shadow"})
+          .fillna("pending").to_string(index=False))
+    done = w[w.shadow_pnl.notna()]
+    pending = w[w.shadow_pnl.isna()]
+    split = int((done.reason == "trail").sum())
+    print(f"  {len(done)} trades: official ${done.pnl.sum():+,.2f}, shadow ${done.shadow_pnl.sum():+,.2f} "
+          f"(they differ only on the {split} trail-exit day{'s' if split != 1 else ''})"
+          + (f"; pending shadow exits: {', '.join(pending.date)}" if len(pending) else ""))
 
 
 def main(argv=None) -> None:
@@ -200,7 +253,7 @@ def main(argv=None) -> None:
     s.add_argument("--since", help="HH:MM ET, the entry time")
     s.add_argument("--seconds", type=float, default=120)
     lg = sub.add_parser("log")
-    lg.add_argument("event", choices=["entry", "exit", "no_signal", "missed"])
+    lg.add_argument("event", choices=["entry", "exit", "shadow_exit", "no_signal", "missed"])
     lg.add_argument("--side", choices=["long", "short"])
     lg.add_argument("--contract")
     lg.add_argument("--ask", type=float)

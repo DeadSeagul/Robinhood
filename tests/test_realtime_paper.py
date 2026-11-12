@@ -60,3 +60,60 @@ def test_entry_buys_what_1000_dollars_allows_and_exit_scores_at_the_bid(tmp_path
     assert t.per_contract == round((1.18 - 0.91) * 100 - 0.09, 2) and t.pnl == round(t.per_contract * 10, 2)
     with pytest.raises(SystemExit):                  # over the price cap
         rt.contracts_for(10_000, 1.05)
+
+
+def _day(monkeypatch, tmp_path, day, hhmm="09:40:05"):
+    monkeypatch.setattr(rt, "LOG", tmp_path / "rt.csv")
+    monkeypatch.setattr(rt, "now_et", lambda: pd.Timestamp(f"{day} {hhmm}", tz=rt.NY))
+
+
+def _entry(ask=0.92):
+    rt.log(Namespace(event="entry", side="long", contract="11/17 700C", ask=ask, bid=ask - 0.02, qqq=686.0,
+                     reason=None, note=""))
+
+
+def _exit(event, reason, bid):
+    rt.log(Namespace(event=event, side=None, contract=None, ask=bid + 0.02, bid=bid, qqq=690.0, reason=reason,
+                     note=""))
+
+
+def test_shadow_splits_off_only_after_a_trail_exit(tmp_path, monkeypatch):
+    _day(monkeypatch, tmp_path, "2026-11-16")
+    _entry()
+    with pytest.raises(SystemExit):                  # nothing to split from before the official exit
+        _exit("shadow_exit", "target", 1.84)
+    _exit("exit", "trail", 1.11)
+    t = rt.trades(rt.read_log()).iloc[0]
+    assert pd.isna(t.get("shadow_pnl"))              # pending until the shadow's own exit
+    with pytest.raises(SystemExit):                  # the shadow has no trail
+        _exit("shadow_exit", "trail", 1.20)
+    _exit("shadow_exit", "target", 1.84)             # the 2x target as a resting limit
+    t = rt.trades(rt.read_log()).iloc[0]
+    assert t.pnl == round(((1.11 - 0.92) * 100 - 0.09) * 10, 2)
+    assert t.shadow_reason == "target" and t.shadow_pnl == round(((1.84 - 0.92) * 100 - 0.09) * 10, 2)
+    with pytest.raises(SystemExit):                  # one shadow exit a day
+        _exit("shadow_exit", "time", 1.50)
+
+
+def test_shadow_copies_the_official_exit_when_the_trail_did_not_fire(tmp_path, monkeypatch):
+    _day(monkeypatch, tmp_path, "2026-11-17")
+    _entry(ask=0.95)
+    _exit("exit", "stop", 0.35)
+    with pytest.raises(SystemExit):                  # no trail, so no separate shadow exit
+        _exit("shadow_exit", "stop", 0.35)
+    t = rt.trades(rt.read_log()).iloc[0]
+    assert t.shadow_reason == "stop" and t.shadow_pnl == t.pnl
+
+
+def test_shadow_report_counts_only_trades_from_its_start_date(tmp_path, monkeypatch, capsys):
+    _day(monkeypatch, tmp_path, "2026-11-12")
+    _entry()
+    _exit("exit", "trail", 1.11)                     # the trade that prompted the test: not counted
+    _day(monkeypatch, tmp_path, "2026-11-16")
+    _entry()
+    _exit("exit", "target", 1.84)
+    rt.report(Namespace())
+    out = capsys.readouterr().out
+    rows = out.split("No-trail shadow")[1].split("\n", 1)[1]   # the table, after the header line
+    assert "2026-11-12" not in rows and "2026-11-16" in rows
+    assert "1 trades: official $+919.10, shadow $+919.10" in rows
