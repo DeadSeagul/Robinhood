@@ -25,6 +25,7 @@ These are the $10,000 options account's rules ([`paper_account.py`](paper_accoun
   - QQQ trades through the other side of the opening range (the stop).
   - Target: the option at 2× the entry ask. Treat this as a resting limit sell, so it counts as filled if any option print reaches it.
   - Trail: armed once the bid reaches 1.5× the entry; sell at the bid when it falls back to 1.3×.
+  - Breakeven stop (the user, 2026-11-16, from 11/17): once the bid reaches 1.25× the entry, sell at the bid if it falls back to the entry. The user's words: "if we are in profit, we should set stop losses so we don't end up losing". The user chose the +25% trigger over "any profit" and +15%.
   - Time: 90 minutes after entry.
   - Every exit except the target sells at the bid.
 - **Lateness:** if the session starts more than 5 minutes after the entry time, the trade is logged as `missed` and not taken late.
@@ -43,12 +44,12 @@ Each Monday to Thursday, after the 8:50am news read is pushed:
 4. **Monitor:** run `watch --side S --stop X --since HH:MM --seconds 120` in the background, and repeat until the trade ends:
    - If it prints `state=stop`, quote the option and exit at the bid.
    - Otherwise check the option's quote. Also check its minute bars since the last check, in case the target printed.
-   - Apply the target, trail and time rules.
+   - Apply the target, trail, breakeven and time rules.
 5. **Exit:**
    1. `log exit --reason R --ask A --bid B --qqq Q`, then `report`.
    2. Commit and push.
    3. Send a push note with the result.
-6. **No-trail shadow, only when the official exit was the trail:** keep the same monitoring going until the shadow's own exit. That is the QQQ stop, the 2× target (filled if any minute print reaches it), or the 90-minute time exit at the bid. Then `log shadow_exit --reason R --ask A --bid B --qqq Q` (for the target, `--bid` is the target price), commit and push. On any other exit the shadow is the same trade and nothing more is logged.
+6. **No-trail shadow, only when the official exit was the trail or the breakeven stop:** keep the same monitoring going until the shadow's own exit. That is the QQQ stop, the 2× target (filled if any minute print reaches it), or the 90-minute time exit at the bid. Then `log shadow_exit --reason R --ask A --bid B --qqq Q` (for the target, `--bid` is the target price), commit and push. On any other exit the shadow is the same trade and nothing more is logged.
 
 ## No-trail shadow (pre-registered 2026-11-12, counted from 2026-11-16)
 
@@ -56,7 +57,7 @@ On 11/12 the 700C trailed out at the bid 1.11 at 11:02. It then dipped to 0.98 a
 
 - **Same entry.** Same contract, same ask, same number of contracts.
 - **Exits:** the QQQ stop, the 2× target and the 90-minute time exit. **No trail.**
-- **It splits off only when the official trade trails out.** On every other day the two are identical, so only trail-exit days carry information. Expect only a handful of those.
+- **It splits off only when the official trade trails out** (and, from 11/17, when the user's breakeven stop sells it). On every other day the two are identical, so only those days carry information. Expect only a handful of them.
 - **Counted from 2026-11-16,** the first trade after this was written. 11/12 itself is left out, because it's the trade that prompted the test. Counting it would build in the hindsight the test is meant to avoid.
 - **Nothing official changes.** The official rules, the 20-trade count and the go-live bar stay as fixed on 2026-11-09. `realtime_paper.py report` shows the shadow beside the official result.
 - **When it's read:** at the go-live checkpoint, both totals over the same trades are reported. If the no-trail rule is ahead *and* positive, I'll put it to the user as an option for the live rules, with the caveat that it rests on only a few trail days. It is not adopted without the user's say-so.

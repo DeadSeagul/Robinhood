@@ -44,6 +44,8 @@ FIELDS = ["date", "source", "signal_time", "side", "or_high", "or_low", "entry_t
 BAR = pd.Timedelta(minutes=5)
 FEES = 0.09
 RULE_CHANGE = "2026-10-23"  # option stop moved from -35% of premium to the QQQ share stop after this day was scored
+BREAKEVEN_FROM = "2026-11-17"  # the user, 2026-11-16: "if we are in profit, we should set stop losses so we don't
+BREAKEVEN_ARM = 1.25           # end up losing" -> once the option reaches +25%, a fall back to the entry sells
 
 
 def load_bars(path: Path) -> pd.DataFrame:
@@ -107,17 +109,22 @@ def share_trade(day: pd.DataFrame, sig: dict) -> dict:
 
 
 def option_trade(opt: pd.DataFrame, entry_time: pd.Timestamp, und: pd.DataFrame | None = None, side: int = 0,
-                 und_stop: float | None = None) -> dict:
+                 und_stop: float | None = None, breakeven: bool | None = None) -> dict:
     """Playbook exits on the option's 5-minute bars, starting at the bar that opens at entry_time.
 
     With und (QQQ's 5-minute bars), side and und_stop, the stop is the share stop: the option is sold at its bar's
     low when QQQ's bar of the same time trades through und_stop. Without them, the old -35% premium stop applies.
+    The breakeven stop (trades from BREAKEVEN_FROM; `breakeven` overrides the date check): once an earlier bar's
+    high reached 1.25x the entry, a bar trading back down to the entry sells at the entry.
     """
+    if breakeven is None:
+        breakeven = f"{entry_time:%Y-%m-%d}" >= BREAKEVEN_FROM
     bars = opt[opt.index >= entry_time]
     if bars.empty:
         return {}
     entry = round(bars.open.iat[0] + 0.01, 2)
     stop, target, arm, trail = entry * 0.65, entry * 2.0, entry * 1.5, entry * 1.3
+    be_arm = entry * BREAKEVEN_ARM
     t_end = entry_time + pd.Timedelta(minutes=90)
     best, exit_px, reason = entry, None, "time"
     for n, (ts, b) in enumerate(bars.iterrows()):
@@ -134,6 +141,8 @@ def option_trade(opt: pd.DataFrame, entry_time: pd.Timestamp, und: pd.DataFrame 
             exit_px, reason = target, "target"
         elif best >= arm and b.low <= trail:
             exit_px, reason = trail, "trail"
+        elif breakeven and best >= be_arm and b.low <= entry:
+            exit_px, reason = entry, "breakeven"
         elif ts + BAR >= t_end:
             exit_px = b.close
         best = max(best, b.high)

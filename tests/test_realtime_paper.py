@@ -154,3 +154,15 @@ def test_after_a_loss_the_entry_still_takes_an_ask_up_to_the_held_cap(tmp_path, 
     _day(monkeypatch, tmp_path, "2026-11-17")
     _entry(ask=0.99)                                  # 1% of $10,000 / 100 = 0.99 still fits
     assert rt.trades(rt.read_log()).iloc[-1].contracts == 10
+
+
+def test_a_breakeven_exit_splits_the_shadow_off_like_a_trail_exit(tmp_path, monkeypatch):
+    _day(monkeypatch, tmp_path, "2026-11-17")
+    _entry(ask=0.92)
+    _exit("exit", "breakeven", 0.92)                 # ran past 1.15 (1.25x), came back to the entry
+    assert pd.isna(rt.trades(rt.read_log()).iloc[0].get("shadow_pnl"))
+    with pytest.raises(SystemExit):
+        _exit("shadow_exit", "breakeven", 0.92)      # the shadow has no breakeven stop
+    _exit("shadow_exit", "time", 1.40)
+    t = rt.trades(rt.read_log()).iloc[0]
+    assert t.pnl == round(-0.09 * 10, 2) and t.shadow_reason == "time"

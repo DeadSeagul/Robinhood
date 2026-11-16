@@ -16,6 +16,7 @@ The rules, fixed before the first trade on 2026-11-02:
     premium is also the most a trade can lose.
   - Entry at that bar's open + $0.01, $0.09 fees per contract. Exits are the playbook's: the QQQ share stop (the
     other side of the opening range), +100% target, the trail (arm at +50%, sell at +30%) or 90 minutes.
+    From 2026-11-17, the user's breakeven stop too: once the option is up 25%, a fall back to the entry sells.
 
   python3 -I research/paper_account.py report
   python3 -I research/paper_account.py option 2026-11-02 --option-bars FILE --contract "11/3 707C" [--bars FILE]

@@ -50,3 +50,18 @@ def test_qqq_stop_sells_at_the_option_bar_low_when_qqq_breaks_the_stop():
     und = day([[712.2, 712.6, 711.5, 712.1], [712.1, 714.9, 712.0, 714.8]])  # short, share stop 714.74
     res = paper.option_trade(opt, opt.index[0], und=und, side=-1, und_stop=714.74)
     assert res["opt_reason"] == "stop" and res["opt_exit"] == 0.09
+
+
+def test_breakeven_stop_from_the_users_change_sells_at_the_entry_after_a_25pct_gain():
+    """The user, 2026-11-16: "if we are in profit, we should set stop losses so we don't end up losing"."""
+    rows = [[0.99, 1.30, 0.98, 1.20], [1.20, 1.22, 0.90, 0.95]] + [[0.95, 0.96, 0.90, 0.92]] * 20
+    idx = pd.date_range("2026-11-17 09:45", periods=len(rows), freq="5min", tz="America/New_York")
+    opt = pd.DataFrame(rows, columns=["open", "high", "low", "close"], index=idx)
+    res = paper.option_trade(opt, opt.index[0])
+    assert res["opt_reason"] == "breakeven" and res["opt_exit"] == 1.00          # entry = open + 0.01
+    old = opt.copy()
+    old.index = old.index - pd.Timedelta(days=7)                                 # 11/10: before the change
+    assert paper.option_trade(old, old.index[0])["opt_reason"] == "time"
+    under = opt.copy()
+    under.iloc[0, 1] = 1.24                                                      # never reached +25%: not armed
+    assert paper.option_trade(under, under.index[0])["opt_reason"] == "time"
