@@ -76,3 +76,7 @@ On 11/12 the 700C trailed out at the bid 1.11 at 11:02. It then dipped to 0.98 a
 ## Pauses
 
 - **2026-11-11:** the 09:45:25 entry (9 × 11/12 670P at the ask 1.04) was briefly voided at 09:46 when the user thought the market was closed (Veterans Day closes only the bond market), then reinstated at 09:48 when the user said to continue. Nothing could have triggered in the gap: QQQ never touched the 689.02 stop, and the 670P's minute highs were 1.03, 1.06 and 1.14, under the 1.56 trail arm and the 2.08 target. The original entry row is kept unchanged.
+
+## Bug fixes (written down per the go-live bar's rules)
+
+- **2026-11-16, 09:30:** right at the open, Yahoo's one-day chart for the new session came back with no bars and an empty quote, and `wait-signal` crashed with a KeyError. Fixed by treating that as "no bars yet" (`parse_chart`, with a test). The watcher was restarted at 09:30:30, ten minutes before the earliest possible signal, so no trade could have been affected. No rule changed.

@@ -57,10 +57,19 @@ def yahoo(interval: str) -> pd.DataFrame:
     url = f"https://query1.finance.yahoo.com/v8/finance/chart/QQQ?interval={interval}&range=1d"
     raw = subprocess.run(["curl", "-sS", "-m", "20", "-A", "Mozilla/5.0", url], capture_output=True, text=True,
                          check=True).stdout
-    r = json.loads(raw)["chart"]["result"][0]
-    q = r["indicators"]["quote"][0]
-    df = pd.DataFrame({k: q[k] for k in ("open", "high", "low", "close")},
-                      index=pd.to_datetime(r.get("timestamp", []), unit="s", utc=True))
+    return parse_chart(json.loads(raw))
+
+
+def parse_chart(payload: dict) -> pd.DataFrame:
+    """Yahoo chart JSON to bars. Right at the open the new session can come back with no bars and an empty quote
+    (seen 2026-11-16 09:30:04): that's no data yet, not an error."""
+    r = payload["chart"]["result"][0]
+    q = (r.get("indicators", {}).get("quote") or [{}])[0]
+    ts = r.get("timestamp") or []
+    cols = ("open", "high", "low", "close")
+    if not ts or any(k not in q for k in cols):
+        return pd.DataFrame(columns=list(cols), index=pd.DatetimeIndex([], tz=NY))
+    df = pd.DataFrame({k: q[k] for k in cols}, index=pd.to_datetime(ts, unit="s", utc=True))
     return df.dropna().tz_convert(NY).sort_index()
 
 

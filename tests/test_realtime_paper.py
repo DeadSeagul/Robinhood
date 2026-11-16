@@ -117,3 +117,16 @@ def test_shadow_report_counts_only_trades_from_its_start_date(tmp_path, monkeypa
     rows = out.split("No-trail shadow")[1].split("\n", 1)[1]   # the table, after the header line
     assert "2026-11-12" not in rows and "2026-11-16" in rows
     assert "1 trades: official $+919.10, shadow $+919.10" in rows
+
+
+def test_an_empty_chart_at_the_open_means_no_bars_yet_not_a_crash():
+    """2026-11-16 09:30:04: Yahoo's chart for the new session came back with an empty quote and the watcher crashed."""
+    for payload in ({"chart": {"result": [{"indicators": {"quote": [{}]}}]}},
+                    {"chart": {"result": [{"timestamp": [], "indicators": {"quote": [{"open": []}]}}]}}):
+        b = rt.parse_chart(payload)
+        assert b.empty
+        assert rt.check_signal(b, at("09:30:05"))["state"] == "wait"
+    ok = rt.parse_chart({"chart": {"result": [{"timestamp": [1794835800],
+                                                "indicators": {"quote": [{"open": [1.0], "high": [2.0], "low": [0.5],
+                                                                          "close": [1.5]}]}}]}})
+    assert len(ok) == 1 and ok.close.iat[0] == 1.5
