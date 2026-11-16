@@ -36,7 +36,7 @@ import pandas as pd
 
 HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
-from paper_account import BUDGET, RISK, START, option_size, tradable  # noqa: E402
+from paper_account import BUDGET, RISK, START, cap_balance, option_size, tradable  # noqa: E402
 from paper_orb import BAR, FEES, signal  # noqa: E402
 
 LOG = HERE / "realtime_paper.csv"
@@ -169,6 +169,8 @@ def trades(log: pd.DataFrame) -> pd.DataFrame:
 
 
 def contracts_for(balance: float, ask: float) -> int:
+    """`balance` is the one the cap is set from (paper_account.cap_balance): since the user's "Don't drop the cap"
+    on 2026-11-16, a loss no longer lowers it."""
     if ask > RISK * balance / 100 + 1e-9:
         sys.exit(f"Ask {ask:.2f} is over the price cap {RISK * balance / 100:.2f}: pick the next strike out.")
     return option_size(BUDGET, ask)
@@ -183,9 +185,8 @@ def log(args) -> None:
     if args.event == "entry":
         if (lg.date == today).any() and (lg[lg.date == today].event == "entry").any():
             sys.exit(f"{today} already has an entry.")
-        closed = done[done.pnl.notna()] if "pnl" in done else done
-        balance = START + (closed.pnl.sum() if len(closed) else 0.0)
-        row["contracts"] = contracts_for(balance, args.ask)
+        closed = done[done.pnl.notna()] if "pnl" in done else pd.DataFrame(columns=["date", "pnl"])
+        row["contracts"] = contracts_for(cap_balance(closed, today), args.ask)
     if args.event == "exit" and not ((lg.date == today) & (lg.event == "entry")).any():
         sys.exit(f"No entry logged for {today}.")
     if args.event == "shadow_exit":
@@ -220,14 +221,15 @@ def report(args) -> None:
     official = [c for c in ("date", "side", "contract", "contracts", "entry", "entry_at", "exit", "exit_at", "reason",
                             "per_contract", "pnl") if c in t]
     print(t[official].fillna("").to_string(index=False))
-    closed = t[t.pnl.notna()] if "pnl" in t else t.iloc[0:0]
+    closed = t[t.pnl.notna()] if "pnl" in t else pd.DataFrame(columns=["date", "pnl", "per_contract"])
     n = len(closed)
     total = closed.pnl.sum() if n else 0.0
     print(f"  {n} closed, {int((closed.pnl > 0).sum()) if n else 0} winners; P&L ${total:+,.2f}; "
           f"balance ${START + total:,.2f}; per contract ${closed.per_contract.sum() if n else 0:+.2f}")
     verdict = ("PASSES" if total > 0 else "FAILS") if n >= GO_LIVE_TRADES else f"{n} of {GO_LIVE_TRADES} trades so far"
     print(f"  Go-live bar (total P&L > 0 after {GO_LIVE_TRADES} trades, set 2026-11-09): {verdict}")
-    print(f"  Next trade: the contract's ask at entry must be <= {RISK * (START + total) / 100:.2f}; up to ${BUDGET:,.0f}")
+    print(f"  Next trade: the contract's ask at entry must be <= {RISK * cap_balance(closed, '9999') / 100:.2f}; "
+          f"up to ${BUDGET:,.0f} (the cap doesn't drop after losses: the user, 2026-11-16)")
     shadow_report(closed)
 
 

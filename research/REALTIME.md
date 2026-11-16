@@ -19,6 +19,7 @@ These are the $10,000 options account's rules ([`paper_account.py`](paper_accoun
 
 - **When:** Monday to Thursday, the QQQ 5-minute opening-range breakout. The signal is the first 5-minute close beyond the 9:30 bar's range, on a bar starting by 11:25.
 - **Contract:** the next trading day's expiry, call for long and put for short. Take the nearest-to-the-money strike whose **ask** at entry is at most the cap `realtime_paper.py report` prints (1% of the real-time book ÷ 100, about $1.00). Walk every listed strike: $1 strikes are common.
+- **The cap doesn't drop (the user, 2026-11-16: "Don't drop the cap"):** from 11/17 a loss no longer lowers it. It stays at the $1.05 in force on 11/16, set from that day's $10,496.39 book, and rises only when the book makes a new high. This is the user's own rule change, made after 4 of the 20 trades. The go-live bar itself is unchanged.
 - **Size:** as many contracts as $1,000 buys at that ask (the user's budget from 2026-11-10). The log works it out.
 - **Exits:**
   - QQQ trades through the other side of the opening range (the stop).

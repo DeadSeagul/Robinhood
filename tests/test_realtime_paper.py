@@ -130,3 +130,27 @@ def test_an_empty_chart_at_the_open_means_no_bars_yet_not_a_crash():
                                                 "indicators": {"quote": [{"open": [1.0], "high": [2.0], "low": [0.5],
                                                                           "close": [1.5]}]}}]}})
     assert len(ok) == 1 and ok.close.iat[0] == 1.5
+
+
+def test_the_cap_holds_after_losses_from_the_users_change_and_still_rises_on_new_highs():
+    """The user, 2026-11-16: "Don't drop the cap"."""
+    from paper_account import cap_balance
+    book = pd.DataFrame({"date": ["2026-11-10", "2026-11-11", "2026-11-12", "2026-11-16"],
+                         "pnl": [929.10, -621.81, 189.10, -558.81]})
+    assert cap_balance(book, "2026-11-12") == pytest.approx(10_307.29)    # before the change: the balance itself
+    assert cap_balance(book, "2026-11-16") == pytest.approx(10_496.39)    # the day of the change: unchanged
+    assert cap_balance(book, "2026-11-17") == pytest.approx(10_496.39)    # after a loss: held, not 9,937.58
+    up = pd.concat([book, pd.DataFrame({"date": ["2026-11-17"], "pnl": [900.0]})], ignore_index=True)
+    assert cap_balance(up, "2026-11-18") == pytest.approx(10_837.58)      # a new high still raises it
+    down = pd.concat([up, pd.DataFrame({"date": ["2026-11-18"], "pnl": [-600.0]})], ignore_index=True)
+    assert cap_balance(down, "2026-11-19") == pytest.approx(10_837.58)    # and it holds there after the next loss
+
+
+def test_after_a_loss_the_entry_still_takes_an_ask_up_to_the_held_cap(tmp_path, monkeypatch):
+    _day(monkeypatch, tmp_path, "2026-11-16")
+    rt.log(Namespace(event="entry", side="long", contract="11/17 688C", ask=0.99, bid=0.97, qqq=672.0,
+                     reason=None, note=""))
+    _exit("exit", "stop", 0.40)                       # a loss: the balance falls under $10,000
+    _day(monkeypatch, tmp_path, "2026-11-17")
+    _entry(ask=0.99)                                  # 1% of $10,000 / 100 = 0.99 still fits
+    assert rt.trades(rt.read_log()).iloc[-1].contracts == 10

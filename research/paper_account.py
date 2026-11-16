@@ -8,7 +8,9 @@ time and the stop. This file picks the size of each options trade and keeps the 
 The rules, fixed before the first trade on 2026-11-02:
   - Monday to Thursday signals only (the playbook skips Fridays). A cash account, so there's no day-trade limit.
   - The contract is the nearest-to-the-money next-day call (long) or put (short) whose 5-minute open at entry
-    fits in 1% of the balance (<= $0.99 at $10,000).
+    fits in 1% of the balance (<= $0.99 at $10,000). On 2026-11-16 the user said "Don't drop the cap": after
+    that day the cap can't fall below the one in force on 2026-11-16, and it still rises when the book makes a
+    new high (cap_balance).
   - Up to 1% of the balance goes into premium, bought as many times as that allows. From 2026-11-10 the user
     raised it to a flat $1,000 a trade ("Raise the budget to $1000"): the same contract, about ten of them. The
     premium is also the most a trade can lose.
@@ -36,6 +38,7 @@ OPT_FIELDS = ["date", "side", "contract", "contracts", "opt_entry", "opt_exit", 
 START = 10_000.0
 RISK = 0.01                # the contract must fit in this share of the balance
 BUDGET, BUDGET_FROM = 1_000.0, "2026-11-10"   # premium per trade from this date; 1% of the balance before it
+CAP_HOLD = "2026-11-16"    # the user that day: "Don't drop the cap"
 
 
 def tradable(date: str) -> bool:
@@ -45,6 +48,21 @@ def tradable(date: str) -> bool:
 
 def budget_for(date: str, balance: float) -> float:
     return BUDGET if date >= BUDGET_FROM else RISK * balance
+
+
+def cap_balance(book: pd.DataFrame, date: str) -> float:
+    """The balance the price cap is set from, for a trade on `date`, given a book with date and pnl columns.
+
+    Up to CAP_HOLD it's the balance before the trade. After it (the user, 2026-11-16: "Don't drop the cap") it's
+    the higher of the balance in force on CAP_HOLD and every balance reached since, so losses don't lower the cap
+    but new highs still raise it."""
+    prior = book[book.date < date].sort_values("date")
+    pnl = prior.pnl.astype(float)
+    if date <= CAP_HOLD:
+        return START + pnl.sum()
+    anchor = START + pnl[(prior.date < CAP_HOLD).values].sum()
+    since = (START + pnl.cumsum())[(prior.date >= CAP_HOLD).values]
+    return max([anchor, *since.tolist()])
 
 
 def max_open(balance: float) -> float:
@@ -81,9 +99,10 @@ def option(args) -> None:
                        und_stop=r.or_low if side == 1 else r.or_high)
     if "opt_exit" not in res:
         sys.exit(f"Can't score {args.contract}: {res.get('opt_reason', 'no option bars at the entry time')}.")
-    if res["opt_entry"] > max_open(balance) + 0.01 + 1e-9:
+    cap = max_open(cap_balance(book, args.date))
+    if res["opt_entry"] > cap + 0.01 + 1e-9:
         sys.exit(f"{args.contract} costs {res['opt_entry']:.2f} at entry: pick a contract whose 5-minute open is "
-                 f"<= {max_open(balance):.2f}.")
+                 f"<= {cap:.2f}.")
     n = option_size(budget_for(args.date, balance), res["opt_entry"])
     pnl = round(n * ((res["opt_exit"] - res["opt_entry"]) * 100 - FEES), 2)
     row = dict(date=args.date, side=r.side, contract=args.contract, contracts=n, **res, pnl=pnl)
@@ -105,7 +124,7 @@ def report(args) -> None:
               f"balance ${START + book.pnl.sum():,.2f}")
     balance = START + book.pnl.sum()
     budget = budget_for(pd.Timestamp.now(tz="America/New_York").strftime("%Y-%m-%d"), balance)
-    print(f"  Next trade: the contract's 5-minute open at entry must be <= {max_open(balance):.2f}; "
+    print(f"  Next trade: the contract's 5-minute open at entry must be <= {max_open(cap_balance(book, '9999')):.2f}; "
           f"spend up to ${budget:,.0f} on as many as that buys")
 
 
