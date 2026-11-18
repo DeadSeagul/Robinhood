@@ -93,4 +93,4 @@ The user asked for better stops after 11/18's loss. Three stop rules were declar
 | B: QQQ back through the range's midpoint | +$302.58 | Smaller losses on 11/11 (−$469) and 11/16 (−$301), but 11/17's +$935 winner became −$190 |
 | C: −35% of the premium (the pre-10/23 rule) | +$907.58 | Smaller losses on 11/11 (−$337) and 11/16 (−$344), but 11/12's +$280 trail winner became −$328 |
 
-On 11/18 in real time, rule C would have sold near 0.69 (bid 0.77 at 09:56, 0.57 at 09:58), about −$334 instead of −$586; rule B between the 0.57 and 0.41 bids. Seven trades prove nothing either way. No rule was changed by this check.
+On 11/18 in real time, rule C would have sold near 0.69 (bid 0.77 at 09:56, 0.57 at 09:58), about −$334 instead of −$586; rule B between the 0.57 and 0.41 bids. Seven trades prove nothing either way. No rule was changed by this check: the user's call the same day was "keep everything the same", with no added shadow.
