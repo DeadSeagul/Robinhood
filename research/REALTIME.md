@@ -82,3 +82,15 @@ On 11/12 the 700C trailed out at the bid 1.11 at 11:02. It then dipped to 0.98 a
 ## Bug fixes (written down per the go-live bar's rules)
 
 - **2026-11-16, 09:30:** right at the open, Yahoo's one-day chart for the new session came back with no bars and an empty quote, and `wait-signal` crashed with a KeyError. Fixed by treating that as "no bars yet" (`parse_chart`, with a test). The watcher was restarted at 09:30:30, ten minutes before the earliest possible signal, so no trade could have been affected. No rule changed.
+
+## Stop-rule check (2026-11-18, after the 628P stop-out)
+
+The user asked for better stops after 11/18's loss. Three stop rules were declared before running anything, and all three are reported. Each was run on the 7 after-the-fact trades that have saved 5-minute option bars (11/09 to 11/18), with the same entries, target, trail, breakeven and time exit; only the stop differs.
+
+| Rule | Total P&L, 7 trades | What changed |
+|---|---|---|
+| A: QQQ through the other side of the opening range (current) | +$1,017.58 | — |
+| B: QQQ back through the range's midpoint | +$302.58 | Smaller losses on 11/11 (−$469) and 11/16 (−$301), but 11/17's +$935 winner became −$190 |
+| C: −35% of the premium (the pre-10/23 rule) | +$907.58 | Smaller losses on 11/11 (−$337) and 11/16 (−$344), but 11/12's +$280 trail winner became −$328 |
+
+On 11/18 in real time, rule C would have sold near 0.69 (bid 0.77 at 09:56, 0.57 at 09:58), about −$334 instead of −$586; rule B between the 0.57 and 0.41 bids. Seven trades prove nothing either way. No rule was changed by this check.
