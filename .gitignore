@@ -6,3 +6,4 @@ journal/
 KILL_SWITCH
 .env
 *.env
+research/history30/orb_symbols_trades.csv
