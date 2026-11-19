@@ -9,17 +9,20 @@ import argparse
 import csv
 import json
 import subprocess
+import time
 import urllib.parse
 
 BASE = "https://data.alpaca.markets/v2/stocks/{symbol}/bars"
 
 
-def get(symbol, params):
+def get(symbol, params, tries=6):
     url = BASE.format(symbol=symbol) + "?" + urllib.parse.urlencode(params)
-    out = subprocess.run(["curl", "-sS", "--fail-with-body", "-m", "120", url], capture_output=True, text=True)
-    if out.returncode:
-        raise SystemExit(f"request failed ({out.returncode}): {out.stdout[:300]} {out.stderr[:300]}")
-    return json.loads(out.stdout)
+    for k in range(tries):
+        out = subprocess.run(["curl", "-sS", "--fail-with-body", "-m", "120", url], capture_output=True, text=True)
+        if not out.returncode:
+            return json.loads(out.stdout)
+        time.sleep(10 * (k + 1))  # rate limit or a dropped connection: wait and retry
+    raise SystemExit(f"request failed ({out.returncode}): {out.stdout[:300]} {out.stderr[:300]}")
 
 
 def main():

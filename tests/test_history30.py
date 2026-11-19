@@ -168,3 +168,24 @@ def test_walk_counts_stop_first():
     g = pd.DataFrame({"open": [100, 100, 100], "high": [101, 103, 100], "low": [99, 97, 99], "close": [100, 100, 100]}, index=idx)
     assert s20.walk(g, 1, 1, 100, 98, 102, "16:00") == (98, "stop")
     assert s20.walk(g, 2, 1, 100, 98, 102, "16:00") == (100, "time")
+
+
+osym = load("orb_symbols")
+
+
+def test_stock_in_play_uses_prior_sessions_only():
+    days = {}
+    for s in osym.STOCKS:
+        days[s] = {}
+        for i, d in enumerate(pd.bdate_range("2026-01-05", periods=16)):
+            idx = pd.date_range(f"{d:%Y-%m-%d} 09:30", periods=2, freq="5min", tz="America/New_York")
+            vol = 1000.0
+            if s == "TSLA" and i == 15:
+                vol = 5000.0          # TSLA's opening volume is 5x its usual on the last day
+            if s == "AAPL" and i == 15:
+                vol = 3000.0
+            days[s][pd.Timestamp(d)] = pd.DataFrame({"open": 1.0, "high": 1.0, "low": 1.0, "close": 1.0, "volume": [vol, 1.0]}, index=idx)
+    pick, frame = osym.in_play(days)
+    last = max(pick.index)
+    assert pick[last] == "TSLA" and abs(frame.loc[last, "TSLA"] - 5.0) < 1e-9
+    assert pick.index.min() == pd.Timestamp(pd.bdate_range("2026-01-05", periods=16)[14])  # needs 14 earlier sessions
