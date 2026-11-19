@@ -155,3 +155,54 @@ Predictable volatility didn't make the breakout work better.
 - **Gap condition fix:** the gap condition first included 1996–2000, whose opens are copies of the prior close. Those years are now blank for gaps.
   - Before the fix, the copied opens counted as zero gaps: first-decade gap test t = +0.8; whole-period rate 38% vs 29%.
   - After: t = +1.3 on 2001–2006; 38% vs 28%.
+
+## Part 3: 14 strategies on QQQ, which has the best edge? (2006–2026)
+
+The user asked: "so can you run different strategies on the QQQ for the last 20 years and see which one has the best edge?"
+The list, the textbook settings and the bar were fixed in [`history30/PREREG3.md`](history30/PREREG3.md) (commit 94c2303)
+before anything ran. Code: [`history30/strategies20.py`](history30/strategies20.py). Every table:
+[`history30/results3.md`](history30/results3.md).
+
+**How the strategies were run:**
+- Hold-for-days strategies use 20 years of daily QQQ data with dividends. Intraday strategies use the 11 years of 5-minute bars that exist (2016 on).
+- Signals are acted on at the next open.
+- Costs are 0.02% per side.
+- A real edge needs t ≥ 3.0 after costs (the 5% level corrected for 14 tests) and a positive result in both halves.
+- A unit test found one bug before the run: the dividend column clashed with a pandas method name. It was fixed before any result was read.
+
+**No strategy has a real edge. None reached the bar, even before costs.**
+
+| Rank | Strategy | Edge t after costs | Growth/yr (after costs) | Worst drop |
+|---|---|---|---|---|
+| — | Buy and hold QQQ (benchmark) | — | +15.4% | −53% |
+| 1 | IBS < 0.2, hold one day | +1.8 | +8.3% | −22% |
+| 2 | 200-day trend filter | +1.6 | +12.0% | −24% |
+| 3 | Golden cross (50-day > 200-day) | +1.5 | +13.3% | −29% |
+| 4 | 20-day breakout | +1.0 | +6.2% | −21% |
+| 5 | RSI(2) pullback | +0.8 | +3.4% | −14% |
+| 6 | Turn of the month | +0.1 | +2.7% | −23% |
+| 7 | Bollinger reversion | −0.7 | +4.8% | −42% |
+| 8 | First-candle ORB to the close (Zarattini & Aziz) | −0.8 | −2.9% | |
+| 9 | Overnight only | −1.8 | +0.7% | −35% |
+| 10 | Gap fade | −2.2 | −7.5% | |
+| 11 | Our 5-min ORB (shares) | −4.7 | −10.8% | |
+| 12 | Prior-day high/low sweep reversal (TJR/ICT-style) | −4.9 | −5.3% | |
+| 13 | Intraday momentum, last 30 minutes | −5.9 | −9.7% | |
+| 14 | Daytime only | −6.7 | −6.3% | −73% |
+
+For hold-for-days strategies, "edge t" is the t of the alpha over buy-and-hold. For intraday ones it is the t of the mean return per trade.
+
+**What stands out:**
+- **Owning QQQ beat every strategy on growth.** +15.4% a year over 20 years. Most of it came overnight: before costs, holding only overnight made +11.3% a year and holding only during the day +3.6%.
+- **Trend filters are a risk tool, not an edge.**
+  - The 200-day filter and the golden cross gave up 2–3 points a year of growth but roughly halved the worst drop (−24% and −29% vs −53%).
+  - Their risk-adjusted return (Sharpe 0.79–0.80) was about the same as holding (0.76).
+- **Every day-trading rule lost money after costs.** Before costs:
+  - Our ORB, intraday momentum and the sweep reversal were flat (t between −0.8 and 0.0).
+  - The first-candle ORB from the Zarattini & Aziz paper made +0.03% a trade (t = +2.6), but the 0.04% round-trip cost erased it. A published replication on index data found the same: positive before costs, zero after.
+- **Costs:** 0.02% per side is conservative for QQQ shares, where the spread is about 0.0025%. That only matters for the rules that are positive before costs, and even at zero cost none reaches t = 3.0. Options cost far more: the live quotes in our paper trades had spreads near 2% of the premium.
+
+**What part 3 means:**
+- The strongest edge in 20 years of QQQ was owning it and holding through the nights.
+- The 200-day average or golden cross is the most defensible way to cut the big drawdowns, at the price of some growth.
+- No short-term rule tested here, including our ORB and a mechanical version of the TJR/ICT sweep, showed an edge that beats luck.

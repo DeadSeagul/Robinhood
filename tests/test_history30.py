@@ -112,3 +112,59 @@ def test_option_bars_use_the_favorable_extreme_for_the_high():
     assert (c.high >= c.open).all() and (c.low <= c.open).all()
     assert (p.high >= p.open).all() and (p.low <= p.open).all()
     assert c.high.iat[0] > c.low.iat[0] and p.high.iat[0] > p.low.iat[0]
+
+
+s20 = load("strategies20")
+
+
+def daily_frame(n=70, start="2026-01-01"):
+    idx = pd.bdate_range(start, periods=n)
+    close = pd.Series(100 + np.arange(n, dtype=float), index=idx)
+    return pd.DataFrame({"open": close - 0.5, "high": close + 1, "low": close - 1, "close": close, "div": 0.0}, index=idx)
+
+
+def test_turn_of_month_holds_last_day_through_third_day():
+    df = daily_frame()
+    on, dp = s20.exposures(df)["D7"]
+    feb = df.index[(df.index.month == 2)]
+    jan_last = df.index[df.index.month == 1][-1]
+    assert dp[jan_last] == 1 and on[jan_last] == 0          # bought at the open of the last day
+    assert list(dp[feb[:4]]) == [1, 1, 1, 0]                 # held through the 3rd trading day
+    assert list(on[feb[:4]]) == [1, 1, 1, 0]                 # nights into days 1-3 held, not into day 4
+    g, n, turns = s20.daily_returns(df, on, dp)
+    assert turns[jan_last] == 1 and turns[feb[2]] == 1       # one buy, one sell
+
+
+def test_overnight_and_daytime_split_buy_and_hold():
+    df = daily_frame()
+    df.loc[df.index[30], "div"] = 0.4
+    ex = s20.exposures(df)
+    g0 = s20.daily_returns(df, *ex["D0"])[0]
+    g8 = s20.daily_returns(df, *ex["D8"])[0]
+    g9 = s20.daily_returns(df, *ex["D9"])[0]
+    assert np.allclose(((1 + g8) * (1 + g9)).iloc[1:], (1 + g0).iloc[1:])
+    assert g8.iloc[30] > g8.iloc[29]                         # the dividend lands in the overnight return
+    n8, t8 = s20.daily_returns(df, *ex["D8"])[1:]
+    assert t8.iloc[5] == 2                                   # buy at the close, sell at the open: two trades a day
+
+
+def test_signal_trades_at_the_next_open():
+    df = daily_frame(10)
+    s = pd.Series([0, 0, 1, 1, 0, 0, 0, 0, 0, 0], index=df.index)
+    dp = s.shift(1).fillna(0)
+    on = dp.shift(1).fillna(0)
+    assert list(dp) == [0, 0, 0, 1, 1, 0, 0, 0, 0, 0]
+    assert list(on) == [0, 0, 0, 0, 1, 1, 0, 0, 0, 0]       # held overnight, sold at the next open
+
+
+def test_stateful_entry_and_exit():
+    e = pd.Series([0, 1, 0, 0, 1, 0])
+    x = pd.Series([0, 0, 0, 1, 0, 1])
+    assert list(s20.stateful(e, x)) == [0, 1, 1, 0, 1, 0]
+
+
+def test_walk_counts_stop_first():
+    idx = pd.date_range("2026-11-18 09:30", periods=3, freq="5min", tz="America/New_York")
+    g = pd.DataFrame({"open": [100, 100, 100], "high": [101, 103, 100], "low": [99, 97, 99], "close": [100, 100, 100]}, index=idx)
+    assert s20.walk(g, 1, 1, 100, 98, 102, "16:00") == (98, "stop")
+    assert s20.walk(g, 2, 1, 100, 98, 102, "16:00") == (100, "time")
