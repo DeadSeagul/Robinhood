@@ -1,7 +1,7 @@
-# 30 years of the Nasdaq-100 with the scheduled-news calendar (part 1)
+# 30 years of the Nasdaq-100 with the scheduled-news calendar, and 11 years of the ORB rules
 
 On 2026-11-18 the user asked: "Can you study the market for the last 30 years with news and all?" On 2026-11-19
-they said "go ahead with the 30-year study". This is part 1:
+they said "go ahead with the 30-year study". Part 1 (below) is:
 - **Prices:** daily Nasdaq-100, 1996-11-19 → 2026-11-18 (7,547 trading days).
 - **Scheduled news:** Fed decisions, CPI releases and jobs reports.
 
@@ -17,7 +17,7 @@ the ORB options trade, and not a forecast.
 - **Covered:** the dates of scheduled news.
   - Fed decision days 1996–2026, from the Fed's own calendar pages: 239 days, scheduled meetings only.
   - CPI and jobs-report days 2008–2026, from the BLS release archive: 223 and 219 trading days.
-- **Not covered:** what the news *said*. No free archive of 30 years of headlines exists. Part 2 (with an Alpaca key) would add headlines from 2015 on.
+- **Not covered:** what the news *said*. No free archive of 30 years of headlines exists, and Alpaca's archive on this account starts only in April 2026.
 - **CPI and jobs start in 2008, not 1996.** The older BLS archive file names aren't always the release date: two checked
   were wrong by up to 12 days. Rather than guess those dates, I left 1994–2007 out.
 - **No intraday data.** Everything is daily: open, high, low, close. A "big day" is a full-day range over 1.25× the median of the previous 20 days, the same idea as the morning vol call but for the whole day. On the 40 recent sessions where both exist, the daily label matched the morning (9:30–12:00) label 75% of the time.
@@ -80,14 +80,64 @@ every decade or half.
   - **How:** log it next to my call each morning from now on, then compare both after 20+ new days.
   - **Status:** that would change the morning routine, so I'll only do it if you say so.
 - **Fed days** need no ORB change, since the decision lands after the morning trade. **Jobs-report mornings** are worth
-  watching in part 2 with minute data.
+  checking with minute data. Part 2 below did: the ORB did no better on event days.
 
-## What part 2 would add
+## Part 2: the live ORB rules on 11 years of QQQ 5-minute bars (2016–2026)
 
-- **Minute data:** the real ORB rules (stop, 2× target, trail, breakeven, 90-minute exit) run on about 10 years of QQQ minute bars.
-- **Headlines:** 2015 on.
-- **Scope:** that's the test that bears on the trade itself.
-- **Needs:** a free Alpaca account, with the key entered in a secure form, never in chat. Option prices still don't exist that far back, so option P&L would be estimated from QQQ's moves.
+The questions were fixed in [`history30/PREREG2.md`](history30/PREREG2.md) (commit 2386118) before the data was downloaded.
+The script is [`history30/orb10.py`](history30/orb10.py); every table is in [`history30/results2.md`](history30/results2.md)
+and every trade is in [`history30/orb10_trades.csv`](history30/orb10_trades.csv). The signal and exits run through
+`paper_orb.py`, the same code that scores the paper trades.
+
+**Headlines weren't available.** Alpaca's news archive on this account starts 2026-04-29, not 2015 as I had expected,
+so the "news" here is the Fed/CPI/jobs calendar from part 1.
+
+**Data:**
+- 2,736 sessions, 2016-01-04 → 2026-11-18, none dropped.
+- Each day's last 5-minute close was within 0.1% of Yahoo's daily close on 98.4% of days. The worst was 0.84%, on 2020-03-13, a chaotic closing auction.
+- 2,180 Monday–Thursday signals, plus 549 on Fridays.
+
+**1. Shares (no model): no edge.**
+
+| | Trades | Win rate | Mean per trade | t |
+|---|---|---|---|---|
+| 2016-01 → 2026-11 | 2,180 | 45% | +0.015R | +0.7 |
+| 2016-01 → 2021-06 | 1,104 | 43% | −0.028R | −0.9 |
+| 2021-07 → 2026-11 | 1,076 | 47% | +0.059R | +1.8 |
+
+Losing years: 6 of 11. The worst was 2020 (−0.12R a trade); the best were 2024–2025 (about +0.10R).
+
+**2. Options (a Black-Scholes estimate): lost money in every year.**
+- Over all 2,180 trades: −$128 per $1,000 trade on average (24% winners, t = −14.8).
+- Every year was negative, from −$272 a trade in 2016 to −$33 in 2022.
+- Exits: stop 813, time 532, breakeven 453, trail 254, target 128.
+
+**Why options lose when shares are flat:** a bought option pays time decay and the bid-ask spread on every trade, so a signal with no edge loses that cost.
+
+**How far to trust the model:**
+- **Checked against reality:** on the 11 recent signals where the after-the-fact account has real option prices, the model averaged +27% a trade vs +34% with the real prices. 8 of 11 exits matched. So the model reads somewhat pessimistic.
+- **The early years are the most pessimistic:** a fixed 2-cent spread is about 12% of a $0.17 option (2016), but only about 2% of today's $1 option.
+- **What that means for recent years:** 2022–2026 lost $33–$108 a trade. Adding back the 6.5-point gap seen on those 11 days (about $65 on $1,000) would put those years near breakeven, from about −$43 to +$32 a trade.
+- **Conclusion:** the honest reading is "no evidence the option version makes money", not a precise loss.
+
+**3. News days didn't matter.**
+- **Shares:** event days +0.020R vs +0.015R on other days (t = +0.1). The two filters, skipping event days or taking only event days, change nothing.
+- **Jobs reports:** they come out on Fridays, so only 6 Monday–Thursday signals fell on a jobs day.
+- **Fed decision mornings:** the option model's worst group, 13% winners and −$204 a trade. That fits part 1's finding that mornings before a 2pm decision are quiet. In shares the same days were −0.07R (t = −0.7), which is noise.
+
+**4. The VIX signal from part 1 doesn't help the trade.** Shares made the same with VIX high or low (t = 0.0). Options were at t = +1.0, also noise.
+Predictable volatility didn't make the breakout work better.
+
+**5. Fridays** were no different: −0.013R (t = −0.3), and −$133 a trade on the option model.
+
+## What part 2 means
+
+- **The ORB signal we paper trade had no edge over the last 11 years:** +0.015R a trade over 2,180 trades. The last 7
+  real-time paper trades (+$1,231) are well within what luck produces in a sample that small.
+- **The option version most likely loses money over time.** The model's error band reaches breakeven in recent years, but nothing points to a profit.
+- **By your own rule** ("If the results fail, do not start live trading"), this is a failed screen. My recommendation is no
+  real money on these rules, even if the 20-trade paper bar is passed. The bar itself is unchanged. Paper trading can keep running
+  as a record. Changing or stopping it is your call.
 
 ## Every test run (none dropped)
 

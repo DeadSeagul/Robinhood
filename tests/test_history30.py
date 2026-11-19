@@ -87,3 +87,28 @@ def test_rule_and_scoring():
     assert study.rule(d).tolist() == [True, True, False, True]
     r = study.score_rule(d, study.rule(d), pd.Series([True, False, False, False]))
     assert r["rule accuracy"] == "50%" and r["'always normal' accuracy"] == "75%" and r["big days caught"] == "100%"
+
+
+orb10 = load("orb10")
+
+
+def test_pick_strike_walks_out_of_the_money_until_under_cap():
+    ts = pd.Timestamp("2026-11-18 10:00", tz="America/New_York")
+    k, mid = orb10.pick_strike(660.0, ts, 0.25, True, 1.0)
+    assert k > 660 and mid + orb10.HALF_SPREAD <= 1.0
+    # one strike nearer the money is over the cap
+    t = orb10.years_left(ts, 1)
+    assert orb10.bs(660.0, k - 1, t, 0.25, True) + orb10.HALF_SPREAD > 1.0
+    kp, _ = orb10.pick_strike(660.0, ts, 0.25, False, 1.0)
+    assert kp < 660
+
+
+def test_option_bars_use_the_favorable_extreme_for_the_high():
+    idx = pd.date_range("2026-11-18 10:00", periods=2, freq="5min", tz="America/New_York")
+    day = pd.DataFrame({"open": [660.0, 661.0], "high": [662.0, 663.0], "low": [658.0, 659.0], "close": [661.0, 662.0]},
+                       index=idx)
+    c = orb10.option_bars(day, idx[0], 665, 0.25, True)
+    p = orb10.option_bars(day, idx[0], 655, 0.25, False)
+    assert (c.high >= c.open).all() and (c.low <= c.open).all()
+    assert (p.high >= p.open).all() and (p.low <= p.open).all()
+    assert c.high.iat[0] > c.low.iat[0] and p.high.iat[0] > p.low.iat[0]
