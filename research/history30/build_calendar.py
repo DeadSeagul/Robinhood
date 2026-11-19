@@ -102,9 +102,13 @@ def fomc_dates(folder):
         dates += got
     cur = [d for d in parse_current((folder / "current.html").read_text(errors="replace"))
            if d.year > LAST_HIST_YEAR]
-    dates = sorted(set(dates + cur))
-    # A "Meeting" one or two days before another one is the same meeting split in two on the page
-    # (2003-09-15 has only an agenda; the decision came on 2003-09-16). Keep the later day.
+    return merge_split_meetings(dates + cur)
+
+
+def merge_split_meetings(dates):
+    """A "Meeting" one or two days before another one is the same meeting split in two on the page
+    (2003-09-15 has only an agenda; the decision came on 2003-09-16). Keep the later day."""
+    dates = sorted(set(dates))
     return [d for i, d in enumerate(dates)
             if not (i + 1 < len(dates) and (dates[i + 1] - d).days <= 2)]
 
