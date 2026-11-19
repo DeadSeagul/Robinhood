@@ -1,0 +1,17 @@
+metric,value
+start_date,1996-11-19
+end_date,2026-11-18
+start_close,805.78
+end_close,27116.26
+growth_multiple,33.7
+annual_growth_pct,12.4
+pct_days_above_200d,76.0
+up_years,23
+down_years,6
+full_years,29
+worst_drawdown_pct,-82.9
+worst_drawdown_date,2002-10-07
+pct_days_within_10pct_of_high,42.0
+ytd_2026_pct,7.4
+end_vs_200d_pct,-3.4
+end_drawdown_pct,-13.2
