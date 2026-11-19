@@ -206,3 +206,20 @@ For hold-for-days strategies, "edge t" is the t of the alpha over buy-and-hold. 
 - The strongest edge in 20 years of QQQ was owning it and holding through the nights.
 - The 200-day average or golden cross is the most defensible way to cut the big drawdowns, at the price of some growth.
 - No short-term rule tested here, including our ORB and a mechanical version of the TJR/ICT sweep, showed an edge that beats luck.
+
+### After-the-fact checks: what could have helped the day trades (2026-11-19)
+
+The user asked "what could've helped the day trading strategies?". These checks reuse part 3's trades (2016–2026, QQQ
+shares). They were chosen after seeing the results, so they suggest ideas to test on new data. They aren't findings.
+1 bp = 0.01%.
+
+- **Costs decide almost everything.** Before costs, four of the five day-trading rules earned about zero per trade:
+  our ORB −0.43 bp, intraday momentum +0.01 bp, the sweep reversal −0.79 bp, the gap fade −3.2 bp.
+  - The one exception is the first-candle ORB, at +3.0 bp a trade, positive in 10 of 11 years.
+  - At a realistic share cost for QQQ (about 0.5 bp per round trip), it nets +2.5 bp a trade (t = +2.1). That's still under the 3.0 bar, and on $1,000 of shares it's about $0.25 a trade.
+- **Long vs short made no difference.** Both sides were near zero for every rule. The first-candle ORB was +3.2 bp long and +2.9 bp short.
+- **Our ORB's exits:** the same entries held to the close, with the same stop, made +1.45 bp a trade before costs (t = +1.0), against −0.43 bp with our 2R target and 90-minute exit.
+  - It lost in the first half (−1.8 bp) and made money in the second (+4.8 bp). That's noise.
+  - Only 32% of its trades ever reached +2R by the close, and 8% reached +4R.
+- **Filters already tested didn't help:** news days and the VIX signal (part 2).
+- **Options are the wrong wrapper for a tiny edge.** A next-day option pays about a 2% spread and loses value by the minute. Part 2's option estimate lost $128 per $1,000 trade on a signal that was flat in shares.
