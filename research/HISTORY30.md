@@ -223,3 +223,54 @@ shares). They were chosen after seeing the results, so they suggest ideas to tes
   - Only 32% of its trades ever reached +2R by the close, and 8% reached +4R.
 - **Filters already tested didn't help:** news days and the VIX signal (part 2).
 - **Options are the wrong wrapper for a tiny edge.** A next-day option pays about a 2% spread and loses value by the minute. Part 2's option estimate lost $128 per $1,000 trade on a signal that was flat in shares.
+
+## Part 4: which other stock could we day trade? (2016–2026, 5-minute bars)
+
+The user asked: "what other stock could we day trade?". Fixed beforehand in [`history30/PREREG4.md`](history30/PREREG4.md)
+(commit 42d01c7):
+- **Symbols:** the 8 biggest QQQ holdings from the morning routine, plus SPY and IWM.
+- **Rules:** our ORB (R1) and the first-candle ORB to the close (R2) on each, plus a daily "stock in play" pick (R3). R3 trades the one stock whose opening 5-minute volume is highest against its own 14-day average.
+- **Costs:** a full cent a share each way.
+- **Bar:** t ≥ 3.1 (22 tests) and positive in both halves.
+
+All tables: [`history30/results4.md`](history30/results4.md).
+
+**Two of the 22 passed, both with the first-candle rule:**
+
+| | Mean per trade after costs | t | Growth/yr at 1x | Worst drop | Win rate | Longest losing streak |
+|---|---|---|---|---|---|---|
+| TSLA, first-candle ORB | +0.127% | +3.3 | +30.9% | −36% | 31% | 17 trades |
+| Stock in play, first-candle ORB | +0.108% | +3.3 | +26.4% | −47% | 35% | 15 trades |
+| QQQ, first-candle ORB (for comparison) | +0.022% | +1.8 | +5.1% | −13% | 24% | 29 trades |
+
+**What else the table shows:**
+- **The first-candle rule beats our ORB on single stocks.** Before costs it was positive on 7 of the 8 big stocks (all but META). Its t was 2.8–3.5 on NVDA, AMZN, MSFT and TSLA. Our ORB rule (R1) passed nowhere: its best t was +1.6 (TSLA).
+- **Index ETFs did worst** (SPY, IWM, QQQ): the most efficient markets.
+- **"Stock in play" isn't just TSLA.** Without the 602 days that picked TSLA, it still made +0.111% a trade (t = +3.3).
+
+**Checks on the passes (after the fact):**
+- **The big wins are real moves**, not data errors: TSLA on 2025-04-09 (the tariff-pause rally), 2020-09-02, 2021-11-09 and 2018-10-23.
+- **The edge is lumpy:**
+  - The median trade lost 0.55%, and 69% of trades lost.
+  - Without TSLA's best 1% of trades (27 of 2,728), the mean falls to +0.03% (t = +0.9).
+  - It is a bet on catching a few big trend days.
+- **Years:** TSLA's mean was positive in 9 of 11 years. Longs (+0.17%, t = 2.9) did better than shorts (+0.09%, t = 1.8).
+
+**Limits:**
+- **Survivorship bias:** the list is today's biggest companies.
+- **Thin margin:** t = 3.3 clears the corrected bar only barely.
+- **Shares only:** these are share results at 1x.
+- **Options:**
+  - TSLA lists only Monday/Wednesday/Friday expirations, so a next-day option exists only some days.
+  - Its options trade in 5-cent steps.
+  - A day's time decay on a near-the-money TSLA option is likely larger than the average gain per trade.
+- **Account rules:**
+  - The rule trades every day. In a margin account under $25,000 the pattern-day-trader rule allows only 3 day trades per 5 business days.
+  - Half the trades are shorts, which need margin.
+
+**What part 4 means:** among the names tested, the only day-trading results that beat the luck-corrected bar were:
+- the first-candle ORB on TSLA;
+- the same rule on whichever big stock is "in play" that morning.
+
+That matches the published follow-up claim that opening-range breakouts work on stocks in play, not on index funds.
+It's a screen that passed narrowly on past data, not proof. The next honest test is forward paper trading with these exact rules.
