@@ -13,3 +13,4 @@ date,logged_at_et,event,side,contract,contracts,opt_ask,opt_bid,qqq,reason,note
 2026-11-18,2026-11-18 10:00:40,exit,,,,0.42,0.41,662.68,stop,"QQQ touched the 662.65 stop in the 10:00 minute (662.68 on the watcher's 1m bar at 10:00:29). Sold at the live bid 0.41 (quote 10:00:33). Breakeven never armed: bids peaked at 1.23 (09:45), below the 1.325 arm; minute highs reached 1.31. Not a trail or breakeven exit, so the no-trail shadow is the same trade."
 2026-11-19,2026-11-19 10:15:54,entry,short,11/20 641P,9.0,1.08,1.06,667.63,,
 2026-11-19,2026-11-19 10:33:09,exit,,,,,2.16,660.99,target,"2x resting limit filled: the 641P's 10:32 minute bar printed a 2.37 high (bid 2.20 at 10:33:01). Breakeven armed 10:22:40 (bid 1.50), trail armed 10:30:39 (bid 1.73); neither fired."
+2026-11-23,2026-11-23 09:40:53,entry,short,11/24 603P,8.0,1.12,1.02,644.64,,Implied vol ~80%: the nearest put with ask <= 1.12 was 6.5% out of the money (604P ask 1.31; 609P 1.52; 615P 2.05).
