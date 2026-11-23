@@ -11,3 +11,4 @@ date,side,contract,contracts,opt_entry,opt_exit,opt_reason,pnl,balance
 2026-11-17,short,11/18 637P,9,1.04,2.08,target,935.19,11242.33
 2026-11-18,short,11/19 629P,9,1.08,1.08,breakeven,-0.81,11241.52
 2026-11-19,short,11/20 643P,9,1.06,2.12,target,953.19,12194.71
+2026-11-23,short,11/24 605P,8,1.14,0.29,stop,-680.72,11513.99
