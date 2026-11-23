@@ -14,3 +14,4 @@ date,logged_at_et,event,side,contract,contracts,opt_ask,opt_bid,qqq,reason,note
 2026-11-19,2026-11-19 10:15:54,entry,short,11/20 641P,9.0,1.08,1.06,667.63,,
 2026-11-19,2026-11-19 10:33:09,exit,,,,,2.16,660.99,target,"2x resting limit filled: the 641P's 10:32 minute bar printed a 2.37 high (bid 2.20 at 10:33:01). Breakeven armed 10:22:40 (bid 1.50), trail armed 10:30:39 (bid 1.73); neither fired."
 2026-11-23,2026-11-23 09:40:53,entry,short,11/24 603P,8.0,1.12,1.02,644.64,,Implied vol ~80%: the nearest put with ask <= 1.12 was 6.5% out of the money (604P ask 1.31; 609P 1.52; 615P 2.05).
+2026-11-23,2026-11-23 10:21:43,exit,,,,,0.26,656.3,stop,QQQ touched the 656.25 opening-range high on the 10:21 minute bar (656.30). Most of the loss was the option's implied volatility falling from ~80% to ~75% while QQQ drifted up.
