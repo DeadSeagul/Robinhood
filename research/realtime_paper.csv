@@ -17,3 +17,4 @@ date,logged_at_et,event,side,contract,contracts,opt_ask,opt_bid,qqq,reason,note
 2026-11-23,2026-11-23 10:21:43,exit,,,,,0.26,656.3,stop,QQQ touched the 656.25 opening-range high on the 10:21 minute bar (656.30). Most of the loss was the option's implied volatility falling from ~80% to ~75% while QQQ drifted up.
 2026-11-24,2026-11-24 09:40:41,entry,short,11/25 607P,9.0,1.08,1.05,637.31,,
 2026-11-24,2026-11-24 09:46:19,exit,,,,0.69,0.67,641.64,stop,
+2026-11-25,2026-11-25 09:40:39,entry,short,11/27 578P,8.0,1.12,1.1,611.01,,Next trading day is Fri 11/27 (Thanksgiving Thu)
