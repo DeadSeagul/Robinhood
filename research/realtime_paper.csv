@@ -18,3 +18,4 @@ date,logged_at_et,event,side,contract,contracts,opt_ask,opt_bid,qqq,reason,note
 2026-11-24,2026-11-24 09:40:41,entry,short,11/25 607P,9.0,1.08,1.05,637.31,,
 2026-11-24,2026-11-24 09:46:19,exit,,,,0.69,0.67,641.64,stop,
 2026-11-25,2026-11-25 09:40:39,entry,short,11/27 578P,8.0,1.12,1.1,611.01,,Next trading day is Fri 11/27 (Thanksgiving Thu)
+2026-11-25,2026-11-25 09:52:04,exit,,,,1.08,1.05,611.0,breakeven,"Breakeven armed 09:45:03 (bid 1.64 >= 1.40); bid fell to 1.05 (<= 1.12) at the 09:51:57 check (1.27 at 09:50:48), sold at that bid. Trail (bid >= 1.68) never armed on an observed bid: bids peaked at 1.64; the 09:45 minute printed a 1.71 trade high. Target 2.24 never printed (minute high 1.71). No-trail shadow continues: QQQ stop 617.74, 2.24 target, 11:10 time exit."
